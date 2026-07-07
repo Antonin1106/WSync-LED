@@ -1,0 +1,324 @@
+import { useEffect, useMemo, useRef, useState } from "react";
+import ControlPanel from "./components/ControlPanel";
+import LedEditor from "./components/LedEditor";
+import LedPreview from "./components/LedPreview";
+import VideoCard from "./components/VideoCard";
+import VideoLibrary from "./components/VideoLibrary";
+import { buildLedFrame, getAnalysisSize, getLedCount } from "./lib/ledLayout";
+import { loadOverrides, loadSettings, saveOverrides, saveSettings } from "./lib/storage";
+import {
+  deleteCachedVideo,
+  getCachedVideos,
+  readCachedVideo,
+  saveCachedVideo,
+} from "./lib/videoCache";
+import type { CachedVideoMeta, LedOverride, Rgb, Settings } from "./types/app";
+
+/**
+ * Main application shell that manages video loading, LED preview rendering and websocket streaming.
+ */
+export default function App() {
+  const [settings, setSettings] = useState<Settings>(loadSettings);
+  const [cachedVideos, setCachedVideos] = useState<CachedVideoMeta[]>([]);
+  const [currentVideoName, setCurrentVideoName] = useState("");
+  const [isRunning, setIsRunning] = useState(false);
+  const [connectionState, setConnectionState] = useState("Ready");
+  const [ledColors, setLedColors] = useState<Rgb[]>([]);
+  const [selectedLed, setSelectedLed] = useState<number | null>(null);
+  const [ledOverrides, setLedOverrides] =
+    useState<Record<number, LedOverride>>(loadOverrides);
+  const [editLeds, setEditLeds] = useState(false);
+
+  const settingsRef = useRef(settings);
+  const overridesRef = useRef(ledOverrides);
+  const previousColorsRef = useRef<Rgb[]>([]);
+  const videoUrlRef = useRef<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+  const wsRef = useRef<WebSocket | null>(null);
+  const runningRef = useRef(false);
+  const lastFrameRef = useRef(0);
+  const animationFrameRef = useRef<number | null>(null);
+
+  const ledCount = getLedCount(settings);
+  const selectedOverride = selectedLed === null ? undefined : ledOverrides[selectedLed];
+  const disabledLedCount = useMemo(
+    () => Object.values(ledOverrides).filter((override) => !override.enabled).length,
+    [ledOverrides],
+  );
+
+  useEffect(() => {
+    document.title = "WSync LED";
+    refreshCachedVideos();
+  }, []);
+
+  useEffect(() => {
+    settingsRef.current = settings;
+    saveSettings(settings);
+    if (selectedLed !== null && selectedLed >= getLedCount(settings)) setSelectedLed(null);
+  }, [settings, selectedLed]);
+
+  useEffect(() => {
+    overridesRef.current = ledOverrides;
+    saveOverrides(ledOverrides);
+  }, [ledOverrides]);
+
+  useEffect(() => {
+    return () => {
+      stop();
+      revokeVideoUrl();
+    };
+  }, []);
+
+  /**
+   * Refreshes the list of cached videos from IndexedDB.
+   */
+  async function refreshCachedVideos() {
+    if (!("indexedDB" in window)) return;
+    try {
+      setCachedVideos(await getCachedVideos());
+    } catch (error) {
+      console.warn("Video cache unavailable:", error);
+    }
+  }
+
+  /**
+   * Releases the currently active object URL for the loaded video.
+   */
+  function revokeVideoUrl() {
+    if (videoUrlRef.current) {
+      URL.revokeObjectURL(videoUrlRef.current);
+      videoUrlRef.current = null;
+    }
+  }
+
+  /**
+   * Attaches a local video blob to the media element and updates the visible file name.
+   * @param blob Video file data to play.
+   * @param name Human-readable file name for the current media source.
+   */
+  function setVideoSource(blob: Blob, name: string) {
+    if (!videoRef.current) return;
+
+    revokeVideoUrl();
+    const url = URL.createObjectURL(blob);
+    videoUrlRef.current = url;
+    videoRef.current.src = url;
+    videoRef.current.load();
+    setCurrentVideoName(name);
+  }
+
+  /**
+   * Handles a selected local video file and stores it in the cache.
+   * @param event File input change event.
+   */
+  async function loadVideo(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setVideoSource(file, file.name);
+
+    try {
+      await saveCachedVideo(file);
+      await refreshCachedVideos();
+    } catch (error) {
+      console.warn("Video could not be cached:", error);
+    }
+  }
+
+  /**
+   * Opens a cached video by its database identifier.
+   * @param id Cached video identifier.
+   */
+  async function openCachedVideo(id: number) {
+    try {
+      const video = await readCachedVideo(id);
+      if (video) setVideoSource(video.blob, video.name);
+    } catch (error) {
+      console.warn("Cached video could not be opened:", error);
+    }
+  }
+
+  /**
+   * Removes a cached video entry and refreshes the library view.
+   * @param id Cached video identifier.
+   */
+  async function removeCachedVideo(id: number) {
+    try {
+      await deleteCachedVideo(id);
+      await refreshCachedVideos();
+    } catch (error) {
+      console.warn("Cached video could not be deleted:", error);
+    }
+  }
+
+  /**
+   * Opens a websocket connection to the configured LED controller.
+   */
+  function connectWS() {
+    wsRef.current?.close();
+
+    const ws = new WebSocket(`ws://${settingsRef.current.ip}/ws`);
+    ws.binaryType = "arraybuffer";
+    ws.onopen = () => setConnectionState("Connected");
+    ws.onclose = () => setConnectionState("Disconnected");
+    ws.onerror = () => setConnectionState("WebSocket error");
+    wsRef.current = ws;
+    setConnectionState("Connecting...");
+  }
+
+  /**
+   * Stops playback, cancels any pending animation frame and closes the websocket.
+   */
+  function stop() {
+    runningRef.current = false;
+    setIsRunning(false);
+
+    if (animationFrameRef.current !== null) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
+    }
+
+    wsRef.current?.close();
+    wsRef.current = null;
+  }
+
+  /**
+   * Runs the animation loop and sends the next LED frame to the controller when ready.
+   */
+  function loop() {
+    const ws = wsRef.current;
+    if (!runningRef.current) return;
+
+    if (!ws || ws.readyState !== 1) {
+      animationFrameRef.current = requestAnimationFrame(loop);
+      return;
+    }
+
+    const currentSettings = settingsRef.current;
+    const now = performance.now();
+    if (now - lastFrameRef.current < 1000 / currentSettings.fps) {
+      animationFrameRef.current = requestAnimationFrame(loop);
+      return;
+    }
+
+    lastFrameRef.current = now;
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+
+    if (!video || !canvas || video.readyState < 2) {
+      animationFrameRef.current = requestAnimationFrame(loop);
+      return;
+    }
+
+    const analysis = getAnalysisSize(currentSettings);
+    canvas.width = analysis.width;
+    canvas.height = analysis.height;
+
+    ctxRef.current ??= canvas.getContext("2d", { willReadFrequently: true });
+    const ctx = ctxRef.current;
+    if (!ctx) return;
+
+    ctx.drawImage(video, 0, 0, analysis.width, analysis.height);
+
+    const frame = buildLedFrame(
+      ctx.getImageData(0, 0, analysis.width, analysis.height),
+      currentSettings,
+      overridesRef.current,
+      previousColorsRef.current,
+    );
+
+    previousColorsRef.current = frame.colors;
+    ws.send(frame.packet.slice().buffer);
+    setLedColors(frame.colors);
+
+    animationFrameRef.current = requestAnimationFrame(loop);
+  }
+
+  /**
+   * Starts the capture loop and opens a websocket connection for streaming.
+   */
+  function start() {
+    previousColorsRef.current = [];
+    connectWS();
+    runningRef.current = true;
+    setIsRunning(true);
+    loop();
+  }
+
+  /**
+   * Updates the override for the currently selected LED.
+   * @param update New override data or null to remove the override.
+   */
+  function updateSelectedLed(update: LedOverride | null) {
+    if (selectedLed === null) return;
+
+    setLedOverrides((current) => {
+      const next = { ...current };
+      if (update) next[selectedLed] = update;
+      else delete next[selectedLed];
+      return next;
+    });
+  }
+
+  return (
+    <main className="app-shell">
+      <section className="control-surface">
+        <header className="app-header">
+          <div>
+            <p className="eyebrow">WLED Video Control</p>
+            <h1>WSync LED</h1>
+          </div>
+          <span className={isRunning ? "status online" : "status"}>{connectionState}</span>
+        </header>
+
+        <VideoCard
+          videoRef={videoRef}
+          canvasRef={canvasRef}
+          currentVideoName={currentVideoName}
+          onLoadVideo={loadVideo}
+        />
+
+        <div className="action-row">
+          <button className="primary-button" onClick={start} disabled={isRunning}>
+            Start
+          </button>
+          <button className="ghost-button" onClick={stop} disabled={!isRunning}>
+            Stop
+          </button>
+        </div>
+
+        <VideoLibrary
+          videos={cachedVideos}
+          onOpen={openCachedVideo}
+          onDelete={removeCachedVideo}
+        />
+
+        <ControlPanel
+          settings={settings}
+          ledCount={ledCount}
+          onSettingsChange={setSettings}
+        />
+      </section>
+
+      <LedPreview
+        settings={settings}
+        colors={ledColors}
+        overrides={ledOverrides}
+        selectedLed={selectedLed}
+        editMode={editLeds}
+        onEditModeChange={setEditLeds}
+        onSelectLed={setSelectedLed}
+      >
+        <LedEditor
+          selectedLed={selectedLed}
+          disabledLedCount={disabledLedCount}
+          selectedOverride={selectedOverride}
+          onUpdateLed={updateSelectedLed}
+          onResetAll={() => setLedOverrides({})}
+        />
+      </LedPreview>
+    </main>
+  );
+}
