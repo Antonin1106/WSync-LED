@@ -29,15 +29,34 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
       </div>
 
       <label className="field">
+        <div className="field-box">
           <span>Output IP</span>
+          <span />
+          <span>WS Path</span>
+        </div>
+        <div className="field-box">
           <input
             value={settings.ip}
+            placeholder="wled.local, 192.168.1.10..."
             autoCapitalize="off"
             autoCorrect="off"
             onInput={(event) =>
               onSettingsChange({ ...settings, ip: event.currentTarget.value })
             }
           />
+          <strong>
+          /
+          </strong>
+          <input
+            value={settings.path}
+            placeholder="ws"
+            autoCapitalize="off"
+            autoCorrect="off"
+            onInput={(event) =>
+              onSettingsChange({ ...settings, path: event.currentTarget.value })
+            }
+          />
+        </div>
       </label>
 
       <label className="field">

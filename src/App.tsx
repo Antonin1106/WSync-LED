@@ -159,7 +159,7 @@ export default function App() {
   function connectWS() {
     wsRef.current?.close();
 
-    const ws = new WebSocket(`ws://${settingsRef.current.ip}/ws`);
+    const ws = new WebSocket(`ws://${settingsRef.current.ip}/${settingsRef.current.path}`);
     ws.binaryType = 'arraybuffer';
     ws.onopen = () => setConnectionState('Connected');
     ws.onclose = () => setConnectionState('Disconnected');

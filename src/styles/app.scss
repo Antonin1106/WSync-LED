@@ -328,6 +328,39 @@ button:disabled {
     #020617;
 }
 
+.field-box {
+  display: flex;
+  gap: 0;
+
+  input,span {
+    flex: 2;
+  }
+
+  span:nth-of-type(2),
+  strong{
+    flex:0.15;
+  }
+
+  strong {
+    text-align: center;
+    padding: 11px 0;
+    border: 1px solid #334155;
+    background: #061142;
+  }
+
+  &>:last-child {
+    flex: 1;
+  }
+
+  input:first-of-type {
+    border-radius: 7px 0 0 7px;
+  }
+
+  input:last-of-type {
+    border-radius: 0 7px 7px 0;
+  }
+}
+
 .range-field span {
   display: flex;
   justify-content: space-between;
