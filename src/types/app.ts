@@ -2,6 +2,7 @@ import type { LedMappingMode } from './led';
 
 export type Settings = {
   ip: string;
+  path: string;
   fps: number;
   ledX: number;
   ledY: number;

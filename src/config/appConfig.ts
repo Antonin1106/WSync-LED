@@ -16,18 +16,19 @@ export const mappingModes: Array<{ value: LedMappingMode; label: string; descrip
     description: 'Full screen perimeter: top, right, bottom, left.',
   },
   {
-    value: "border",
-    label: "Border",
-    description: "Three-sided perimeter: top, right, left. No bottom edge.",
-  }
+    value: 'border',
+    label: 'Border',
+    description: 'Three-sided perimeter: top, right, left. No bottom edge.',
+  },
 ];
 
 export const initialSettings: Settings = {
   ip: '',
+  path: 'ws',
   fps: 24,
   ledX: 25,
   ledY: 6,
-  mappingMode: "classic",
+  mappingMode: 'classic',
   gain: 1.3,
   smooth: 0.35,
   threshold: 8,
