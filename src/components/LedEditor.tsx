@@ -1,10 +1,10 @@
-import type { LedOverride } from "../types/app";
+import type { LedOverride } from '../types/app';
 
 type Props = {
   selectedLed: number | null;
   disabledLedCount: number;
   selectedOverride?: LedOverride;
-  onUpdateLed: (override: LedOverride | null) => void;
+  onUpdateLed: (_override: LedOverride | null) => void;
   onResetAll: () => void;
 };
 
@@ -18,13 +18,13 @@ export default function LedEditor({
   onUpdateLed,
   onResetAll,
 }: Props) {
-  const selectedColor = selectedOverride?.color ?? "#ffffff";
+  const selectedColor = selectedOverride?.color ?? '#ffffff';
   const selectedEnabled = selectedOverride?.enabled ?? true;
 
   return (
     <div className="led-editor">
       <div>
-        <h3>{selectedLed === null ? "No LED selected" : `LED ${selectedLed + 1}`}</h3>
+        <h3>{selectedLed === null ? 'No LED selected' : `LED ${selectedLed + 1}`}</h3>
         <p>{disabledLedCount} disabled LED(s)</p>
       </div>
       <div className="editor-actions">
@@ -46,7 +46,7 @@ export default function LedEditor({
             onUpdateLed({ enabled: !selectedEnabled, color: selectedOverride?.color })
           }
         >
-          {selectedEnabled ? "Disable" : "Enable"}
+          {selectedEnabled ? 'Disable' : 'Enable'}
         </button>
         <button
           className="ghost-button compact"

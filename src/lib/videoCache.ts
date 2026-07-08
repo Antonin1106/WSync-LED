@@ -1,8 +1,8 @@
-import type { CachedVideo, CachedVideoMeta } from "../types/app";
+import type { CachedVideo, CachedVideoMeta } from '../types/app';
 
-const DB_NAME = "wsync-led-video-cache";
+const DB_NAME = 'wsync-led-video-cache';
 const DB_VERSION = 1;
-const STORE_NAME = "videos";
+const STORE_NAME = 'videos';
 
 /**
  * Opens the IndexedDB database used to persist cached videos.
@@ -16,10 +16,10 @@ function openVideoDb() {
       const db = request.result;
       if (!db.objectStoreNames.contains(STORE_NAME)) {
         const store = db.createObjectStore(STORE_NAME, {
-          keyPath: "id",
+          keyPath: 'id',
           autoIncrement: true,
         });
-        store.createIndex("savedAt", "savedAt");
+        store.createIndex('savedAt', 'savedAt');
       }
     };
 
@@ -36,7 +36,7 @@ function openVideoDb() {
  */
 async function withVideoStore<T>(
   mode: IDBTransactionMode,
-  action: (store: IDBObjectStore) => IDBRequest<T>,
+  action: (_store: IDBObjectStore) => IDBRequest<T>,
 ) {
   const db = await openVideoDb();
 
@@ -64,7 +64,7 @@ export async function getCachedVideos() {
 
   return new Promise<CachedVideoMeta[]>((resolve, reject) => {
     const videos: CachedVideoMeta[] = [];
-    const transaction = db.transaction(STORE_NAME, "readonly");
+    const transaction = db.transaction(STORE_NAME, 'readonly');
     const request = transaction.objectStore(STORE_NAME).openCursor();
 
     request.onsuccess = () => {
@@ -95,13 +95,13 @@ export async function getCachedVideos() {
 export async function saveCachedVideo(file: File) {
   const video = {
     name: file.name,
-    type: file.type || "video/*",
+    type: file.type || 'video/*',
     size: file.size,
     savedAt: Date.now(),
     blob: file,
   };
 
-  await withVideoStore<IDBValidKey>("readwrite", (store) => store.add(video));
+  await withVideoStore<IDBValidKey>('readwrite', (store) => store.add(video));
 }
 
 /**
@@ -110,7 +110,7 @@ export async function saveCachedVideo(file: File) {
  * @returns Promise resolving to the stored video data.
  */
 export function readCachedVideo(id: number) {
-  return withVideoStore<CachedVideo>("readonly", (store) => store.get(id));
+  return withVideoStore<CachedVideo>('readonly', (store) => store.get(id));
 }
 
 /**
@@ -118,7 +118,7 @@ export function readCachedVideo(id: number) {
  * @param id Cached video identifier.
  */
 export async function deleteCachedVideo(id: number) {
-  await withVideoStore<undefined>("readwrite", (store) => store.delete(id));
+  await withVideoStore<undefined>('readwrite', (store) => store.delete(id));
 }
 
 /**

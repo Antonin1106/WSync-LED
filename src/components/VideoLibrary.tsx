@@ -1,11 +1,11 @@
-import { LucideX } from "lucide-react";
-import { formatBytes } from "../lib/videoCache";
-import type { CachedVideoMeta } from "../types/app";
+import { LucideX } from 'lucide-react';
+import { formatBytes } from '../lib/videoCache';
+import type { CachedVideoMeta } from '../types/app';
 
 type Props = {
   videos: CachedVideoMeta[];
-  onOpen: (id: number) => void;
-  onDelete: (id: number) => void;
+  onOpen: (_id: number) => void;
+  onDelete: (_id: number) => void;
 };
 
 export default function VideoLibrary({ videos, onOpen, onDelete }: Props) {

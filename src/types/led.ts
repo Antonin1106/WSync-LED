@@ -1,4 +1,4 @@
 export type LedMappingMode =
-    | "classic"
-    | "perimeter"
-    | "border";
+    | 'classic'
+    | 'perimeter'
+    | 'border';

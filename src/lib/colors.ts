@@ -1,4 +1,4 @@
-import type { Rgb } from "../types/app";
+import type { Rgb } from '../types/app';
 
 /**
  * Converts a hexadecimal color string into an RGB triplet.
@@ -6,7 +6,7 @@ import type { Rgb } from "../types/app";
  * @returns RGB channel values as integers.
  */
 export function hexToRgb(hex: string): Rgb {
-  const value = hex.replace("#", "");
+  const value = hex.replace('#', '');
   return [
     parseInt(value.slice(0, 2), 16),
     parseInt(value.slice(2, 4), 16),

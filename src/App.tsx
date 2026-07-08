@@ -1,18 +1,18 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import ControlPanel from "./components/ControlPanel";
-import LedEditor from "./components/LedEditor";
-import LedPreview from "./components/LedPreview";
-import VideoCard from "./components/VideoCard";
-import VideoLibrary from "./components/VideoLibrary";
-import { buildLedFrame, getAnalysisSize, getLedCount } from "./lib/ledLayout";
-import { loadOverrides, loadSettings, saveOverrides, saveSettings } from "./lib/storage";
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import ControlPanel from './components/ControlPanel';
+import LedEditor from './components/LedEditor';
+import LedPreview from './components/LedPreview';
+import VideoCard from './components/VideoCard';
+import VideoLibrary from './components/VideoLibrary';
+import { buildLedFrame, getAnalysisSize, getLedCount } from './lib/ledLayout';
+import { loadOverrides, loadSettings, saveOverrides, saveSettings } from './lib/storage';
 import {
   deleteCachedVideo,
   getCachedVideos,
   readCachedVideo,
   saveCachedVideo,
-} from "./lib/videoCache";
-import type { CachedVideoMeta, LedOverride, Rgb, Settings } from "./types/app";
+} from './lib/videoCache';
+import type { CachedVideoMeta, LedOverride, Rgb, Settings } from './types/app';
 
 /**
  * Main application shell that manages video loading, LED preview rendering and websocket streaming.
@@ -20,9 +20,9 @@ import type { CachedVideoMeta, LedOverride, Rgb, Settings } from "./types/app";
 export default function App() {
   const [settings, setSettings] = useState<Settings>(loadSettings);
   const [cachedVideos, setCachedVideos] = useState<CachedVideoMeta[]>([]);
-  const [currentVideoName, setCurrentVideoName] = useState("");
+  const [currentVideoName, setCurrentVideoName] = useState('');
   const [isRunning, setIsRunning] = useState(false);
-  const [connectionState, setConnectionState] = useState("Ready");
+  const [connectionState, setConnectionState] = useState('Ready');
   const [ledColors, setLedColors] = useState<Rgb[]>([]);
   const [selectedLed, setSelectedLed] = useState<number | null>(null);
   const [ledOverrides, setLedOverrides] =
@@ -49,14 +49,14 @@ export default function App() {
   );
 
   useEffect(() => {
-    document.title = "WSync LED";
+    document.title = 'WSync LED';
     refreshCachedVideos();
   }, []);
 
   useEffect(() => {
     settingsRef.current = settings;
     saveSettings(settings);
-    if (selectedLed !== null && selectedLed >= getLedCount(settings)) setSelectedLed(null);
+    if (selectedLed !== null && selectedLed >= getLedCount(settings)) (() => setSelectedLed(null))();
   }, [settings, selectedLed]);
 
   useEffect(() => {
@@ -75,11 +75,11 @@ export default function App() {
    * Refreshes the list of cached videos from IndexedDB.
    */
   async function refreshCachedVideos() {
-    if (!("indexedDB" in window)) return;
+    if (!('indexedDB' in window)) return;
     try {
       setCachedVideos(await getCachedVideos());
     } catch (error) {
-      console.warn("Video cache unavailable:", error);
+      console.warn('Video cache unavailable:', error);
     }
   }
 
@@ -123,7 +123,7 @@ export default function App() {
       await saveCachedVideo(file);
       await refreshCachedVideos();
     } catch (error) {
-      console.warn("Video could not be cached:", error);
+      console.warn('Video could not be cached:', error);
     }
   }
 
@@ -136,7 +136,7 @@ export default function App() {
       const video = await readCachedVideo(id);
       if (video) setVideoSource(video.blob, video.name);
     } catch (error) {
-      console.warn("Cached video could not be opened:", error);
+      console.warn('Cached video could not be opened:', error);
     }
   }
 
@@ -149,7 +149,7 @@ export default function App() {
       await deleteCachedVideo(id);
       await refreshCachedVideos();
     } catch (error) {
-      console.warn("Cached video could not be deleted:", error);
+      console.warn('Cached video could not be deleted:', error);
     }
   }
 
@@ -160,12 +160,12 @@ export default function App() {
     wsRef.current?.close();
 
     const ws = new WebSocket(`ws://${settingsRef.current.ip}/ws`);
-    ws.binaryType = "arraybuffer";
-    ws.onopen = () => setConnectionState("Connected");
-    ws.onclose = () => setConnectionState("Disconnected");
-    ws.onerror = () => setConnectionState("WebSocket error");
+    ws.binaryType = 'arraybuffer';
+    ws.onopen = () => setConnectionState('Connected');
+    ws.onclose = () => setConnectionState('Disconnected');
+    ws.onerror = () => setConnectionState('WebSocket error');
     wsRef.current = ws;
-    setConnectionState("Connecting...");
+    setConnectionState('Connecting...');
   }
 
   /**
@@ -216,7 +216,7 @@ export default function App() {
     canvas.width = analysis.width;
     canvas.height = analysis.height;
 
-    ctxRef.current ??= canvas.getContext("2d", { willReadFrequently: true });
+    ctxRef.current ??= canvas.getContext('2d', { willReadFrequently: true });
     const ctx = ctxRef.current;
     if (!ctx) return;
 
@@ -270,7 +270,7 @@ export default function App() {
             <p className="eyebrow">WLED Video Control</p>
             <h1>WSync LED</h1>
           </div>
-          <span className={isRunning ? "status online" : "status"}>{connectionState}</span>
+          <span className={isRunning ? 'status online' : 'status'}>{connectionState}</span>
         </header>
 
         <VideoCard

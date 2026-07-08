@@ -1,4 +1,4 @@
-import type { LedMappingMode } from "./led";
+import type { LedMappingMode } from './led';
 
 export type Settings = {
   ip: string;
@@ -47,7 +47,7 @@ export type LedPosition = {
     width: number;
     height: number;
   };
-  side: "grid" | "top" | "right" | "bottom" | "left";
+  side: 'grid' | 'top' | 'right' | 'bottom' | 'left';
 };
 
 export type LedFrame = {

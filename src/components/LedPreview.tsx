@@ -1,7 +1,6 @@
-import { useEffect, useRef } from "react";
-import type React from "react";
-import { createLedPositions } from "../lib/ledLayout";
-import type { LedOverride, Rgb, Settings } from "../types/app";
+import { useEffect, useRef, type ReactNode } from 'react';
+import { createLedPositions } from '../lib/ledLayout';
+import type { LedOverride, Rgb, Settings } from '../types/app';
 
 type Props = {
     settings: Settings;
@@ -9,9 +8,9 @@ type Props = {
     overrides: Record<number, LedOverride>;
     selectedLed: number | null;
     editMode: boolean;
-    onEditModeChange: (enabled: boolean) => void;
-    onSelectLed: (id: number) => void;
-    children?: React.ReactNode;
+    onEditModeChange: (_enabled: boolean) => void;
+    onSelectLed: (_id: number) => void;
+    children?: ReactNode;
 };
 
 /**
@@ -29,12 +28,6 @@ export default function LedPreview({
 }: Props) {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const latestLayoutRef = useRef<Array<{ id: number; x: number; y: number; width: number; height: number }>>([]);
-
-    useEffect(() => {
-        draw();
-        window.addEventListener("resize", draw);
-        return () => window.removeEventListener("resize", draw);
-    });
 
     /**
      * Draws the LED layout preview inside the canvas using the current settings and colors.
@@ -61,23 +54,23 @@ export default function LedPreview({
             x: padding + position.x * innerW,
             y: padding + position.y * innerH,
             width: position.width * innerW,
-            height: position.height * innerH
+            height: position.height * innerH,
         }));
 
         canvas.width = cssWidth * dpr;
         canvas.height = cssHeight * dpr;
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
 
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.clearRect(0, 0, cssWidth, cssHeight);
-        ctx.fillStyle = "#05070a";
+        ctx.fillStyle = '#05070a';
         ctx.fillRect(0, 0, cssWidth, cssHeight);
 
-        ctx.strokeStyle = "#1f2937";
+        ctx.strokeStyle = '#1f2937';
         ctx.lineWidth = 2;
         ctx.strokeRect(padding, padding, innerW, innerH);
 
@@ -107,31 +100,37 @@ export default function LedPreview({
             const r = Math.min(position.width, position.height) * 0.1;
 
             ctx.fillStyle = override && !override.enabled
-                ? "#111827"
+                ? '#111827'
                 : `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
             roundRect(ctx, position.x, position.y, position.width, position.height, r);
             ctx.fill();
 
-            ctx.strokeStyle = "#020617";
+            ctx.strokeStyle = '#020617';
             ctx.lineWidth = 1;
             roundRect(ctx, position.x, position.y, position.width, position.height, r);
             ctx.stroke();
 
             if (override?.color) {
-                ctx.strokeStyle = "#ffffff";
+                ctx.strokeStyle = '#ffffff';
                 ctx.lineWidth = 2;
                 roundRect(ctx, position.x + 1, position.y + 1, position.width - 2, position.height - 2, Math.max(0, r - 1));
                 ctx.stroke();
             }
 
             if (position.id === selectedLed) {
-                ctx.strokeStyle = "#60a5fa";
+                ctx.strokeStyle = '#60a5fa';
                 ctx.lineWidth = 3;
                 roundRect(ctx, position.x + 1.5, position.y + 1.5, position.width - 3, position.height - 3, Math.max(0, r - 1.5));
                 ctx.stroke();
             }
         });
     }
+
+    useEffect(() => {
+        draw();
+        window.addEventListener('resize', draw);
+        return () => window.removeEventListener('resize', draw);
+    });
 
     /**
      * Selects the LED located at the pointer position when edit mode is active.
@@ -162,10 +161,10 @@ export default function LedPreview({
                     <h2>LED layout</h2>
                 </div>
                 <button
-                    className={editMode ? "mode-button active" : "mode-button"}
+                    className={editMode ? 'mode-button active' : 'mode-button'}
                     onClick={() => onEditModeChange(!editMode)}
                 >
-                    {editMode ? "Editing active" : "Edit LEDs"}
+                    {editMode ? 'Editing active' : 'Edit LEDs'}
                 </button>
             </div>
 

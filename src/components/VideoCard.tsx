@@ -1,10 +1,10 @@
-import type React from "react";
+import type React from 'react';
 
 type Props = {
   videoRef: React.RefObject<HTMLVideoElement | null>;
   canvasRef: React.RefObject<HTMLCanvasElement | null>;
   currentVideoName: string;
-  onLoadVideo: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onLoadVideo: (_event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 /**
@@ -29,7 +29,7 @@ export default function VideoCard({
         accept="video/*,.mp4,.mov,.m4v,.webm,.avi,.mkv"
         onChange={onLoadVideo}
       />
-      <p className="video-name">{currentVideoName || "No video loaded"}</p>
+      <p className="video-name">{currentVideoName || 'No video loaded'}</p>
     </div>
   );
 }

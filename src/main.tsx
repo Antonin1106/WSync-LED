@@ -1,15 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
-import { registerServiceWorker } from "./lib/registerServiceWorker";
-import "./styles/app.scss";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import { registerServiceWorker } from './lib/registerServiceWorker';
+import './styles/app.scss';
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+ReactDOM.createRoot(document.getElementById('root') as ReactDOM.Container).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
-window.addEventListener("load", () => {
+window.addEventListener('load', () => {
   registerServiceWorker();
 });

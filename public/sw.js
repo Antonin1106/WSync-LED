@@ -1,16 +1,16 @@
-const CACHE_NAME = __CACHE_NAME__;
+const CACHE_NAME = 'wsync-led-cache';
 
 const APP_SHELL = [
-  "/",
-  "/index.html",
-  "/manifest.webmanifest",
-  "/app-icon.svg",
-  "/app-icon-192.png",
-  "/app-icon-512.png",
-  "/apple-touch-icon.png",
+  '/',
+  '/index.html',
+  '/manifest.webmanifest',
+  '/app-icon.svg',
+  '/app-icon-192.png',
+  '/app-icon-512.png',
+  '/apple-touch-icon.png',
 ];
 
-self.addEventListener("install", (event) => {
+self.addEventListener('install', (event) => {
   self.skipWaiting();
 
   event.waitUntil(
@@ -22,7 +22,7 @@ self.addEventListener("install", (event) => {
   );
 });
 
-self.addEventListener("activate", (event) => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(
     (async () => {
       const keys = await caches.keys();
@@ -37,7 +37,7 @@ self.addEventListener("activate", (event) => {
 
       // Précharge immédiatement toutes les pages ouvertes.
       const clients = await self.clients.matchAll({
-        type: "window",
+        type: 'window',
       });
 
       for (const client of clients) {
@@ -47,10 +47,10 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-self.addEventListener("fetch", (event) => {
+self.addEventListener('fetch', (event) => {
   const request = event.request;
 
-  if (request.method !== "GET") {
+  if (request.method !== 'GET') {
     return;
   }
 
@@ -61,20 +61,20 @@ self.addEventListener("fetch", (event) => {
   }
 
   // Navigation HTML
-  if (request.mode === "navigate") {
+  if (request.mode === 'navigate') {
     event.respondWith(
       (async () => {
         try {
           const response = await fetch(request);
 
           const cache = await caches.open(CACHE_NAME);
-          cache.put("/index.html", response.clone());
+          cache.put('/index.html', response.clone());
 
           return response;
         } catch {
           return (
-            (await caches.match("/index.html")) ||
-            (await caches.match("/")) ||
+            (await caches.match('/index.html')) ||
+            (await caches.match('/')) ||
             Response.error()
           );
         }
@@ -103,9 +103,9 @@ self.addEventListener("fetch", (event) => {
           return cached;
         }
 
-        return new Response("", {
+        return new Response('', {
           status: 404,
-          statusText: "Offline",
+          statusText: 'Offline',
         });
       }
     })(),
