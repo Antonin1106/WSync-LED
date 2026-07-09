@@ -1,5 +1,6 @@
 import { applyGamma, applySaturation, clampChannel, hexToRgb } from './colors';
 import type { LedFrame, LedOverride, LedPosition, Rgb, Settings } from '../types/app';
+import t from './lang';
 
 type LayoutBounds = {
   width: number;
@@ -36,14 +37,13 @@ export function getAnalysisSize(settings: Settings) {
  */
 export function getModeHelp(settings: Settings) {
   if (settings.mappingMode === 'perimeter') {
-    return `Perimeter uses ${settings.ledX} LEDs on top, ${settings.ledX} on bottom, and ${settings.ledY} on each side.`;
+    return t('perimeterHelp', { ledX: settings.ledX, ledY: settings.ledY });
   }
 
-  if (settings.mappingMode === 'border') {
-    return `Border uses ${settings.ledX} LEDs on top and ${settings.ledY} on each side. The bottom edge is not used.`;
-  }
+  if (settings.mappingMode === 'border')
+    return t('borderHelp', { ledX: settings.ledX, ledY: settings.ledY });
 
-  return `Classic-style modes use a ${settings.ledX} by ${settings.ledY} LED grid.`;
+  return t('classicHelp', { ledX: settings.ledX, ledY: settings.ledY });
 }
 
 /**

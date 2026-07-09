@@ -1,6 +1,6 @@
 # WSync LED
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) ![Last commit](https://img.shields.io/github/last-commit/Antonin1106/WSyncLED) ![Stars](https://img.shields.io/github/stars/Antonin1106/WSyncLED)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) ![Last commit](https://img.shields.io/github/last-commit/Antonin1106/WSync-LED) ![Stars](https://img.shields.io/github/stars/Antonin1106/WSync-LED)
 
 A mobile-first Web App that analyzes colors from a local video and streams real-time LED frames over WebSocket to compatible devices on the local network.
 
@@ -33,6 +33,7 @@ The application works on any modern browser supporting the required Web APIs. As
   - Gamma
   - Saturation
   - Output reversal
+- Language support with English and French translations.
 
 ## Compatibility
 

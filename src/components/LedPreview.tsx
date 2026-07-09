@@ -1,6 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { createLedPositions } from '../lib/ledLayout';
 import type { LedOverride, Rgb, Settings } from '../types/app';
+import t from '../lib/lang';
 
 type Props = {
     settings: Settings;
@@ -157,14 +158,14 @@ export default function LedPreview({
         <section className="preview-surface">
             <div className="preview-toolbar">
                 <div>
-                    <p className="eyebrow">Visualization</p>
-                    <h2>LED layout</h2>
+                    <p className="eyebrow">{t('visualization')}</p>
+                    <h2>{t('layout')}</h2>
                 </div>
                 <button
                     className={editMode ? 'mode-button active' : 'mode-button'}
                     onClick={() => onEditModeChange(!editMode)}
                 >
-                    {editMode ? 'Editing active' : 'Edit LEDs'}
+                    {editMode ? t('editingActive') : t('editLEDs')}
                 </button>
             </div>
 

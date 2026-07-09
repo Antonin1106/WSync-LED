@@ -1,4 +1,5 @@
 import { mappingModes } from '../config/appConfig';
+import t from '../lib/lang';
 import { getModeHelp } from '../lib/ledLayout';
 import type { Settings } from '../types/app';
 
@@ -24,15 +25,15 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
   return (
     <section className="panel-section">
       <div className="section-title">
-        <h2>Controls</h2>
+        <h2>{t('controls')}</h2>
         <span>{ledCount} LEDs</span>
       </div>
 
       <label className="field">
         <div className="field-box">
-          <span>Output IP</span>
+          <span>{t('outputIP')}</span>
           <span />
-          <span>WS Path</span>
+          <span>{t('wsPath')}</span>
         </div>
         <div className="field-box">
           <input
@@ -60,7 +61,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
       </label>
 
       <label className="field">
-        <span>Diffusion mode</span>
+        <span>{t('diffusionMode')}</span>
         <select
           value={settings.mappingMode}
           onChange={(event) =>
@@ -72,19 +73,19 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
         >
           {mappingModes.map((mode) => (
             <option key={mode.value} value={mode.value}>
-              {mode.label}
+              {t(mode.label)}
             </option>
           ))}
         </select>
       </label>
       <p className="helper-text">{getModeHelp(settings)}</p>
 
-      <ControlRange label="FPS" value={settings.fps} min={5} max={60} step={1} onChange={(value) => setNumber('fps', value)} />
+      <ControlRange label={t('FPS')} value={settings.fps} min={5} max={60} step={1} onChange={(value) => setNumber('fps', value)} />
       <ControlRange label="LED X" value={settings.ledX} min={5} max={120} step={1} onChange={(value) => setNumber('ledX', value)} />
       <ControlRange label="LED Y" value={settings.ledY} min={1} max={80} step={1} onChange={(value) => setNumber('ledY', value)} />
       <ControlRange label="Gain" value={settings.gain} min={0.2} max={4} step={0.05} onChange={(value) => setNumber('gain', value)} />
-      <ControlRange label="Smoothing" value={settings.smooth} min={0} max={0.95} step={0.01} onChange={(value) => setNumber('smooth', value)} />
-      <ControlRange label="Threshold" value={settings.threshold} min={0} max={80} step={1} onChange={(value) => setNumber('threshold', value)} />
+      <ControlRange label={t('smoothing')} value={settings.smooth} min={0} max={0.95} step={0.01} onChange={(value) => setNumber('smooth', value)} />
+      <ControlRange label={t('threshold')} value={settings.threshold} min={0} max={80} step={1} onChange={(value) => setNumber('threshold', value)} />
       <ControlRange label="Gamma" value={settings.gamma} min={1} max={3.4} step={0.05} onChange={(value) => setNumber('gamma', value)} />
       <ControlRange label="Saturation" value={settings.saturation} min={0} max={2.5} step={0.05} onChange={(value) => setNumber('saturation', value)} />
 
@@ -97,7 +98,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
               onSettingsChange({ ...settings, reverse: event.currentTarget.checked })
             }
           />
-          Reverse output order
+          {t('reverseOutputOrder')}
         </label>
       </div>
     </section>

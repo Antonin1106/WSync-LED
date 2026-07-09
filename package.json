@@ -5,15 +5,19 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
+    "sort-translations": "npx sort-json-keys src/lang/en.json && npx sort-json-keys src/lang/fr.json",
+    "prebuild": "npm run sort-translations",
     "build": "npm run lint && tsc -b && vite build",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview"
   },
   "dependencies": {
+    "i18next": "^26.3.5",
     "lucide-react": "^1.23.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "react-i18next": "^17.0.8",
     "sass": "^1.101.0",
     "vite-plugin-singlefile": "^2.3.3"
   },
@@ -29,6 +33,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
     "globals": "^17.7.0",
+    "sort-json-keys": "^1.0.3",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.63.0",
     "vite": "^8.0.12"

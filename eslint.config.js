@@ -11,6 +11,12 @@ export default defineConfig([
     globalIgnores(['dist']),
 
     {
+        settings: {
+            react: {
+                version: 'detect',
+            },
+        },
+
         plugins: {
             react,
         },

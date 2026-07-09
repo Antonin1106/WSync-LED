@@ -1,4 +1,5 @@
 import type React from 'react';
+import t from '../lib/lang';
 
 type Props = {
   videoRef: React.RefObject<HTMLVideoElement | null>;
@@ -21,7 +22,7 @@ export default function VideoCard({
       <video id="video" ref={videoRef} controls playsInline preload="metadata" />
       <canvas id="canvas" ref={canvasRef} hidden />
       <label className="file-button" htmlFor="fileInput">
-        Choose a video
+        {t('chooseVideo')}
       </label>
       <input
         type="file"
@@ -29,7 +30,7 @@ export default function VideoCard({
         accept="video/*,.mp4,.mov,.m4v,.webm,.avi,.mkv"
         onChange={onLoadVideo}
       />
-      <p className="video-name">{currentVideoName || 'No video loaded'}</p>
+      <p className="video-name">{currentVideoName || t('noVideoLoaded')}</p>
     </div>
   );
 }

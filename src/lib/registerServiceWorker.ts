@@ -1,3 +1,5 @@
+import t from './lang';
+
 /**
  * Registers the service worker used to enable PWA capabilities.
  */
@@ -13,6 +15,6 @@ export async function registerServiceWorker() {
 
     await navigator.serviceWorker.ready;
   } catch (error) {
-    console.warn('Service worker registration failed:', error);
+    console.warn(t('swFailed') + ':', error);
   }
 }

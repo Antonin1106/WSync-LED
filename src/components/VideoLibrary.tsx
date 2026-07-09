@@ -1,6 +1,7 @@
 import { LucideX } from 'lucide-react';
 import { formatBytes } from '../lib/videoCache';
 import type { CachedVideoMeta } from '../types/app';
+import t from '../lib/lang';
 
 type Props = {
   videos: CachedVideoMeta[];
@@ -12,12 +13,12 @@ export default function VideoLibrary({ videos, onOpen, onDelete }: Props) {
   return (
     <section className="panel-section">
       <div className="section-title">
-        <h2>Local library</h2>
+        <h2>{t('localLibrary')}</h2>
         <span>{videos.length}</span>
       </div>
       <div className="library-list">
         {videos.length === 0 && (
-          <p className="empty-state">Opened videos are kept here for offline use.</p>
+          <p className="empty-state">{t('openedVideos')}</p>
         )}
         {videos.map((video) => (
           <article className="library-item" key={video.id}>
@@ -27,7 +28,7 @@ export default function VideoLibrary({ videos, onOpen, onDelete }: Props) {
             </button>
             <button
               className="icon-button"
-              aria-label={`Delete ${video.name}`}
+              aria-label={`${t('delete')} ${video.name}`}
               onClick={() => onDelete(video.id)}
             >
               <LucideX />

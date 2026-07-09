@@ -13,6 +13,8 @@ import {
   saveCachedVideo,
 } from './lib/videoCache';
 import type { CachedVideoMeta, LedOverride, Rgb, Settings } from './types/app';
+import t from './lib/lang';
+import LanguageSelector from './components/LanguageSelector/LanguageSelector';
 
 /**
  * Main application shell that manages video loading, LED preview rendering and websocket streaming.
@@ -22,7 +24,7 @@ export default function App() {
   const [cachedVideos, setCachedVideos] = useState<CachedVideoMeta[]>([]);
   const [currentVideoName, setCurrentVideoName] = useState('');
   const [isRunning, setIsRunning] = useState(false);
-  const [connectionState, setConnectionState] = useState('Ready');
+  const [connectionState, setConnectionState] = useState(t('ready'));
   const [ledColors, setLedColors] = useState<Rgb[]>([]);
   const [selectedLed, setSelectedLed] = useState<number | null>(null);
   const [ledOverrides, setLedOverrides] =
@@ -49,7 +51,7 @@ export default function App() {
   );
 
   useEffect(() => {
-    document.title = 'WSync LED';
+    document.title = t('appName');
     refreshCachedVideos();
   }, []);
 
@@ -79,7 +81,7 @@ export default function App() {
     try {
       setCachedVideos(await getCachedVideos());
     } catch (error) {
-      console.warn('Video cache unavailable:', error);
+      console.warn(t('unavailableVideoCache') + ' :', error);
     }
   }
 
@@ -123,7 +125,7 @@ export default function App() {
       await saveCachedVideo(file);
       await refreshCachedVideos();
     } catch (error) {
-      console.warn('Video could not be cached:', error);
+      console.warn(t('noVideoCache') + ' :', error);
     }
   }
 
@@ -136,7 +138,7 @@ export default function App() {
       const video = await readCachedVideo(id);
       if (video) setVideoSource(video.blob, video.name);
     } catch (error) {
-      console.warn('Cached video could not be opened:', error);
+      console.warn(t('errorOpenVideo') + ' :', error);
     }
   }
 
@@ -149,7 +151,7 @@ export default function App() {
       await deleteCachedVideo(id);
       await refreshCachedVideos();
     } catch (error) {
-      console.warn('Cached video could not be deleted:', error);
+      console.warn(t('errorDeleteVideo') + ' :', error);
     }
   }
 
@@ -161,11 +163,11 @@ export default function App() {
 
     const ws = new WebSocket(`ws://${settingsRef.current.ip}/${settingsRef.current.path}`);
     ws.binaryType = 'arraybuffer';
-    ws.onopen = () => setConnectionState('Connected');
-    ws.onclose = () => setConnectionState('Disconnected');
-    ws.onerror = () => setConnectionState('WebSocket error');
+    ws.onopen = () => setConnectionState(t('connected'));
+    ws.onclose = () => setConnectionState(t('disconnected'));
+    ws.onerror = () => setConnectionState(t('wsError'));
     wsRef.current = ws;
-    setConnectionState('Connecting...');
+    setConnectionState(t('connecting'));
   }
 
   /**
@@ -267,8 +269,9 @@ export default function App() {
       <section className="control-surface">
         <header className="app-header">
           <div>
-            <p className="eyebrow">WLED Video Control</p>
-            <h1>WSync LED</h1>
+            <p className="eyebrow">{t('desc')}</p>
+            <h1>{t('appName')}</h1>
+            <LanguageSelector />
           </div>
           <span className={isRunning ? 'status online' : 'status'}>{connectionState}</span>
         </header>
@@ -282,10 +285,10 @@ export default function App() {
 
         <div className="action-row">
           <button className="primary-button" onClick={start} disabled={isRunning}>
-            Start
+            {t('start')}
           </button>
           <button className="ghost-button" onClick={stop} disabled={!isRunning}>
-            Stop
+              {t('stop')}
           </button>
         </div>
 

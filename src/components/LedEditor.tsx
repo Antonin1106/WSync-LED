@@ -1,3 +1,4 @@
+import t from '../lib/lang';
 import type { LedOverride } from '../types/app';
 
 type Props = {
@@ -24,12 +25,12 @@ export default function LedEditor({
   return (
     <div className="led-editor">
       <div>
-        <h3>{selectedLed === null ? 'No LED selected' : `LED ${selectedLed + 1}`}</h3>
-        <p>{disabledLedCount} disabled LED(s)</p>
+        <h3>{selectedLed === null ? t('noLEDSel') : `LED ${selectedLed + 1}`}</h3>
+        <p>{disabledLedCount} {t('disabledLED', { count: disabledLedCount })}</p>
       </div>
       <div className="editor-actions">
         <label className="color-field">
-          <span>Color</span>
+          <span>{t('color')}</span>
           <input
             type="color"
             value={selectedColor}
@@ -46,17 +47,17 @@ export default function LedEditor({
             onUpdateLed({ enabled: !selectedEnabled, color: selectedOverride?.color })
           }
         >
-          {selectedEnabled ? 'Disable' : 'Enable'}
+          {selectedEnabled ? t('disable') : t('enable')}
         </button>
         <button
           className="ghost-button compact"
           disabled={selectedLed === null}
           onClick={() => onUpdateLed(null)}
         >
-          Reset LED
+          {t('resetLED')}
         </button>
         <button className="ghost-button compact" onClick={onResetAll}>
-          Reset all
+          {t('resetAll')}
         </button>
       </div>
     </div>
