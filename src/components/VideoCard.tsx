@@ -10,6 +10,12 @@ type Props = {
 
 /**
  * Renders the media player surface and file picker used to load a video source.
+ * @param props - The properties for the VideoCard component.
+ * @param props.videoRef - A React ref object pointing to the HTML video element for playback.
+ * @param props.canvasRef - A React ref object pointing to the HTML canvas element used for LED preview rendering.
+ * @param props.currentVideoName - The name of the currently loaded video file, or an empty string if none is loaded.
+ * @param props.onLoadVideo - A callback function to handle the selection of a new video file from the file input.
+ * @returns The rendered VideoCard component.
  */
 export default function VideoCard({
   videoRef,

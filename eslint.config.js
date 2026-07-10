@@ -5,11 +5,12 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 import { defineConfig, globalIgnores } from 'eslint/config';
+import jsdoc from 'eslint-plugin-jsdoc';
 
 export default defineConfig([
     // Ignore generated build files.
     globalIgnores(['dist']),
-
+    jsdoc.configs['flat/recommended-typescript'],
     {
         settings: {
             react: {
@@ -19,6 +20,7 @@ export default defineConfig([
 
         plugins: {
             react,
+            jsdoc,
         },
 
         // Apply this configuration to all JavaScript and TypeScript source files.
@@ -161,6 +163,30 @@ export default defineConfig([
 
             // Disable the prevent using undeclared variables.
             'no-undef': 'off',
+
+            /* ------------------------------------------------------------------
+            * JSDoc
+            * ---------------------------------------------------------------- */
+
+
+            'jsdoc/require-jsdoc': [
+                'error',
+                {
+                    publicOnly: true,
+                    require: {
+                        FunctionDeclaration: true,
+                        MethodDefinition: false,
+                        ClassDeclaration: true,
+                        ArrowFunctionExpression: false,
+                        FunctionExpression: false,
+                    },
+                },
+            ],
+
+            'jsdoc/require-param': 'error',
+            'jsdoc/require-returns': 'error',
+            'jsdoc/check-tag-names': 'error',
+            'jsdoc/check-alignment': 'error',
         },
     },
 ]);

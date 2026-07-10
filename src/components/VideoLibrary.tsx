@@ -9,6 +9,14 @@ type Props = {
   onDelete: (_id: number) => void;
 };
 
+/**
+ * Renders the video library panel, displaying a list of cached videos with options to open or delete them.
+ * @param props - The properties for the VideoLibrary component.
+ * @param props.videos - An array of cached video metadata to display in the library.
+ * @param props.onOpen - A callback function to handle opening a video when its corresponding button is clicked.
+ * @param props.onDelete - A callback function to handle deleting a video when its corresponding button is clicked.
+ * @returns The rendered VideoLibrary component.
+ */
 export default function VideoLibrary({ videos, onOpen, onDelete }: Props) {
   return (
     <section className="panel-section">

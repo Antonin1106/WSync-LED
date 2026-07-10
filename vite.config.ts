@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Toggle production-specific options (e.g. CSS class naming).
-const IS_PROD = false;
+const IS_PROD = process.env.NODE_ENV === 'production';
 
 // Global SCSS code automatically injected into every SCSS file.
 const scssToImport = '';

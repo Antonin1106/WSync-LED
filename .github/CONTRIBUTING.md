@@ -1,0 +1,173 @@
+# WSync-LED Contributing Guide
+
+Thank you for your interest in contributing to this project!
+
+Contributions of all kinds are welcome, including bug fixes, new features, documentation improvements, and code quality enhancements.
+
+---
+
+## Table of Contents
+
+- [Contributing Guide](#contributing-guide)
+  - [1. Before Contributing](#1-before-contributing)
+  - [2. Reporting a Bug](#2-reporting-a-bug)
+  - [3. Project Structure](#3-project-structure)
+  - [4. Coding Guidelines](#4-coding-guidelines)
+  - [5. Documentation](#5-documentation)
+  - [6. Updating the Documentation](#6-updating-the-documentation)
+  - [7. Updating translation files](#7-updating-translation-files)
+  - [8. Testing Your Changes](#8-testing-your-changes)
+  - [9. Submitting a Pull Request](#9-submitting-a-pull-request)
+
+---
+
+## 1. Before Contributing
+
+Before opening an issue or submitting a Pull Request, please:
+
+- Check whether your issue or idea has already been reported.
+- Read the project's `README.md`.
+- Keep your changes focused on a single feature or fix whenever possible.
+- Follow the existing code style and project conventions.
+
+---
+
+## 2. Reporting a Bug
+
+If you discover a bug, please open an issue including:
+
+- The project version.
+- Your operating system and browser (if applicable).
+- Steps to reproduce the issue.
+- Expected behavior.
+- Actual behavior.
+- Screenshots or logs when relevant.
+
+---
+
+## 3. Project Structure
+
+```
+.
+├── public/             # Static assets
+├── src/
+│   ├── components/     # React components
+│   ├── config/         # Application configuration
+│   ├── lang/           # Languages files
+│   ├── lib/            # Utilities and helpers
+│   ├── styles/         # Global styles
+│   ├── types/          # TypeScript types
+│   ├── App.tsx
+│   └── main.tsx
+├── CHANGELOG.md
+├── README.md
+└── package.json
+```
+
+---
+
+## 4. Coding Guidelines
+
+Please follow these guidelines when contributing:
+
+- Use TypeScript whenever possible.
+- Respect the existing folder structure.
+- Follow the project's ESLint configuration.
+- Keep functions small and focused.
+- Prefer descriptive names over abbreviations.
+- Remove unused imports and dead code.
+- Keep commits clear and meaningful.
+
+---
+
+## 5. Documentation
+
+Public functions, hooks, utilities, and reusable components should be documented using **JSDoc** when their behavior is not immediately obvious.
+
+Example:
+
+```ts
+/**
+ * Updates a numeric setting from an input value.
+ *
+ * @param key Setting to update.
+ * @param value Numeric value entered by the user.
+ */
+function setNumber(key: keyof Settings, value: string) {
+  onSettingsChange({
+    ...settings,
+    [key]: parseFloat(value),
+  });
+}
+```
+
+Comments should explain **why** something exists rather than simply repeating what the code already says.
+
+---
+
+## 6. Updating the Documentation
+
+If your contribution changes the project's behavior:
+
+- Update `README.md` if needed.
+- Update `CHANGELOG.md`.
+- Add or update JSDoc comments when appropriate.
+
+---
+
+## 7. Updating Translation Files
+
+If your contribution introduces or modifies user-facing text:
+
+- Always use the `t()` function for translatable strings.
+- Update every supported language file in [`src/lang/`](src/lang/).
+- Ensure that translation keys remain consistent across all language files.
+- Remove unused translation keys whenever applicable.
+
+---
+
+## 8. Testing Your Changes
+
+Before opening a Pull Request:
+
+- Install dependencies:
+
+```bash
+npm install
+```
+
+- Run ESLint:
+
+```bash
+npm run lint
+```
+
+- Build the project:
+
+```bash
+npm run build
+```
+
+If tests exist, run them as well.
+
+Your contribution should compile without errors or warnings.
+
+---
+
+## 9. Submitting a Pull Request
+
+Before submitting your Pull Request, verify that:
+
+- Your branch is up to date.
+- The project builds successfully.
+- Documentation has been updated when necessary.
+- Your changes are focused on a single feature or bug fix.
+
+When creating the Pull Request, include:
+
+- A short description of the changes.
+- The motivation behind the change.
+- How the changes were tested.
+- Any known limitations or breaking changes.
+
+Thank you for helping improve the project !

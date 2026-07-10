@@ -16,6 +16,16 @@ type Props = {
 
 /**
  * Renders a canvas-based preview of the LED layout and supports selecting individual LEDs.
+ * @param props  - The properties for the LedPreview component.
+ * @param props.settings - The current application settings, including LED layout configuration.
+ * @param props.colors - An array of RGB color values for each LED in the layout.
+ * @param props.overrides - A record of LED override settings, allowing for custom colors or disabled states.
+ * @param props.selectedLed - The index of the currently selected LED, or null if none is selected.
+ * @param props.editMode -  A boolean indicating whether the LED selection mode is active.
+ * @param props.onEditModeChange - A callback function to toggle the edit mode state.
+ * @param props.onSelectLed - A callback function to handle selecting an LED when it is clicked in the preview.
+ * @param props.children - Optional React children to render within the preview section.
+ * @returns The rendered LedPreview component.
  */
 export default function LedPreview({
     settings,

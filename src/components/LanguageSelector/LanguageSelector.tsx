@@ -5,6 +5,7 @@ import styles from './LanguageSelector.module.scss';
 
 /**
  * Allows the user to switch the active interface language.
+ * @returns The rendered LanguageSelector component.
  */
 export default function LanguageSelector() {
 

@@ -8,3 +8,5 @@
 - Added support for dynamic color synchronization based on screen content.
 - Added configuration options for brightness and update rate.
 - Added language support with English and French translations.
+- Added ESlint configuration.
+- Added script to check if translations are correctly implemented.

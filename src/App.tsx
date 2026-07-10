@@ -18,6 +18,7 @@ import LanguageSelector from './components/LanguageSelector/LanguageSelector';
 
 /**
  * Main application shell that manages video loading, LED preview rendering and websocket streaming.
+ * @returns The rendered App component.
  */
 export default function App() {
   const [settings, setSettings] = useState<Settings>(loadSettings);

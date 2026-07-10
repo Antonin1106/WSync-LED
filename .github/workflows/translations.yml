@@ -28,4 +28,6 @@ jobs:
 
       - run: npm run prebuild
 
-      - run: npm run sort-translations
+      - run: npm run sort-translations # Sort translation files
+
+      - run: npm run check:i18n # Check for missing translations

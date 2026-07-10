@@ -11,6 +11,13 @@ type Props = {
 
 /**
  * Shows the active LED selection and allows editing its color or enabled state.
+ * @param props - The properties for the LedEditor component.
+ * @param props.selectedLed - The index of the currently selected LED, or null if none is selected.
+ * @param props.disabledLedCount - The number of LEDs that are currently disabled.
+ * @param props.selectedOverride - The override settings for the selected LED, if any.
+ * @param props.onUpdateLed - A callback function to handle updates to the selected LED's override settings.
+ * @param props.onResetAll - A callback function to reset all LED overrides to their default state.
+ * @returns The rendered LedEditor component.
  */
 export default function LedEditor({
   selectedLed,

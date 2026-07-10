@@ -11,6 +11,11 @@ type Props = {
 
 /**
  * Renders the control panel for LED output settings and mapping options.
+ * @param props - The properties for the ControlPanel component.
+ * @param props.settings - The current application settings.
+ * @param props.ledCount - The total number of LEDs configured in the application.
+ * @param props.onSettingsChange - A callback function to handle changes to the application settings.
+ * @returns The rendered ControlPanel component.
  */
 export default function ControlPanel({ settings, ledCount, onSettingsChange }: Props) {
   /**
@@ -107,6 +112,14 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
 
 /**
  * Renders a single numeric range control with a visible value label.
+ * @param props - The properties for the ControlRange component.
+ * @param props.label - The label text for the range control.
+ * @param props.value - The current numeric value of the range control.
+ * @param props.min - The minimum value for the range control.
+ * @param props.max - The maximum value for the range control.
+ * @param props.step - The step increment for the range control.
+ * @param props.onChange - A callback function to handle changes to the range control's value.
+ * @returns The rendered ControlRange component.
  */
 function ControlRange({
   label,
