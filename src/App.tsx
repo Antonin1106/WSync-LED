@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import ControlPanel from './components/ControlPanel';
 import LedEditor from './components/LedEditor';
 import LedPreview from './components/LedPreview';
@@ -25,7 +25,7 @@ export default function App() {
   const [cachedVideos, setCachedVideos] = useState<CachedVideoMeta[]>([]);
   const [currentVideoName, setCurrentVideoName] = useState('');
   const [isRunning, setIsRunning] = useState(false);
-  const [connectionState, setConnectionState] = useState(t('ready'));
+  const [connectionState, setConnectionState] = useState('ready');
   const [ledColors, setLedColors] = useState<Rgb[]>([]);
   const [selectedLed, setSelectedLed] = useState<number | null>(null);
   const [ledOverrides, setLedOverrides] =
@@ -50,6 +50,7 @@ export default function App() {
     () => Object.values(ledOverrides).filter((override) => !override.enabled).length,
     [ledOverrides],
   );
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   useEffect(() => {
     document.title = t('appName');
@@ -123,6 +124,18 @@ export default function App() {
     setVideoSource(file, file.name);
 
     try {
+      const existingVideos = await getCachedVideos();
+      let exist = false;
+      existingVideos.forEach(v => {
+        if (v.name === file.name && v.size === file.size) {
+          exist = true;
+          return;
+        }
+      });
+
+      if(exist)
+        return;
+
       await saveCachedVideo(file);
       await refreshCachedVideos();
     } catch (error) {
@@ -162,13 +175,13 @@ export default function App() {
   function connectWS() {
     wsRef.current?.close();
 
-    const ws = new WebSocket(`ws://${settingsRef.current.ip}/${settingsRef.current.path}`);
+    const ws = new WebSocket(`ws://${settingsRef.current.ip}/${(settingsRef.current.path).replace(/^\/+/, '')}`);
     ws.binaryType = 'arraybuffer';
-    ws.onopen = () => setConnectionState(t('connected'));
-    ws.onclose = () => setConnectionState(t('disconnected'));
-    ws.onerror = () => setConnectionState(t('wsError'));
+    ws.onopen = () => setConnectionState('connected');
+    ws.onclose = () => setConnectionState('disconnected');
+    ws.onerror = () => setConnectionState('wsError');
     wsRef.current = ws;
-    setConnectionState(t('connecting'));
+    setConnectionState('connecting');
   }
 
   /**
@@ -192,9 +205,10 @@ export default function App() {
    */
   function loop() {
     const ws = wsRef.current;
+
     if (!runningRef.current) return;
 
-    if (!ws || ws.readyState !== 1) {
+    if (!ws) {
       animationFrameRef.current = requestAnimationFrame(loop);
       return;
     }
@@ -233,8 +247,9 @@ export default function App() {
     );
 
     previousColorsRef.current = frame.colors;
-    ws.send(frame.packet.slice().buffer);
     setLedColors(frame.colors);
+    if (ws.readyState === 1)
+      ws.send(frame.packet.slice().buffer);
 
     animationFrameRef.current = requestAnimationFrame(loop);
   }
@@ -272,9 +287,9 @@ export default function App() {
           <div>
             <p className="eyebrow">{t('desc')}</p>
             <h1>{t('appName')}</h1>
-            <LanguageSelector />
+            <LanguageSelector onChange={() => forceUpdate()} />
           </div>
-          <span className={isRunning ? 'status online' : 'status'}>{connectionState}</span>
+          <span className={isRunning ? 'status online' : 'status'}>{t(connectionState)}</span>
         </header>
 
         <VideoCard
@@ -289,7 +304,7 @@ export default function App() {
             {t('start')}
           </button>
           <button className="ghost-button" onClick={stop} disabled={!isRunning}>
-              {t('stop')}
+            {t('stop')}
           </button>
         </div>
 
@@ -314,6 +329,7 @@ export default function App() {
         editMode={editLeds}
         onEditModeChange={setEditLeds}
         onSelectLed={setSelectedLed}
+        videoRef={videoRef}
       >
         <LedEditor
           selectedLed={selectedLed}

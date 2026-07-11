@@ -56,3 +56,8 @@ export type LedFrame = {
   colors: Rgb[];
   positions: LedPosition[];
 };
+
+export interface LedGrid {
+    ledX: number;
+    ledY: number;
+}

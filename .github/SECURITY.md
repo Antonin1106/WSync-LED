@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Security updates are provided for the latest version available on the default branch.
+Security updates are provided for the latest version available on the default branch (main).
 
 | Version | Supported |
 | :------: | :-------: |

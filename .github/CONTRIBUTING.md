@@ -8,16 +8,18 @@ Contributions of all kinds are welcome, including bug fixes, new features, docum
 
 ## Table of Contents
 
-- [Contributing Guide](#contributing-guide)
+- [WSync-LED Contributing Guide](#wsync-led-contributing-guide)
+  - [Table of Contents](#table-of-contents)
   - [1. Before Contributing](#1-before-contributing)
-  - [2. Reporting a Bug](#2-reporting-a-bug)
-  - [3. Project Structure](#3-project-structure)
-  - [4. Coding Guidelines](#4-coding-guidelines)
-  - [5. Documentation](#5-documentation)
-  - [6. Updating the Documentation](#6-updating-the-documentation)
-  - [7. Updating translation files](#7-updating-translation-files)
-  - [8. Testing Your Changes](#8-testing-your-changes)
-  - [9. Submitting a Pull Request](#9-submitting-a-pull-request)
+  - [2. Branching Strategy](#2-branching-strategy)
+  - [3. Reporting a Bug](#3-reporting-a-bug)
+  - [4. Project Structure](#4-project-structure)
+  - [5. Coding Guidelines](#5-coding-guidelines)
+  - [6. Documentation](#6-documentation)
+  - [7. Updating the Documentation](#7-updating-the-documentation)
+  - [8. Updating Translation Files](#8-updating-translation-files)
+  - [9. Testing Your Changes](#9-testing-your-changes)
+  - [10. Submitting a Pull Request](#10-submitting-a-pull-request)
 
 ---
 
@@ -32,7 +34,16 @@ Before opening an issue or submitting a Pull Request, please:
 
 ---
 
-## 2. Reporting a Bug
+## 2. Branching Strategy
+
+On GitHub, we use the following branching strategy:
+- The `main` branch contains the latest stable release.
+- The `dev` branch is used for ongoing development and may contain unstable code.
+- Feature branches should be created from `dev` and named according to the feature or bug being addressed (e.g., `feature/new-feature`, `bugfix/fix-issue`).
+
+---
+
+## 3. Reporting a Bug
 
 If you discover a bug, please open an issue including:
 
@@ -45,7 +56,7 @@ If you discover a bug, please open an issue including:
 
 ---
 
-## 3. Project Structure
+## 4. Project Structure
 
 ```
 .
@@ -66,7 +77,7 @@ If you discover a bug, please open an issue including:
 
 ---
 
-## 4. Coding Guidelines
+## 5. Coding Guidelines
 
 Please follow these guidelines when contributing:
 
@@ -80,9 +91,9 @@ Please follow these guidelines when contributing:
 
 ---
 
-## 5. Documentation
+## 6. Documentation
 
-Public functions, hooks, utilities, and reusable components should be documented using **JSDoc** when their behavior is not immediately obvious.
+Public functions, hooks, utilities, and reusable components must be documented using **JSDoc** when their behavior is not immediately obvious.
 
 Example:
 
@@ -105,7 +116,7 @@ Comments should explain **why** something exists rather than simply repeating wh
 
 ---
 
-## 6. Updating the Documentation
+## 7. Updating the Documentation
 
 If your contribution changes the project's behavior:
 
@@ -115,7 +126,7 @@ If your contribution changes the project's behavior:
 
 ---
 
-## 7. Updating Translation Files
+## 8. Updating Translation Files
 
 If your contribution introduces or modifies user-facing text:
 
@@ -126,7 +137,7 @@ If your contribution introduces or modifies user-facing text:
 
 ---
 
-## 8. Testing Your Changes
+## 9. Testing Your Changes
 
 Before opening a Pull Request:
 
@@ -154,7 +165,7 @@ Your contribution should compile without errors or warnings.
 
 ---
 
-## 9. Submitting a Pull Request
+## 10. Submitting a Pull Request
 
 Before submitting your Pull Request, verify that:
 

@@ -11,6 +11,7 @@ type Props = {
     editMode: boolean;
     onEditModeChange: (_enabled: boolean) => void;
     onSelectLed: (_id: number) => void;
+    videoRef: React.RefObject<HTMLVideoElement | null>;
     children?: ReactNode;
 };
 
@@ -25,6 +26,7 @@ type Props = {
  * @param props.onEditModeChange - A callback function to toggle the edit mode state.
  * @param props.onSelectLed - A callback function to handle selecting an LED when it is clicked in the preview.
  * @param props.children - Optional React children to render within the preview section.
+ * @param props.videoRef - A reference to the video element used for LED frame sampling (not used in this component).
  * @returns The rendered LedPreview component.
  */
 export default function LedPreview({
@@ -35,6 +37,7 @@ export default function LedPreview({
     editMode,
     onEditModeChange,
     onSelectLed,
+    videoRef,
     children,
 }: Props) {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -46,7 +49,8 @@ export default function LedPreview({
     function draw() {
         const canvas = canvasRef.current;
         const parent = canvas?.parentElement;
-        if (!canvas || !parent) return;
+
+        if (!canvas || !parent || !videoRef || !videoRef.current) return;
 
         const rect = parent.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
@@ -55,17 +59,30 @@ export default function LedPreview({
         const padding = 18;
         const innerW = cssWidth - padding * 2;
         const innerH = cssHeight - padding * 2;
+        const videoRatio = videoRef.current.videoWidth / videoRef.current.videoHeight;
+
+        let previewW = innerW;
+        let previewH = previewW / videoRatio;
+
         const positions = createLedPositions(settings, {
-            width: innerW,
-            height: innerH,
+            width: previewW,
+            height: previewH,
         });
+
+        if (previewH > innerH) {
+            previewH = innerH;
+            previewW = previewH * videoRatio;
+        }
+
+        const offsetX = padding + (innerW - previewW) / 2;
+        const offsetY = padding + (innerH - previewH) / 2;
 
         latestLayoutRef.current = positions.map((position) => ({
             id: position.id,
-            x: padding + position.x * innerW,
-            y: padding + position.y * innerH,
-            width: position.width * innerW,
-            height: position.height * innerH,
+            x: offsetX + position.x * previewW,
+            y: offsetY + position.y * previewH,
+            width: position.width * previewW,
+            height: position.height * previewH,
         }));
 
         canvas.width = cssWidth * dpr;
@@ -83,7 +100,7 @@ export default function LedPreview({
 
         ctx.strokeStyle = '#1f2937';
         ctx.lineWidth = 2;
-        ctx.strokeRect(padding, padding, innerW, innerH);
+        ctx.strokeRect(offsetX, offsetY, previewW, previewH);
 
         /**
          * Draws a rounded rectangle path for a given canvas context.

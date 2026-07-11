@@ -23,8 +23,8 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      - run: zip -r dist.zip dist
+      - run: zip -r WSync-LED.zip dist
 
       - uses: softprops/action-gh-release@v2
         with:
-          files: dist.zip
+          files: WSync-LED.zip
