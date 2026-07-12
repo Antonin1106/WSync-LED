@@ -1,5 +1,9 @@
+// components/VideoCard/VideoCard.tsx
+// Component to renders the media player surface
+
 import type React from 'react';
-import t from '../lib/lang';
+import t from '../../lib/lang';
+import styles from './VideoCard.module.scss';
 
 type Props = {
   videoRef: React.RefObject<HTMLVideoElement | null>;
@@ -24,19 +28,19 @@ export default function VideoCard({
   onLoadVideo,
 }: Props) {
   return (
-    <div className="video-card">
+    <div className={styles.videoCard}>
       <video id="video" ref={videoRef} controls playsInline preload="metadata" />
       <canvas id="canvas" ref={canvasRef} hidden />
-      <label className="file-button" htmlFor="fileInput">
+      <label className={styles.fileButton} htmlFor={styles.fileInput}>
         {t('chooseVideo')}
       </label>
       <input
         type="file"
-        id="fileInput"
+        id={styles.fileInput}
         accept="video/*,.mp4,.mov,.m4v,.webm,.avi,.mkv"
         onChange={onLoadVideo}
       />
-      <p className="video-name">{currentVideoName || t('noVideoLoaded')}</p>
+      <p className={styles.videoName}>{currentVideoName || t('noVideoLoaded')}</p>
     </div>
   );
 }

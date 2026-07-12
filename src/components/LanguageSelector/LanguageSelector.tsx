@@ -1,3 +1,6 @@
+// components/LanguageSelector/LanguageSelector.tsx
+// Component to select a specific language
+
 import { useEffect, useState } from 'react';
 import { loadSettings, saveSettings } from '../../lib/storage';
 import i18n from '../../config/langConfig';

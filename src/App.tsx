@@ -1,9 +1,12 @@
+// App.tsx
+// Main app component
+
 import React, { useEffect, useMemo, useReducer, useRef, useState } from 'react';
-import ControlPanel from './components/ControlPanel';
-import LedEditor from './components/LedEditor';
-import LedPreview from './components/LedPreview';
-import VideoCard from './components/VideoCard';
-import VideoLibrary from './components/VideoLibrary';
+import ControlPanel from './components/ControlPanel/ControlPanel';
+import LedEditor from './components/LedEditor/LedEditor';
+import LedPreview from './components/LedPreview/LedPreview';
+import VideoCard from './components/VideoCard/VideoCard';
+import VideoLibrary from './components/VideoLibrary/VideoLibrary';
 import { buildLedFrame, getAnalysisSize, getLedCount } from './lib/ledLayout';
 import { loadOverrides, loadSettings, saveOverrides, saveSettings } from './lib/storage';
 import {
@@ -15,6 +18,8 @@ import {
 import type { CachedVideoMeta, LedOverride, Rgb, Settings } from './types/app';
 import t from './lib/lang';
 import LanguageSelector from './components/LanguageSelector/LanguageSelector';
+import field from './styles/modules/field.module.scss';
+import styles from './App.module.scss';
 
 /**
  * Main application shell that manages video loading, LED preview rendering and websocket streaming.
@@ -281,15 +286,15 @@ export default function App() {
   }
 
   return (
-    <main className="app-shell">
-      <section className="control-surface">
-        <header className="app-header">
+    <main className={styles.appShell}>
+      <section className={styles.controlSurface}>
+        <header className={styles.appHeader}>
           <div>
-            <p className="eyebrow">{t('desc')}</p>
+            <p className={styles.eyebrow}>{t('desc')}</p>
             <h1>{t('appName')}</h1>
             <LanguageSelector onChange={() => forceUpdate()} />
           </div>
-          <span className={isRunning ? 'status online' : 'status'}>{t(connectionState)}</span>
+          <span className={isRunning ? `${styles.status} ${styles.online}` : styles.status}>{t(connectionState)}</span>
         </header>
 
         <VideoCard
@@ -299,11 +304,11 @@ export default function App() {
           onLoadVideo={loadVideo}
         />
 
-        <div className="action-row">
-          <button className="primary-button" onClick={start} disabled={isRunning}>
+        <div className={styles.actionRow}>
+          <button className={styles.primaryButton} onClick={start} disabled={isRunning}>
             {t('start')}
           </button>
-          <button className="ghost-button" onClick={stop} disabled={!isRunning}>
+          <button className={field.ghostButton} onClick={stop} disabled={!isRunning}>
             {t('stop')}
           </button>
         </div>

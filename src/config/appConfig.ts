@@ -1,24 +1,24 @@
+// config/appConfig.ts
+// Global app settings
+
 import type { Settings } from '../types/app';
 import type { LedMappingMode } from '../types/led';
 
 export const SETTINGS_KEY = 'wsync-led-settings-v1';
 export const LED_OVERRIDES_KEY = 'wsync-led-overrides-v1';
 
-export const mappingModes: Array<{ value: LedMappingMode; label: string; description: string }> = [
+export const mappingModes: Array<{ value: LedMappingMode; label: string; }> = [
   {
     value: 'classic',
     label: 'Classic',
-    description: 'Grid mapping. LED X by LED Y, unchanged.',
   },
   {
     value: 'perimeter',
     label: 'Perimeter',
-    description: 'Full screen perimeter: top, right, bottom, left.',
   },
   {
     value: 'border',
     label: 'Border',
-    description: 'Three-sided perimeter: top, right, left. No bottom edge.',
   },
 ];
 

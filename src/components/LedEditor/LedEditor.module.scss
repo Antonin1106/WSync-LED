@@ -1,0 +1,57 @@
+// components/LedEditor/LedEditor.module.scss
+// Styles for the LedEditor component
+
+.ledEditor {
+    @include default-container;
+
+    display: grid;
+    grid-template-columns: minmax(140px, 1fr) auto;
+    gap: 12px;
+    padding: 12px;
+
+    @include respond(medium) {
+        grid-template-columns: 1fr;
+    }
+
+    p {
+        margin: 4px 0 0;
+        color: #94a3b8;
+        font-size: 0.82rem;
+    }
+
+    .editorActions {
+        @include flex-center;
+
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 8px;
+
+        @include respond(medium) {
+            justify-content: stretch;
+
+            >* {
+                flex: 1 1 130px;
+            }
+        }
+
+
+        .colorField {
+            min-height: 38px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 8px;
+            border: 1px solid #334155;
+            border-radius: 7px;
+            background: #111827;
+        }
+
+    }
+
+    .compact {
+        flex: 0 0 auto;
+        min-height: 38px;
+        padding: 0 12px;
+        font-size: 0.84rem;
+    }
+}

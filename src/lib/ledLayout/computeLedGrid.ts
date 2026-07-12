@@ -1,3 +1,6 @@
+// lib/ledLayout/computeLedGrid.ts
+// Function to find optimal led grid dimension
+
 import type { LedGrid } from '../../types/app';
 
 // UNUSED

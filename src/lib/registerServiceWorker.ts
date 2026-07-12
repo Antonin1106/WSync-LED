@@ -1,3 +1,6 @@
+// lib/registerServiceWorker.ts
+// Function to register a service worker
+
 import t from './lang';
 
 /**

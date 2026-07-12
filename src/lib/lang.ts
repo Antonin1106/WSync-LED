@@ -1,3 +1,6 @@
+// lib/lang.ts
+// Language helper for translation
+
 import i18n from '../config/langConfig';
 
 /**

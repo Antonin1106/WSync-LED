@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 const IS_PROD = process.env.NODE_ENV === 'production';
 
 // Global SCSS code automatically injected into every SCSS file.
-const scssToImport = '';
+const scssToImport = '@use "@/styles/_index.scss" as *;';
 
 // More informations at https://vite.dev/config/
 export default defineConfig({
@@ -25,7 +25,7 @@ export default defineConfig({
   // Configure import aliases for cleaner and shorter paths.
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      '@': path.resolve(__dirname, 'src/'),
     },
   },
 

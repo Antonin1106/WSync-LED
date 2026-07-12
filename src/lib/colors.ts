@@ -1,3 +1,6 @@
+// lib/colors.ts
+// Color helpers
+
 import type { Rgb } from '../types/app';
 
 /**

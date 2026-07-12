@@ -1,5 +1,10 @@
-import t from '../lib/lang';
-import type { LedOverride } from '../types/app';
+// components/LedEditor/LedEditor.tsx
+// Component to renders a toolbar to edut LED layout
+
+import t from '../../lib/lang';
+import type { LedOverride } from '../../types/app';
+import styles from './LedEditor.module.scss';
+import field from '../../styles/modules/field.module.scss';
 
 type Props = {
   selectedLed: number | null;
@@ -30,13 +35,13 @@ export default function LedEditor({
   const selectedEnabled = selectedOverride?.enabled ?? true;
 
   return (
-    <div className="led-editor">
+    <div className={styles.ledEditor}>
       <div>
         <h3>{selectedLed === null ? t('noLEDSel') : `LED ${selectedLed + 1}`}</h3>
         <p>{disabledLedCount} {t('disabledLED', { count: disabledLedCount })}</p>
       </div>
-      <div className="editor-actions">
-        <label className="color-field">
+      <div className={styles.editorActions}>
+        <label className={styles.colorField}>
           <span>{t('color')}</span>
           <input
             type="color"
@@ -48,7 +53,7 @@ export default function LedEditor({
           />
         </label>
         <button
-          className="ghost-button compact"
+          className={`${styles.compact} ${field.ghostButton}`}
           disabled={selectedLed === null}
           onClick={() =>
             onUpdateLed({ enabled: !selectedEnabled, color: selectedOverride?.color })
@@ -57,15 +62,18 @@ export default function LedEditor({
           {selectedEnabled ? t('disable') : t('enable')}
         </button>
         <button
-          className="ghost-button compact"
+          className={`${styles.compact} ${field.ghostButton}`}
           disabled={selectedLed === null}
           onClick={() => onUpdateLed(null)}
         >
           {t('resetLED')}
         </button>
-        <button className="ghost-button compact" onClick={onResetAll}>
+        <button className={`${styles.compact} ${field.ghostButton}`} onClick={onResetAll}>
           {t('resetAll')}
         </button>
+         {/*<button className={`${styles.compact} ${field.ghostButton}`} onClick={() => setShowFineSettings(showFineSettings)}>
+          {t('adjust')}
+        </button>*/}
       </div>
     </div>
   );

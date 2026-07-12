@@ -1,7 +1,12 @@
+// components/VideoLibrary/VideoLibrary.tsx
+// Component to renders the video library panel
+
 import { LucideX } from 'lucide-react';
-import { formatBytes } from '../lib/videoCache';
-import type { CachedVideoMeta } from '../types/app';
-import t from '../lib/lang';
+import { FormatBytes } from '../../lib/videoCache';
+import type { CachedVideoMeta } from '../../types/app';
+import t from '../../lib/lang';
+import styles from './VideoLibrary.module.scss';
+import sections from '@/styles/modules/sections.module.scss';
 
 type Props = {
   videos: CachedVideoMeta[];
@@ -19,23 +24,23 @@ type Props = {
  */
 export default function VideoLibrary({ videos, onOpen, onDelete }: Props) {
   return (
-    <section className="panel-section">
-      <div className="section-title">
+    <section className={sections.panelSection}>
+      <div className={sections.sectionTitle}>
         <h2>{t('localLibrary')}</h2>
         <span>{videos.length}</span>
       </div>
-      <div className="library-list">
+      <div className={styles.libraryList}>
         {videos.length === 0 && (
-          <p className="empty-state">{t('openedVideos')}</p>
+          <p className={styles.emptyState}>{t('openedVideos')}</p>
         )}
         {videos.map((video) => (
-          <article className="library-item" key={video.id}>
+          <article className={styles.libraryItem} key={video.id}>
             <button onClick={() => onOpen(video.id)}>
               <strong>{video.name}</strong>
-              <span>{formatBytes(video.size)}</span>
+              <span><FormatBytes size={video.size} /></span>
             </button>
             <button
-              className="icon-button"
+              className={styles.iconButton}
               aria-label={`${t('delete')} ${video.name}`}
               onClick={() => onDelete(video.id)}
             >

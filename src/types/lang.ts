@@ -1,3 +1,6 @@
+// types/lang.ts
+// Type used by the language feature
+
 import type en from '../lang/en.json';
 import type fr from '../lang/fr.json';
 

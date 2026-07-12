@@ -1,0 +1,35 @@
+// components/ControlPanel/ControlPanel.module.scss
+// Styles for the ControlPanel component
+
+.toggleGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 12px;
+    font-weight: bold;
+    user-select: none;
+
+
+    @include respond(small) {
+        grid-template-columns: 1fr;
+    }
+
+    label {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 10px;
+        border: 1px solid #334155;
+        border-radius: 7px;
+        color: #e5e7eb;
+        background: #111827;
+    }
+}
+
+.helperText {
+    margin: 7px 0 0;
+    color: #94a3b8;
+    font-size: 0.78rem;
+    line-height: 1.35;
+}

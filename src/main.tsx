@@ -1,8 +1,11 @@
+// main.tsx
+// Entry app point
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { registerServiceWorker } from './lib/registerServiceWorker';
-import './styles/app.scss';
+import './styles/global.scss';
 import './config/langConfig';
 
 ReactDOM.createRoot(document.getElementById('root') as ReactDOM.Container).render(
@@ -11,6 +14,7 @@ ReactDOM.createRoot(document.getElementById('root') as ReactDOM.Container).rende
   </React.StrictMode>,
 );
 
+// Request registration of SW
 window.addEventListener('load', () => {
   registerServiceWorker();
 });

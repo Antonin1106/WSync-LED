@@ -1,4 +1,5 @@
 {
+  "adjust": "Adjust settings",
   "appName": "WSync LED",
   "Border": "Border",
   "borderHelp": "Border uses {{ledX}} LEDs on top and {{ledY}} on each side. The bottom edge is not used.",
@@ -22,8 +23,10 @@
   "errorDeleteVideo": "Cached video could not be deleted",
   "errorOpenVideo": "Cached video could not be opened",
   "FPS": "FPS",
+  "KB": "KB",
   "layout": "LED Layout",
   "localLibrary": "Local library",
+  "MB": "MB",
   "noLEDSel": "No LED selected",
   "noVideoCache": "Video could not be cached",
   "noVideoLoaded": "No video loaded",
@@ -43,5 +46,5 @@
   "unavailableVideoCache": "Video cache unavailable",
   "visualization": "Visualization",
   "wsError": "WebSocket Error",
-  "wsPath": "wsPath"
+  "wsPath": "WS Path"
 }

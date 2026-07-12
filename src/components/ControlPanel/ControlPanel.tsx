@@ -1,7 +1,14 @@
-import { mappingModes } from '../config/appConfig';
-import t from '../lib/lang';
-import { getModeHelp } from '../lib/ledLayout';
-import type { Settings } from '../types/app';
+// components/ControlPanel/ControlPanel.tsx
+// Component to renders the settings panel
+
+import { mappingModes } from '../../config/appConfig';
+import t from '../../lib/lang';
+import { getModeHelp } from '../../lib/ledLayout';
+import type { Settings } from '../../types/app';
+import ControlRange from './ControlRange';
+import styles from './ControlPanel.module.scss';
+import field from '../../styles/modules/field.module.scss';
+import sections from '../../styles/modules/sections.module.scss';
 
 type Props = {
   settings: Settings;
@@ -28,19 +35,19 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
   }
 
   return (
-    <section className="panel-section">
-      <div className="section-title">
+    <section className={sections.panelSection}>
+      <div className={sections.sectionTitle}>
         <h2>{t('controls')}</h2>
         <span>{ledCount} LEDs</span>
       </div>
 
-      <label className="field">
-        <div className="field-box">
+      <label className={field.field}>
+        <div className={field.fieldBox}>
           <span>{t('outputIP')}</span>
           <span />
           <span>{t('wsPath')}</span>
         </div>
-        <div className="field-box">
+        <div className={field.fieldBox}>
           <input
             value={settings.ip}
             placeholder="wled.local, 192.168.1.10..."
@@ -50,9 +57,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
               onSettingsChange({ ...settings, ip: event.currentTarget.value })
             }
           />
-          <strong>
-          /
-          </strong>
+          <strong>/</strong>
           <input
             value={settings.path}
             placeholder="ws"
@@ -65,7 +70,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
         </div>
       </label>
 
-      <label className="field">
+      <label className={field.field}>
         <span>{t('diffusionMode')}</span>
         <select
           value={settings.mappingMode}
@@ -83,7 +88,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
           ))}
         </select>
       </label>
-      <p className="helper-text">{getModeHelp(settings)}</p>
+      <p className={styles.helperText}>{getModeHelp(settings)}</p>
 
       <ControlRange label={t('FPS')} value={settings.fps} min={5} max={60} step={1} onChange={(value) => setNumber('fps', value)} />
       <ControlRange label="LED X" value={settings.ledX} min={5} max={120} step={1} onChange={(value) => setNumber('ledX', value)} />
@@ -94,7 +99,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
       <ControlRange label="Gamma" value={settings.gamma} min={1} max={3.4} step={0.05} onChange={(value) => setNumber('gamma', value)} />
       <ControlRange label="Saturation" value={settings.saturation} min={0} max={2.5} step={0.05} onChange={(value) => setNumber('saturation', value)} />
 
-      <div className="toggle-grid">
+      <div className={styles.toggleGrid}>
         <label>
           <input
             type="checkbox"
@@ -107,49 +112,5 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
         </label>
       </div>
     </section>
-  );
-}
-
-/**
- * Renders a single numeric range control with a visible value label.
- * @param props - The properties for the ControlRange component.
- * @param props.label - The label text for the range control.
- * @param props.value - The current numeric value of the range control.
- * @param props.min - The minimum value for the range control.
- * @param props.max - The maximum value for the range control.
- * @param props.step - The step increment for the range control.
- * @param props.onChange - A callback function to handle changes to the range control's value.
- * @returns The rendered ControlRange component.
- */
-function ControlRange({
-  label,
-  value,
-  min,
-  max,
-  step,
-  onChange,
-}: {
-  label: string;
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  onChange: (_value: string) => void;
-}) {
-  return (
-    <label className="range-field">
-      <span>
-        {label}
-        <strong>{value}</strong>
-      </span>
-      <input
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onInput={(event) => onChange(event.currentTarget.value)}
-      />
-    </label>
   );
 }

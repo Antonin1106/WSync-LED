@@ -1,3 +1,6 @@
+// types/app.ts
+// Types used by the app
+
 import type { LedMappingMode } from './led';
 
 export type Settings = {

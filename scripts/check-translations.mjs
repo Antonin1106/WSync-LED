@@ -3,6 +3,8 @@
 
 import fs from "fs";
 import path from "path";
+import error from "./helpers/error.mjs";
+import success from "./helpers/success.mjs";
 
 const SRC_DIR = "src";
 const LANG_DIR = "src/lang";
@@ -71,7 +73,7 @@ const languageFiles = fs
     .filter(file => file.endsWith(".json"));
 
 if (languageFiles.length === 0) {
-    console.error("No language files found.");
+    error("No language files found.");
     process.exit(1);
 }
 
@@ -110,7 +112,7 @@ for (const key of usedKeys) {
         );
 
         if (!exists) {
-            console.error(`[ERROR] Missing key "${key}" in ${file}`);
+            error(`Missing key "${key}" in ${file}`);
             hasError = true;
         }
     }
@@ -124,14 +126,14 @@ for (const file of languageFiles.slice(1)) {
 
     for (const key of referenceKeys) {
         if (!keys.has(key)) {
-            console.error(`[ERROR] ${file} is missing "${key}"`);
+            error(`${file} is missing "${key}"`);
             hasError = true;
         }
     }
 
     for (const key of keys) {
         if (!referenceKeys.has(key)) {
-            console.error(`[ERROR] ${file} contains extra key "${key}"`);
+            error(`${file} contains extra key "${key}"`);
             hasError = true;
         }
     }
@@ -142,6 +144,6 @@ if (hasError) {
     process.exit(1);
 }
 
-console.log(`[OK] ${usedKeys.size} translation keys used.`);
-console.log(`[OK] ${languageFiles.length} language files checked.`);
-console.log("[OK] All translations are valid.");
+success(`${usedKeys.size} translation keys used.`);
+success(`${languageFiles.length} language files checked.`);
+success("All translations are valid.");

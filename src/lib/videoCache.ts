@@ -1,8 +1,9 @@
-import type { CachedVideo, CachedVideoMeta } from '../types/app';
+// lib/videoCache.ts
+// Helpers for video caching
 
-const DB_NAME = 'wsync-led-video-cache';
-const DB_VERSION = 1;
-const STORE_NAME = 'videos';
+import { DB_NAME, DB_VERSION, STORE_NAME } from '../config/cacheConfig';
+import type { CachedVideo, CachedVideoMeta } from '../types/app';
+import t from './lang';
 
 /**
  * Opens the IndexedDB database used to persist cached videos.
@@ -123,10 +124,11 @@ export async function deleteCachedVideo(id: number) {
 
 /**
  * Formats a byte size into a compact human-readable string.
- * @param size Number of bytes.
+ * @param props Proprety of the FormatBytes component
+ * @param props.size Number of bytes.
  * @returns Display string with KB or MB unit.
  */
-export function formatBytes(size: number) {
-  if (size < 1024 * 1024) return `${Math.round(size / 1024)} KB`;
-  return `${(size / 1024 / 1024).toFixed(1)} MB`;
+export function FormatBytes({ size }: { size: number }) {
+  if (size < 1024 * 1024) return `${Math.round(size / 1024)} ${t('KB')}`;
+  return `${(size / 1024 / 1024).toFixed(1)} ${t('MB')}`;
 }

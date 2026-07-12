@@ -3,7 +3,6 @@
     "target": "ES2023",
     "module": "ESNext",
     "moduleResolution": "bundler",
-
     "strict": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
@@ -12,17 +11,13 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-
     "useDefineForClassFields": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
-
     "allowImportingTsExtensions": true,
-
     "skipLibCheck": true,
     "noEmit": true,
-
-    "erasableSyntaxOnly": true
+    "erasableSyntaxOnly": true,
   }
 }

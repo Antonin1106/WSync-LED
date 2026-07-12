@@ -1,0 +1,34 @@
+// components/VideoCard/VideoCard.module.scss
+// Styles for the VideoCard component
+
+.videoCard {
+    @include default-container;
+    padding: 10px;
+
+    .fileButton {
+        @include button;
+
+        width: 100%;
+        margin-top: 10px;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        background: #2563eb;
+        font-weight: 700;
+    }
+
+    #fileInput {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .videoName {
+        margin: 8px 2px 0;
+        color: #94a3b8;
+        font-size: 0.83rem;
+        overflow-wrap: anywhere;
+    }
+}

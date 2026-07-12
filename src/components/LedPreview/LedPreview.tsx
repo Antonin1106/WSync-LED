@@ -1,7 +1,11 @@
+// components/LedPreview/LedPreview.tsx
+// Component to renders a canvas-based preview of the LED layout
+
 import { useEffect, useRef, type ReactNode } from 'react';
-import { createLedPositions } from '../lib/ledLayout';
-import type { LedOverride, Rgb, Settings } from '../types/app';
-import t from '../lib/lang';
+import { createLedPositions } from '../../lib/ledLayout';
+import type { LedOverride, Rgb, Settings } from '../../types/app';
+import t from '../../lib/lang';
+import styles from './LedPreview.module.scss';
 
 type Props = {
     settings: Settings;
@@ -49,8 +53,9 @@ export default function LedPreview({
     function draw() {
         const canvas = canvasRef.current;
         const parent = canvas?.parentElement;
+        const DEFAULT_RATIO = 1.775; // Corresponding to 16:9
 
-        if (!canvas || !parent || !videoRef || !videoRef.current) return;
+        if (!canvas || !parent) return;
 
         const rect = parent.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
@@ -59,7 +64,8 @@ export default function LedPreview({
         const padding = 18;
         const innerW = cssWidth - padding * 2;
         const innerH = cssHeight - padding * 2;
-        const videoRatio = videoRef.current.videoWidth / videoRef.current.videoHeight;
+        let videoRatio = videoRef.current ? (videoRef.current.videoWidth / videoRef.current.videoHeight) : DEFAULT_RATIO;
+        videoRatio = isNaN(videoRatio) ? DEFAULT_RATIO : videoRatio;
 
         let previewW = innerW;
         let previewH = previewW / videoRatio;
@@ -182,21 +188,21 @@ export default function LedPreview({
     }
 
     return (
-        <section className="preview-surface">
-            <div className="preview-toolbar">
+        <section className={styles.previewSurface}>
+            <div className={styles.previewToolbar}>
                 <div>
-                    <p className="eyebrow">{t('visualization')}</p>
+                    <p className={styles.eyebrow}>{t('visualization')}</p>
                     <h2>{t('layout')}</h2>
                 </div>
                 <button
-                    className={editMode ? 'mode-button active' : 'mode-button'}
+                    className={editMode ? `${styles.modeButton} ${styles.active}` : styles.modeButton}
                     onClick={() => onEditModeChange(!editMode)}
                 >
                     {editMode ? t('editingActive') : t('editLEDs')}
                 </button>
             </div>
 
-            <div className="preview-canvas-wrap">
+            <div className={styles.previewCanvasWrap}>
                 <canvas ref={canvasRef} onPointerDown={pickLed} />
             </div>
 
