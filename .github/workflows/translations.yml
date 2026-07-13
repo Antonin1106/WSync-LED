@@ -3,9 +3,9 @@ name: Translations
 on:
   push:
     branches:
-      - dev
       - main
-      - translation
+      - v1
+      - v2
 
   pull_request:
 
