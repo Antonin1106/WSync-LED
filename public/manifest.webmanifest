@@ -1,7 +1,7 @@
 {
   "name": "WSync LED",
   "short_name": "WSync",
-  "description": "WLED Video Control offline app",
+  "description": "WS Video Live Stream",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

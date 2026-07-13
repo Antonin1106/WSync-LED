@@ -115,6 +115,6 @@ After the first successful load:
 - `npm run build` — Builds the production bundle in the `dist` directory.
 - `npm run lint` — Runs ESLint to check for code style issues.
 - `npm run lint:fix` — Runs ESLint and automatically fixes fixable issues.
-- `npm run check:licenses` — Checks for license compliance of all dependencies.
+- `npm run check:header` — Checks for headers compliance in all files.
 - `npm run check:i18n` — Checks for missing or unused translation keys in the `src/lang/` directory.
 - `npm run sort-translations` — Sorts translation keys in the `src/lang/` directory for consistency.
