@@ -38,8 +38,8 @@ Before opening an issue or submitting a Pull Request, please:
 
 On GitHub, we use the following branching strategy:
 - The `main` branch contains the latest stable release.
-- The `dev` branch is used for ongoing development and may contain unstable code.
-- Feature branches should be created from `dev` and named according to the feature or bug being addressed (e.g., `feature/new-feature`, `bugfix/fix-issue`).
+- `v1, v2, ...` branch are used for ongoing development and may contain unstable code.
+- Feature branches should be created from `v*` and named according to the feature or bug being addressed (e.g., `feature/new-feature`, `bugfix/fix-issue`).
 
 ---
 
