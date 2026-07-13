@@ -11,11 +11,13 @@ type LayoutBounds = {
 };
 
 /**
- * Calculates the total number of LEDs for the selected mapping mode.
+ * Calculates the total number of LEDs for the selected mapping/compute mode.
  * @param settings Current LED layout settings.
  * @returns LED count for the active mapping mode.
  */
 export function getLedCount(settings: Settings) {
+
+  if (settings.autoCompute) return settings.leds;
   if (settings.mappingMode === 'perimeter') return settings.ledX * 2 + settings.ledY * 2;
   if (settings.mappingMode === 'border') return settings.ledX + settings.ledY * 2;
   return settings.ledX * settings.ledY;

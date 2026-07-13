@@ -26,6 +26,7 @@ export const initialSettings: Settings = {
   ip: '',
   path: 'ws',
   fps: 24,
+  leds: 150,
   ledX: 15,
   ledY: 10,
   mappingMode: 'classic',
@@ -36,4 +37,6 @@ export const initialSettings: Settings = {
   saturation: 1,
   reverse: false,
   lang: 'en',
+  autoCompute: false,
+  computeExactLedCount: false,
 };

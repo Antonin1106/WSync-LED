@@ -15,11 +15,15 @@ import {
   readCachedVideo,
   saveCachedVideo,
 } from './lib/videoCache';
-import type { CachedVideoMeta, LedOverride, Rgb, Settings } from './types/app';
+import type { CachedVideoMeta, LedGrid, LedOverride, Rgb, Settings } from './types/app';
 import t from './lib/lang';
 import LanguageSelector from './components/LanguageSelector/LanguageSelector';
 import field from './styles/modules/field.module.scss';
 import styles from './App.module.scss';
+import computeLedGrid from './lib/ledLayout/computeLedGrid';
+import computeExactLedGrid from './lib/ledLayout/computeExactLedGrid';
+import computeLedPerimeter from './lib/ledLayout/computeLedPerimeter';
+import computeLedBorder from './lib/ledLayout/computeLedBorder';
 
 /**
  * Main application shell that manages video loading, LED preview rendering and websocket streaming.
@@ -67,6 +71,35 @@ export default function App() {
     saveSettings(settings);
     if (selectedLed !== null && selectedLed >= getLedCount(settings)) (() => setSelectedLed(null))();
   }, [settings, selectedLed]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !settings.autoCompute) return;
+
+    const updateGrid = () => {
+      // if (!video.videoWidth || !video.videoHeight) return;
+
+      let leds: LedGrid;
+
+      if (settings.mappingMode === 'classic')
+        leds = settings.computeExactLedCount
+          ? computeExactLedGrid(video.videoWidth, video.videoHeight, settings.leds)
+          : computeLedGrid(video.videoWidth, video.videoHeight, settings.leds);
+      else if (settings.mappingMode === 'perimeter')
+        leds = computeLedPerimeter(video.videoWidth, video.videoHeight, settings.leds);
+      else if (settings.mappingMode === 'border')
+        leds = computeLedBorder(video.videoWidth, video.videoHeight, settings.leds);
+
+      setSettings((current) => {
+        if (current.ledX === leds.ledX && current.ledY === leds.ledY) return current;
+        return { ...current, ledX: leds.ledX, ledY: leds.ledY };
+      });
+    };
+
+    video.addEventListener('loadedmetadata', updateGrid);
+    updateGrid();
+    return () => video.removeEventListener('loadedmetadata', updateGrid);
+  }, [currentVideoName, settings.autoCompute, settings.computeExactLedCount, settings, settings.leds]);
 
   useEffect(() => {
     overridesRef.current = ledOverrides;
@@ -138,7 +171,7 @@ export default function App() {
         }
       });
 
-      if(exist)
+      if (exist)
         return;
 
       await saveCachedVideo(file);

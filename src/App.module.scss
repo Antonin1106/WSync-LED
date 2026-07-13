@@ -72,16 +72,16 @@
 
 
 @include respond(medium) {
-  .app-shell {
+  .appShell {
     display: flex;
     flex-direction: column-reverse;
   }
 
-  .control-surface {
+  .controlSurface {
     @include surface;
   }
 
-  .control-surface {
+  .controlSurface {
     order: 2;
     padding-top: 12px;
   }

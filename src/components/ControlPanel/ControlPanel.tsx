@@ -3,7 +3,7 @@
 
 import { mappingModes } from '../../config/appConfig';
 import t from '../../lib/lang';
-import { getModeHelp } from '../../lib/ledLayout';
+import { getLedCount, getModeHelp } from '../../lib/ledLayout';
 import type { Settings } from '../../types/app';
 import ControlRange from './ControlRange';
 import styles from './ControlPanel.module.scss';
@@ -91,14 +91,44 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
       <p className={styles.helperText}>{getModeHelp(settings)}</p>
 
       <ControlRange label={t('FPS')} value={settings.fps} min={5} max={60} step={1} onChange={(value) => setNumber('fps', value)} />
-      <ControlRange label="LED X" value={settings.ledX} min={5} max={120} step={1} onChange={(value) => setNumber('ledX', value)} />
-      <ControlRange label="LED Y" value={settings.ledY} min={1} max={80} step={1} onChange={(value) => setNumber('ledY', value)} />
+
+      {settings.autoCompute ?
+        <ControlRange label="LEDs" value={settings.leds} min={1} max={1600} step={1} onChange={(value) => setNumber('leds', value)} />
+        : <>
+          <ControlRange label="LED X" value={settings.ledX} min={1} max={40} step={1} onChange={(value) => setNumber('ledX', value)} />
+          <ControlRange label="LED Y" value={settings.ledY} min={1} max={40} step={1} onChange={(value) => setNumber('ledY', value)} />
+        </>
+      }
+
       <ControlRange label="Gain" value={settings.gain} min={0.2} max={4} step={0.05} onChange={(value) => setNumber('gain', value)} />
       <ControlRange label={t('smoothing')} value={settings.smooth} min={0} max={0.95} step={0.01} onChange={(value) => setNumber('smooth', value)} />
       <ControlRange label={t('threshold')} value={settings.threshold} min={0} max={80} step={1} onChange={(value) => setNumber('threshold', value)} />
       <ControlRange label="Gamma" value={settings.gamma} min={1} max={3.4} step={0.05} onChange={(value) => setNumber('gamma', value)} />
       <ControlRange label="Saturation" value={settings.saturation} min={0} max={2.5} step={0.05} onChange={(value) => setNumber('saturation', value)} />
 
+      <div className={styles.toggleGrid}>
+        <label>
+          <input
+            type="checkbox"
+            checked={settings.autoCompute}
+            onChange={(event) =>
+              onSettingsChange({ ...settings, autoCompute: event.currentTarget.checked, leds: getLedCount(settings) })
+            }
+          />
+          {t('autoCompute')}</label>
+      </div>
+      {settings.autoCompute && settings.mappingMode === 'classic' &&
+        <div className={styles.toggleGrid}>
+          <label>
+            <input
+              type="checkbox"
+              checked={settings.computeExactLedCount}
+              onChange={(event) =>
+                onSettingsChange({ ...settings, computeExactLedCount: event.currentTarget.checked })
+              }
+            />
+            {t('computeExactLedCount')}</label>
+        </div>}
       <div className={styles.toggleGrid}>
         <label>
           <input

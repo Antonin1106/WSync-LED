@@ -7,6 +7,7 @@ export type Settings = {
   ip: string;
   path: string;
   fps: number;
+  leds: number;
   ledX: number;
   ledY: number;
   mappingMode: LedMappingMode;
@@ -17,6 +18,8 @@ export type Settings = {
   saturation: number;
   reverse: boolean;
   lang: string;
+  autoCompute: boolean;
+  computeExactLedCount: boolean;
 };
 
 export type CachedVideoMeta = {
@@ -61,6 +64,6 @@ export type LedFrame = {
 };
 
 export interface LedGrid {
-    ledX: number;
-    ledY: number;
+  ledX: number;
+  ledY: number;
 }
