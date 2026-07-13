@@ -1,6 +1,6 @@
 # WSync LED
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) ![Last commit](https://img.shields.io/github/last-commit/Antonin1106/WSyncLED) ![Stars](https://img.shields.io/github/stars/Antonin1106/WSyncLED)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) ![Last commit](https://img.shields.io/github/last-commit/Antonin1106/WSync-LED) ![Stars](https://img.shields.io/github/stars/Antonin1106/WSync-LED)
 
 A mobile-first Web App that analyzes colors from a local video and streams real-time LED frames over WebSocket to compatible devices on the local network.
 
@@ -33,6 +33,7 @@ The application works on any modern browser supporting the required Web APIs. As
   - Gamma
   - Saturation
   - Output reversal
+- Language support with English and French translations with [`i18n`](https://www.npmjs.com/package/i18n).
 
 ## Compatibility
 
@@ -107,3 +108,13 @@ After the first successful load:
 - Video compatibility depends on browser codec support rather than file extensions.
 - The target LED device must be reachable over the local network.
 - LED streaming is active only while playback is running and streaming has been started by the user.
+
+## Built-in development commands
+
+- `npm run dev` — Starts a development server with hot reload.
+- `npm run build` — Builds the production bundle in the `dist` directory.
+- `npm run lint` — Runs ESLint to check for code style issues.
+- `npm run lint:fix` — Runs ESLint and automatically fixes fixable issues.
+- `npm run check:header` — Checks for headers compliance in all files.
+- `npm run check:i18n` — Checks for missing or unused translation keys in the `src/lang/` directory.
+- `npm run sort-translations` — Sorts translation keys in the `src/lang/` directory for consistency.

@@ -1,0 +1,91 @@
+// styles/modules/field.module.scss
+// Field class used by several components
+
+.field,
+.rangeField {
+    display: grid;
+    gap: 7px;
+    margin-top: 11px;
+}
+
+.field span,
+.rangeField span,
+.colorField span {
+    color: #cbd5e1;
+    font-size: 0.83rem;
+}
+
+.field input,
+.field select {
+    width: 100%;
+    min-height: 42px;
+    padding: 0 11px;
+    border: 1px solid #334155;
+    border-radius: 7px;
+    color: #f8fafc;
+    background: #020617;
+}
+
+.field select {
+    appearance: none;
+    background:
+        linear-gradient(45deg, transparent 50%, #94a3b8 50%) calc(100% - 18px) 18px / 6px 6px no-repeat,
+        linear-gradient(135deg, #94a3b8 50%, transparent 50%) calc(100% - 12px) 18px / 6px 6px no-repeat,
+        #020617;
+}
+
+.fieldBox {
+    display: flex;
+    gap: 0;
+
+    input,
+    span {
+        flex: 2;
+    }
+
+    span:nth-of-type(2),
+    strong {
+        flex: 0.15;
+    }
+
+    strong {
+        text-align: center;
+        padding: 11px 0;
+        border: 1px solid #334155;
+        background: #061142;
+    }
+
+    &>:last-child {
+        flex: 1;
+    }
+
+    input:first-of-type {
+        border-radius: 7px 0 0 7px;
+    }
+
+    input:last-of-type {
+        border-radius: 0 7px 7px 0;
+    }
+}
+
+.rangeField {
+    span {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        user-select: none;
+    }
+
+    strong {
+        color: #f8fafc;
+        font-weight: 700;
+    }
+}
+
+.ghostButton {
+    @include button;
+    @include white-content;
+    @include darkButton;
+
+    flex: 1;
+}

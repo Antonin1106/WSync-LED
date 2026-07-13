@@ -1,5 +1,9 @@
-import { applyGamma, applySaturation, clampChannel, hexToRgb } from "./colors";
-import type { LedFrame, LedOverride, LedPosition, Rgb, Settings } from "../types/app";
+// lib/ledLayout.ts
+// Helpers for the led layout
+
+import { applyGamma, applySaturation, clampChannel, hexToRgb } from './colors';
+import type { LedFrame, LedOverride, LedPosition, Rgb, Settings } from '../types/app';
+import t from './lang';
 
 type LayoutBounds = {
   width: number;
@@ -7,13 +11,15 @@ type LayoutBounds = {
 };
 
 /**
- * Calculates the total number of LEDs for the selected mapping mode.
+ * Calculates the total number of LEDs for the selected mapping/compute mode.
  * @param settings Current LED layout settings.
  * @returns LED count for the active mapping mode.
  */
 export function getLedCount(settings: Settings) {
-  if (settings.mappingMode === "perimeter") return settings.ledX * 2 + settings.ledY * 2;
-  if (settings.mappingMode === "border") return settings.ledX + settings.ledY * 2;
+
+  if (settings.autoCompute) return settings.leds;
+  if (settings.mappingMode === 'perimeter') return settings.ledX * 2 + settings.ledY * 2;
+  if (settings.mappingMode === 'border') return settings.ledX + settings.ledY * 2;
   return settings.ledX * settings.ledY;
 }
 
@@ -35,15 +41,14 @@ export function getAnalysisSize(settings: Settings) {
  * @returns Help text explaining current mapping behavior.
  */
 export function getModeHelp(settings: Settings) {
-  if (settings.mappingMode === "perimeter") {
-    return `Perimeter uses ${settings.ledX} LEDs on top, ${settings.ledX} on bottom, and ${settings.ledY} on each side.`;
+  if (settings.mappingMode === 'perimeter') {
+    return t('perimeterHelp', { ledX: settings.ledX, ledY: settings.ledY });
   }
 
-  if (settings.mappingMode === "border") {
-    return `Border uses ${settings.ledX} LEDs on top and ${settings.ledY} on each side. The bottom edge is not used.`;
-  }
+  if (settings.mappingMode === 'border')
+    return t('borderHelp', { ledX: settings.ledX, ledY: settings.ledY });
 
-  return `Classic-style modes use a ${settings.ledX} by ${settings.ledY} LED grid.`;
+  return t('classicHelp', { ledX: settings.ledX, ledY: settings.ledY });
 }
 
 /**
@@ -96,7 +101,7 @@ function sampleRect(
 export function createLedPositions(settings: Settings, bounds: LayoutBounds): LedPosition[] {
   const total = getLedCount(settings);
 
-  if (settings.mappingMode === "perimeter" || settings.mappingMode === "border") {
+  if (settings.mappingMode === 'perimeter' || settings.mappingMode === 'border') {
     const positions: LedPosition[] = [];
     const edge = Math.max(4, Math.round(Math.min(bounds.width, bounds.height) * 0.08));
     const topW = bounds.width / settings.ledX;
@@ -111,7 +116,7 @@ export function createLedPositions(settings: Settings, bounds: LayoutBounds): Le
         width: 1 / settings.ledX,
         height: edge / bounds.height,
         sample: sampleRect(i * topW, 0, topW, edge, bounds),
-        side: "top",
+        side: 'top',
       });
     }
 
@@ -124,11 +129,11 @@ export function createLedPositions(settings: Settings, bounds: LayoutBounds): Le
         width: edge / bounds.width,
         height: 1 / settings.ledY,
         sample: sampleRect(bounds.width - edge, i * sideH, edge, sideH, bounds),
-        side: "right",
+        side: 'right',
       });
     }
 
-    if (settings.mappingMode === "perimeter") {
+    if (settings.mappingMode === 'perimeter') {
       for (let i = settings.ledX - 1; i >= 0; i--) {
         positions.push({
           id: positions.length,
@@ -138,7 +143,7 @@ export function createLedPositions(settings: Settings, bounds: LayoutBounds): Le
           width: 1 / settings.ledX,
           height: edge / bounds.height,
           sample: sampleRect(i * topW, bounds.height - edge, topW, edge, bounds),
-          side: "bottom",
+          side: 'bottom',
         });
       }
     }
@@ -152,7 +157,7 @@ export function createLedPositions(settings: Settings, bounds: LayoutBounds): Le
         width: edge / bounds.width,
         height: 1 / settings.ledY,
         sample: sampleRect(0, i * sideH, edge, sideH, bounds),
-        side: "left",
+        side: 'left',
       });
     }
 
@@ -178,7 +183,7 @@ export function createLedPositions(settings: Settings, bounds: LayoutBounds): Le
         width: 1 / settings.ledX,
         height: 1 / settings.ledY,
         sample: sampleRect(x * cellW, y * cellH, cellW, cellH, bounds),
-        side: "grid",
+        side: 'grid',
       });
     }
   }
@@ -204,9 +209,9 @@ function averageColor(img: ImageData, position: LedPosition, settings: Settings)
   for (let yy = y; yy < y + height; yy += 1) {
     for (let xx = x; xx < x + width; xx += 1) {
       const id = (yy * img.width + xx) * 4;
-      r += px[id] * px[id];
-      g += px[id + 1] * px[id + 1];
-      b += px[id + 2] * px[id + 2];
+      r += px[id] as number * (px[id] as number);
+      g += px[id + 1] as number * (px[id + 1] as number);
+      b += px[id + 2] as number * (px[id + 2] as number);
       c++;
     }
   }

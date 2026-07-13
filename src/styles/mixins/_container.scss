@@ -1,0 +1,29 @@
+// styles/mixins/_container.scss
+// Commun style for containers
+
+@mixin default-container {
+    border: 1px solid #243041;
+    border-radius: 8px;
+    background: #0b1220;
+}
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+}
+
+@mixin space-between {
+    justify-content: space-between;
+    gap: 12px;
+}
+
+@mixin surface {
+    height: auto;
+    min-height: auto;
+    border-right: 0;
+}
+
+@mixin side-padding-12 {
+    padding-left: 12px;
+    padding-right: 12px;
+}

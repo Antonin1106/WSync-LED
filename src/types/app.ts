@@ -1,8 +1,13 @@
-import type { LedMappingMode } from "./led";
+// types/app.ts
+// Types used by the app
+
+import type { LedMappingMode } from './led';
 
 export type Settings = {
   ip: string;
+  path: string;
   fps: number;
+  leds: number;
   ledX: number;
   ledY: number;
   mappingMode: LedMappingMode;
@@ -13,6 +18,8 @@ export type Settings = {
   saturation: number;
   reverse: boolean;
   lang: string;
+  autoCompute: boolean;
+  computeExactLedCount: boolean;
 };
 
 export type CachedVideoMeta = {
@@ -47,7 +54,7 @@ export type LedPosition = {
     width: number;
     height: number;
   };
-  side: "grid" | "top" | "right" | "bottom" | "left";
+  side: 'grid' | 'top' | 'right' | 'bottom' | 'left';
 };
 
 export type LedFrame = {
@@ -55,3 +62,8 @@ export type LedFrame = {
   colors: Rgb[];
   positions: LedPosition[];
 };
+
+export interface LedGrid {
+  ledX: number;
+  ledY: number;
+}

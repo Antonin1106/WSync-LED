@@ -1,38 +1,42 @@
-import type { Settings } from "../types/app";
-import type { LedMappingMode } from "../types/led";
+// config/appConfig.ts
+// Global app settings
 
-export const SETTINGS_KEY = "wsync-led-settings-v1";
-export const LED_OVERRIDES_KEY = "wsync-led-overrides-v1";
+import type { Settings } from '../types/app';
+import type { LedMappingMode } from '../types/led';
 
-export const mappingModes: Array<{ value: LedMappingMode; label: string; description: string }> = [
+export const SETTINGS_KEY = 'wsync-led-settings-v1';
+export const LED_OVERRIDES_KEY = 'wsync-led-overrides-v1';
+
+export const mappingModes: Array<{ value: LedMappingMode; label: string; }> = [
   {
-    value: "classic",
-    label: "Classic",
-    description: "Grid mapping. LED X by LED Y, unchanged.",
+    value: 'classic',
+    label: 'Classic',
   },
   {
-    value: "perimeter",
-    label: "Perimeter",
-    description: "Full screen perimeter: top, right, bottom, left.",
+    value: 'perimeter',
+    label: 'Perimeter',
   },
   {
-    value: "border",
-    label: "Border",
-    description: "Three-sided perimeter: top, right, left. No bottom edge.",
-  }
+    value: 'border',
+    label: 'Border',
+  },
 ];
 
 export const initialSettings: Settings = {
-  ip: "",
+  ip: '',
+  path: 'ws',
   fps: 24,
-  ledX: 25,
-  ledY: 6,
-  mappingMode: "classic",
+  leds: 150,
+  ledX: 15,
+  ledY: 10,
+  mappingMode: 'classic',
   gain: 1.3,
   smooth: 0.35,
   threshold: 8,
   gamma: 2.2,
   saturation: 1,
   reverse: false,
-  lang: "en"
+  lang: 'en',
+  autoCompute: false,
+  computeExactLedCount: false,
 };

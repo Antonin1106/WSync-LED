@@ -1,0 +1,16 @@
+// styles/mixins/_breakpoints.scss
+// Breakpoints for responsive design
+
+@use "sass:map";
+
+$breakpoints: (
+  small: 480px,
+  medium: 860px,
+  big: 1024px,
+);
+
+@mixin respond($size) {
+  @media (max-width: map.get($breakpoints, $size)) {
+    @content;
+  }
+}
