@@ -1,5 +1,16 @@
 # WSync-LED Changelog
 
+## [Unreleased] 
+
+### Added
+
+- Added animations with motion
+
+### Changed
+
+- Github Actions
+
+
 ## [1.0.0] - 2026-07-13
 
 ### Added

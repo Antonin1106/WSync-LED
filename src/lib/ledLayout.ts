@@ -3,7 +3,6 @@
 
 import { applyGamma, applySaturation, clampChannel, hexToRgb } from './colors';
 import type { LedFrame, LedOverride, LedPosition, Rgb, Settings } from '../types/app';
-import t from './lang';
 
 type LayoutBounds = {
   width: number;
@@ -16,8 +15,7 @@ type LayoutBounds = {
  * @returns LED count for the active mapping mode.
  */
 export function getLedCount(settings: Settings) {
-
-  if (settings.autoCompute) return settings.leds;
+  if (settings.autoCompute) return settings.leds; // Return all LEDs included unused
   if (settings.mappingMode === 'perimeter') return settings.ledX * 2 + settings.ledY * 2;
   if (settings.mappingMode === 'border') return settings.ledX + settings.ledY * 2;
   return settings.ledX * settings.ledY;
@@ -33,22 +31,6 @@ export function getAnalysisSize(settings: Settings) {
     width: Math.max(64, Math.min(240, settings.ledX * 6)),
     height: Math.max(48, Math.min(180, settings.ledY * 12)),
   };
-}
-
-/**
- * Returns a user-facing description of the active mapping mode.
- * @param settings Current LED layout settings.
- * @returns Help text explaining current mapping behavior.
- */
-export function getModeHelp(settings: Settings) {
-  if (settings.mappingMode === 'perimeter') {
-    return t('perimeterHelp', { ledX: settings.ledX, ledY: settings.ledY });
-  }
-
-  if (settings.mappingMode === 'border')
-    return t('borderHelp', { ledX: settings.ledX, ledY: settings.ledY });
-
-  return t('classicHelp', { ledX: settings.ledX, ledY: settings.ledY });
 }
 
 /**

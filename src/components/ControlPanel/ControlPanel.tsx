@@ -3,12 +3,15 @@
 
 import { mappingModes } from '../../config/appConfig';
 import t from '../../lib/lang';
-import { getLedCount, getModeHelp } from '../../lib/ledLayout';
+import { getLedCount } from '../../lib/ledLayout';
 import type { Settings } from '../../types/app';
 import ControlRange from './ControlRange';
 import styles from './ControlPanel.module.scss';
 import field from '../../styles/modules/field.module.scss';
 import sections from '../../styles/modules/sections.module.scss';
+import { MotionDiv } from '../Motion/Motion';
+import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
+import { ModeHelp } from './ModeHelp';
 
 type Props = {
   settings: Settings;
@@ -88,59 +91,69 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
           ))}
         </select>
       </label>
-      <p className={styles.helperText}>{getModeHelp(settings)}</p>
 
-      <ControlRange label={t('FPS')} value={settings.fps} min={5} max={60} step={1} onChange={(value) => setNumber('fps', value)} />
+      <LayoutGroup>
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.p layout className={styles.helperText}>
+            <AnimatePresence mode="wait">
+              <ModeHelp key={settings.mappingMode} settings={settings} />
+            </AnimatePresence>
+          </motion.p>
+          <ControlRange key="fps" label={t('FPS')} value={settings.fps} min={5} max={60} step={1} onChange={(value) => setNumber('fps', value)} />
 
-      {settings.autoCompute ?
-        <ControlRange label="LEDs" value={settings.leds} min={1} max={1600} step={1} onChange={(value) => setNumber('leds', value)} />
-        : <>
-          <ControlRange label="LED X" value={settings.ledX} min={1} max={40} step={1} onChange={(value) => setNumber('ledX', value)} />
-          <ControlRange label="LED Y" value={settings.ledY} min={1} max={40} step={1} onChange={(value) => setNumber('ledY', value)} />
-        </>
-      }
+          {settings.autoCompute &&
+            <ControlRange key="LEDs" label="LEDs" value={settings.leds} min={1} max={1600} step={1} onChange={(value) => setNumber('leds', value)} />}
+          {!settings.autoCompute &&
+            <ControlRange key="x" label="LED X" value={settings.ledX} min={1} max={40} step={1} onChange={(value) => setNumber('ledX', value)} />}
+          {!settings.autoCompute &&
+            <ControlRange key="y" label="LED Y" value={settings.ledY} min={1} max={40} step={1} onChange={(value) => setNumber('ledY', value)} />}
 
-      <ControlRange label="Gain" value={settings.gain} min={0.2} max={4} step={0.05} onChange={(value) => setNumber('gain', value)} />
-      <ControlRange label={t('smoothing')} value={settings.smooth} min={0} max={0.95} step={0.01} onChange={(value) => setNumber('smooth', value)} />
-      <ControlRange label={t('threshold')} value={settings.threshold} min={0} max={80} step={1} onChange={(value) => setNumber('threshold', value)} />
-      <ControlRange label="Gamma" value={settings.gamma} min={1} max={3.4} step={0.05} onChange={(value) => setNumber('gamma', value)} />
-      <ControlRange label="Saturation" value={settings.saturation} min={0} max={2.5} step={0.05} onChange={(value) => setNumber('saturation', value)} />
+          <ControlRange key="gain" label="Gain" value={settings.gain} min={0.2} max={4} step={0.05} onChange={(value) => setNumber('gain', value)} />
+          <ControlRange key="smooth" label={t('smoothing')} value={settings.smooth} min={0} max={0.95} step={0.01} onChange={(value) => setNumber('smooth', value)} />
+          <ControlRange key="threshold" label={t('threshold')} value={settings.threshold} min={0} max={80} step={1} onChange={(value) => setNumber('threshold', value)} />
+          <ControlRange key="gamma" label="Gamma" value={settings.gamma} min={1} max={3.4} step={0.05} onChange={(value) => setNumber('gamma', value)} />
+          <ControlRange key="saturation" label="Saturation" value={settings.saturation} min={0} max={2.5} step={0.05} onChange={(value) => setNumber('saturation', value)} />
 
-      <div className={styles.toggleGrid}>
-        <label>
-          <input
-            type="checkbox"
-            checked={settings.autoCompute}
-            onChange={(event) =>
-              onSettingsChange({ ...settings, autoCompute: event.currentTarget.checked, leds: getLedCount(settings) })
-            }
-          />
-          {t('autoCompute')}</label>
-      </div>
-      {settings.autoCompute && settings.mappingMode === 'classic' &&
-        <div className={styles.toggleGrid}>
-          <label>
-            <input
-              type="checkbox"
-              checked={settings.computeExactLedCount}
-              onChange={(event) =>
-                onSettingsChange({ ...settings, computeExactLedCount: event.currentTarget.checked })
-              }
-            />
-            {t('computeExactLedCount')}</label>
-        </div>}
-      <div className={styles.toggleGrid}>
-        <label>
-          <input
-            type="checkbox"
-            checked={settings.reverse}
-            onChange={(event) =>
-              onSettingsChange({ ...settings, reverse: event.currentTarget.checked })
-            }
-          />
-          {t('reverseOutputOrder')}
-        </label>
-      </div>
+
+          <MotionDiv key="reverse" className={styles.toggleGrid} >
+            <label>
+              <input
+                type="checkbox"
+                checked={settings.reverse}
+                onChange={(event) =>
+                  onSettingsChange({ ...settings, reverse: event.currentTarget.checked })
+                }
+              />
+              {t('reverseOutputOrder')}
+            </label>
+          </MotionDiv>
+
+          <MotionDiv key="autoCompute" className={styles.toggleGrid}>
+            <label>
+              <input
+                type="checkbox"
+                checked={settings.autoCompute}
+                onChange={(event) =>
+                  onSettingsChange({ ...settings, autoCompute: event.currentTarget.checked, leds: getLedCount(settings) })
+                }
+              />
+              {t('autoCompute')}</label>
+          </MotionDiv>
+
+          {settings.autoCompute && settings.mappingMode === 'classic' &&
+            <MotionDiv key="computeExactLedCount" className={styles.toggleGrid}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={settings.computeExactLedCount}
+                  onChange={(event) =>
+                    onSettingsChange({ ...settings, computeExactLedCount: event.currentTarget.checked })
+                  }
+                />
+                {t('computeExactLedCount')}</label>
+            </MotionDiv>}
+        </AnimatePresence>
+      </LayoutGroup>
     </section>
   );
 }

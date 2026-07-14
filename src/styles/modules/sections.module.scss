@@ -5,6 +5,8 @@
     @include default-container;
     padding: 12px;
     margin-top: 12px;
+    position: relative;
+    overflow: hidden;
 }
 
 .sectionTitle {

@@ -6,6 +6,7 @@ import { createLedPositions } from '../../lib/ledLayout';
 import type { LedOverride, Rgb, Settings } from '../../types/app';
 import t from '../../lib/lang';
 import styles from './LedPreview.module.scss';
+import { MotionButton } from '../Motion/Motion';
 
 type Props = {
     settings: Settings;
@@ -194,12 +195,12 @@ export default function LedPreview({
                     <p className={styles.eyebrow}>{t('visualization')}</p>
                     <h2>{t('layout')}</h2>
                 </div>
-                <button
+                <MotionButton
                     className={editMode ? `${styles.modeButton} ${styles.active}` : styles.modeButton}
                     onClick={() => onEditModeChange(!editMode)}
                 >
                     {editMode ? t('editingActive') : t('editLEDs')}
-                </button>
+                </MotionButton>
             </div>
 
             <div className={styles.previewCanvasWrap}>

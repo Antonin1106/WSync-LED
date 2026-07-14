@@ -5,6 +5,7 @@ import t from '../../lib/lang';
 import type { LedOverride } from '../../types/app';
 import styles from './LedEditor.module.scss';
 import field from '../../styles/modules/field.module.scss';
+import { MotionButton } from '../Motion/Motion';
 
 type Props = {
   selectedLed: number | null;
@@ -52,7 +53,7 @@ export default function LedEditor({
             }
           />
         </label>
-        <button
+        <MotionButton
           className={`${styles.compact} ${field.ghostButton}`}
           disabled={selectedLed === null}
           onClick={() =>
@@ -60,17 +61,17 @@ export default function LedEditor({
           }
         >
           {selectedEnabled ? t('disable') : t('enable')}
-        </button>
-        <button
+        </MotionButton>
+        <MotionButton
           className={`${styles.compact} ${field.ghostButton}`}
           disabled={selectedLed === null}
           onClick={() => onUpdateLed(null)}
         >
           {t('resetLED')}
-        </button>
-        <button className={`${styles.compact} ${field.ghostButton}`} onClick={onResetAll}>
+        </MotionButton>
+        <MotionButton className={`${styles.compact} ${field.ghostButton}`} onClick={onResetAll}>
           {t('resetAll')}
-        </button>
+        </MotionButton>
          {/*<button className={`${styles.compact} ${field.ghostButton}`} onClick={() => setShowFineSettings(showFineSettings)}>
           {t('adjust')}
         </button>*/}

@@ -2,6 +2,7 @@
 // Component to renders a numeric input range
 
 import field from '../../styles/modules/field.module.scss';
+import { motion } from 'framer-motion';
 
 /**
  * Renders a single numeric range control with a visible value label.
@@ -30,7 +31,16 @@ export default function ControlRange({
   onChange: (_value: string) => void;
 }) {
   return (
-    <label className={field.rangeField}>
+    <motion.label
+      layout
+      initial={{ opacity: 0, y: -25 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -25, position: 'absolute', width: '0%' }}
+      transition={{
+        opacity: { duration: 0.1, damping: 20, stiffness: 300, type: 'spring', ease: 'linear' },
+        y: { duration: 0.2, damping: 15, stiffness: 100, type: 'spring', ease: 'easeInOut' },
+      }}
+      className={field.rangeField}>
       <span>
         {label}
         <strong>{value}</strong>
@@ -43,6 +53,6 @@ export default function ControlRange({
         value={value}
         onInput={(event) => onChange(event.currentTarget.value)}
       />
-    </label>
+    </motion.label>
   );
 }
