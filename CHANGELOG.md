@@ -4,12 +4,7 @@
 
 ### Added
 
-- Added animations with motion
-
-### Changed
-
-- Github Actions
-
+- Added panel resizing
 
 ## [1.0.0] - 2026-07-13
 

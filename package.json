@@ -24,6 +24,7 @@
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-i18next": "^17.0.8",
+    "react-resizable-panels": "^4.12.2",
     "sass": "^1.101.0",
     "vite-plugin-singlefile": "^2.3.3"
   },
