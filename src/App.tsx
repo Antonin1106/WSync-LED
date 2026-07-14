@@ -24,7 +24,12 @@ import computeLedGrid from './lib/ledLayout/computeLedGrid';
 import computeExactLedGrid from './lib/ledLayout/computeExactLedGrid';
 import computeLedPerimeter from './lib/ledLayout/computeLedPerimeter';
 import computeLedBorder from './lib/ledLayout/computeLedBorder';
-
+import {
+  Panel,
+  Group,
+  Separator,
+} from 'react-resizable-panels';
+import useIsDesktop from './lib/hooks/useIsDesktop';
 /**
  * Main application shell that manages video loading, LED preview rendering and websocket streaming.
  * @returns The rendered App component.
@@ -317,66 +322,117 @@ export default function App() {
       return next;
     });
   }
+  const isDesktop = useIsDesktop();
+
+  const controls = (
+    <section className={styles.controlSurface}>
+      <header className={styles.appHeader}>
+        <div>
+          <p className={styles.eyebrow}>{t('desc')}</p>
+          <h1>{t('appName')}</h1>
+          <LanguageSelector onChange={() => forceUpdate()} />
+        </div>
+
+        <span
+          className={
+            isRunning
+              ? `${styles.status} ${styles.online}`
+              : styles.status
+          }
+        >
+          {t(connectionState)}
+        </span>
+      </header>
+
+      <VideoCard
+        videoRef={videoRef}
+        canvasRef={canvasRef}
+        currentVideoName={currentVideoName}
+        onLoadVideo={loadVideo}
+      />
+
+      <div className={styles.actionRow}>
+        <button
+          className={styles.primaryButton}
+          onClick={start}
+          disabled={isRunning}
+        >
+          {t('start')}
+        </button>
+
+        <button
+          className={field.ghostButton}
+          onClick={stop}
+          disabled={!isRunning}
+        >
+          {t('stop')}
+        </button>
+      </div>
+
+      <VideoLibrary
+        videos={cachedVideos}
+        onOpen={openCachedVideo}
+        onDelete={removeCachedVideo}
+      />
+
+      <ControlPanel
+        settings={settings}
+        ledCount={ledCount}
+        onSettingsChange={setSettings}
+      />
+    </section>
+  );
+
+  const preview = (
+    <LedPreview
+      settings={settings}
+      colors={ledColors}
+      overrides={ledOverrides}
+      selectedLed={selectedLed}
+      editMode={editLeds}
+      onEditModeChange={setEditLeds}
+      onSelectLed={setSelectedLed}
+      videoRef={videoRef}
+    >
+      <LedEditor
+        selectedLed={selectedLed}
+        disabledLedCount={disabledLedCount}
+        selectedOverride={selectedOverride}
+        onUpdateLed={updateSelectedLed}
+        onResetAll={() => setLedOverrides({})}
+      />
+    </LedPreview>
+  );
 
   return (
     <main className={styles.appShell}>
-      <section className={styles.controlSurface}>
-        <header className={styles.appHeader}>
-          <div>
-            <p className={styles.eyebrow}>{t('desc')}</p>
-            <h1>{t('appName')}</h1>
-            <LanguageSelector onChange={() => forceUpdate()} />
-          </div>
-          <span className={isRunning ? `${styles.status} ${styles.online}` : styles.status}>{t(connectionState)}</span>
-        </header>
+      {isDesktop ? (
+        <Group
+          orientation="horizontal"
+          style={{ height: '100vh', width: '100vw' }}
+        >
+          <Panel defaultSize="400px" minSize="350px" maxSize="700px">
+            {controls}
+          </Panel>
 
-        <VideoCard
-          videoRef={videoRef}
-          canvasRef={canvasRef}
-          currentVideoName={currentVideoName}
-          onLoadVideo={loadVideo}
-        />
+          <Separator
+            style={{
+              width: 1,
+              cursor: 'col-resize',
+              background: '#dddddd7c',
+            }}
+          />
 
-        <div className={styles.actionRow}>
-          <button className={styles.primaryButton} onClick={start} disabled={isRunning}>
-            {t('start')}
-          </button>
-          <button className={field.ghostButton} onClick={stop} disabled={!isRunning}>
-            {t('stop')}
-          </button>
-        </div>
-
-        <VideoLibrary
-          videos={cachedVideos}
-          onOpen={openCachedVideo}
-          onDelete={removeCachedVideo}
-        />
-
-        <ControlPanel
-          settings={settings}
-          ledCount={ledCount}
-          onSettingsChange={setSettings}
-        />
-      </section>
-
-      <LedPreview
-        settings={settings}
-        colors={ledColors}
-        overrides={ledOverrides}
-        selectedLed={selectedLed}
-        editMode={editLeds}
-        onEditModeChange={setEditLeds}
-        onSelectLed={setSelectedLed}
-        videoRef={videoRef}
-      >
-        <LedEditor
-          selectedLed={selectedLed}
-          disabledLedCount={disabledLedCount}
-          selectedOverride={selectedOverride}
-          onUpdateLed={updateSelectedLed}
-          onResetAll={() => setLedOverrides({})}
-        />
-      </LedPreview>
+          <Panel defaultSize="400px" minSize="350px">
+            {preview}
+          </Panel>
+        </Group>
+      ) : (
+        <>
+          {controls}
+          {preview}
+        </>
+      )}
     </main>
   );
 }
