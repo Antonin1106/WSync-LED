@@ -7,6 +7,8 @@ import type { CachedVideoMeta } from '../../types/app';
 import t from '../../lib/lang';
 import styles from './VideoLibrary.module.scss';
 import sections from '@/styles/modules/sections.module.scss';
+import { MotionButton } from '../Motion/Motion';
+import { motion } from 'framer-motion';
 
 type Props = {
   videos: CachedVideoMeta[];
@@ -35,17 +37,19 @@ export default function VideoLibrary({ videos, onOpen, onDelete }: Props) {
         )}
         {videos.map((video) => (
           <article className={styles.libraryItem} key={video.id}>
-            <button onClick={() => onOpen(video.id)}>
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              onClick={() => onOpen(video.id)}>
               <strong>{video.name}</strong>
               <span><FormatBytes size={video.size} /></span>
-            </button>
-            <button
+            </motion.button>
+            <MotionButton
               className={styles.iconButton}
               aria-label={`${t('delete')} ${video.name}`}
               onClick={() => onDelete(video.id)}
             >
               <LucideX />
-            </button>
+            </MotionButton>
           </article>
         ))}
       </div>

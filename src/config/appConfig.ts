@@ -37,6 +37,6 @@ export const initialSettings: Settings = {
   saturation: 1,
   reverse: false,
   lang: 'en',
-  autoCompute: false,
+  autoCompute: true,
   computeExactLedCount: false,
 };

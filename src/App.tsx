@@ -24,6 +24,7 @@ import computeLedGrid from './lib/ledLayout/computeLedGrid';
 import computeExactLedGrid from './lib/ledLayout/computeExactLedGrid';
 import computeLedPerimeter from './lib/ledLayout/computeLedPerimeter';
 import computeLedBorder from './lib/ledLayout/computeLedBorder';
+import { MotionButton } from './components/Motion/Motion';
 
 /**
  * Main application shell that manages video loading, LED preview rendering and websocket streaming.
@@ -77,7 +78,7 @@ export default function App() {
     if (!video || !settings.autoCompute) return;
 
     const updateGrid = () => {
-      // if (!video.videoWidth || !video.videoHeight) return;
+      if (!video.videoWidth || !video.videoHeight) return;
 
       let leds: LedGrid;
 
@@ -222,6 +223,19 @@ export default function App() {
     setConnectionState('connecting');
   }
 
+  function getStatusClass(connectionState: string) {
+    switch (connectionState) {
+      case 'disconnected':
+        return styles.error;
+      case 'connected':
+        return styles.online;
+      case 'wsError':
+        return styles.error;
+      default:
+        return '';
+    }
+  }
+
   /**
    * Stops playback, cancels any pending animation frame and closes the websocket.
    */
@@ -327,7 +341,7 @@ export default function App() {
             <h1>{t('appName')}</h1>
             <LanguageSelector onChange={() => forceUpdate()} />
           </div>
-          <span className={isRunning ? `${styles.status} ${styles.online}` : styles.status}>{t(connectionState)}</span>
+          <span className={`${styles.status} ${getStatusClass(connectionState)}`}>{t(connectionState)}</span>
         </header>
 
         <VideoCard
@@ -338,12 +352,12 @@ export default function App() {
         />
 
         <div className={styles.actionRow}>
-          <button className={styles.primaryButton} onClick={start} disabled={isRunning}>
+          <MotionButton className={styles.primaryButton} onClick={start} disabled={isRunning}>
             {t('start')}
-          </button>
-          <button className={field.ghostButton} onClick={stop} disabled={!isRunning}>
+          </MotionButton>
+          <MotionButton className={field.ghostButton} onClick={stop} disabled={!isRunning}>
             {t('stop')}
-          </button>
+          </MotionButton>
         </div>
 
         <VideoLibrary
