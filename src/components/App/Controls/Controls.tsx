@@ -11,7 +11,7 @@ import styles from './Controls.module.scss';
 import field from '../../../styles/modules/field.module.scss';
 import type { LedRendererHook, SettingsHook, VideoCacheHook, VideoHook, WebSocketHook } from '../../../types/hooks';
 import { loadVideo, openCachedVideo } from '../../../lib/videoCache';
-import { MotionButton } from './components/Motion/Motion';
+import { MotionButton } from '../../Motion/Motion';
 
 /**
  * Controls component that provides the main user interface for managing video playback, LED rendering, and application settings.
