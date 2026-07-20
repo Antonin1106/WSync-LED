@@ -9,6 +9,40 @@
     align-items: center;
     color: #fecaca;
     background: #1f2937;
+
+    &:hover {
+        &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.080);
+            pointer-events: none;
+            border-radius: inherit;
+            animation: scale .3s ease-in;
+
+            @keyframes scale {
+                0% {
+                    transform: translate(-50%, -50%) scale(0.01);
+                    opacity: 0;
+                    border-radius: 50%
+                }
+
+                75% {
+                    opacity: 1;
+                    border-radius: 50%;
+                    transform: translate(-50%, -50%) scale(0.9);
+                }
+
+                100% {
+                    transform: translate(-50%, -50%);
+                }
+            }
+        }
+    }
 }
 
 .libraryList {
@@ -26,7 +60,7 @@
 .libraryItem {
     @include flex-center;
     gap: 8px;
-   
+
     button {
         @include button;
     }
@@ -54,7 +88,7 @@
                 background: rgba(255, 255, 255, 0.05);
                 pointer-events: none;
                 border-radius: inherit;
-                animation: translate .3s cubic-bezier(.18,.04,.1,1.01);
+                animation: translate .3s cubic-bezier(.18, .04, .1, 1.01);
 
                 @keyframes translate {
                     0% {
@@ -62,7 +96,7 @@
                         transform: translateX(-100%);
                     }
 
-                    50% {
+                    75% {
                         opacity: 1;
                     }
 

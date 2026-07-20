@@ -11,6 +11,7 @@ import styles from './Controls.module.scss';
 import field from '../../../styles/modules/field.module.scss';
 import type { LedRendererHook, SettingsHook, VideoCacheHook, VideoHook, WebSocketHook } from '../../../types/hooks';
 import { loadVideo, openCachedVideo } from '../../../lib/videoCache';
+import { MotionButton } from '../../Motion/Motion';
 
 /**
  * Controls component that provides the main user interface for managing video playback, LED rendering, and application settings.
@@ -57,21 +58,21 @@ export default function Controls({ ledRenderer, settings, video, videoCache, web
             />
 
             <div className={styles.actionRow}>
-                <button
+                <MotionButton
                     className={styles.primaryButton}
                     onClick={ledRenderer.start}
                     disabled={ledRenderer.isRunning}
                 >
                     {t('start')}
-                </button>
+                </MotionButton>
 
-                <button
+                <MotionButton
                     className={field.ghostButton}
                     onClick={ledRenderer.stop}
                     disabled={!ledRenderer.isRunning}
                 >
                     {t('stop')}
-                </button>
+                </MotionButton>
             </div>
 
             <VideoLibrary
