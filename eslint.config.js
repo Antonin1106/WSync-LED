@@ -168,7 +168,6 @@ export default defineConfig([
             * JSDoc
             * ---------------------------------------------------------------- */
 
-
             'jsdoc/require-jsdoc': [
                 'error',
                 {
@@ -186,7 +185,7 @@ export default defineConfig([
             'jsdoc/require-param': 'error',
             'jsdoc/require-returns': 'error',
             'jsdoc/check-tag-names': 'error',
-            'jsdoc/check-alignment': 'error',
+            'jsdoc/check-alignment': 'off',
         },
     },
 ]);

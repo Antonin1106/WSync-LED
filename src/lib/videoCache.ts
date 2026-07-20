@@ -1,9 +1,11 @@
 // lib/videoCache.ts
 // Helpers for video caching
 
+import type { ChangeEvent } from 'react';
 import { DB_NAME, DB_VERSION, STORE_NAME } from '../config/cacheConfig';
 import type { CachedVideo, CachedVideoMeta } from '../types/app';
 import t from './lang';
+import type { VideoCacheHook, VideoHook } from '../types/hooks';
 
 /**
  * Opens the IndexedDB database used to persist cached videos.
@@ -132,3 +134,42 @@ export function FormatBytes({ size }: { size: number }) {
   if (size < 1024 * 1024) return `${Math.round(size / 1024)} ${t('KB')}`;
   return `${(size / 1024 / 1024).toFixed(1)} ${t('MB')}`;
 }
+
+/**
+ * Opens a cached video by its database identifier.
+ * @param id Cached video identifier.
+ * @param setVideoSource Function to set the current video source.
+ */
+export const openCachedVideo = async (id: number, setVideoSource: VideoHook['setVideoSource']) => {
+  try {
+    const cached = await readCachedVideo(id);
+    if (cached) setVideoSource(cached.blob, cached.name);
+  } catch (error) {
+    console.warn(t('errorOpenVideo') + ' :', error);
+  }
+};
+
+/**
+ * Loads a video file from an input event, saves it to the cache if not already present, and sets it as the current video source.
+ * @param e The change event from the file input.
+ * @param setVideoSource Function to set the current video source.
+ * @param refreshCachedVideos Function to refresh the list of cached videos.
+ * @returns A promise that resolves when the video is loaded and cached.
+ */
+export const loadVideo = async (e: ChangeEvent<HTMLInputElement>, setVideoSource: VideoHook['setVideoSource'], refreshCachedVideos: VideoCacheHook['refreshCachedVideos']) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+
+  setVideoSource(file, file.name);
+
+  try {
+    // Don't store the video if it's already cached
+    if ((await getCachedVideos()).some(v => v.name === file.name && v.size === file.size))
+      return;
+
+    await saveCachedVideo(file);
+    await refreshCachedVideos();
+  } catch (error) {
+    console.warn(t('noVideoCache') + ' :', error);
+  }
+};

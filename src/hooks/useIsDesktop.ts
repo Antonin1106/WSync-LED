@@ -1,4 +1,4 @@
-// lib/hooks/useIsDesktop.ts
+// hooks/useIsDesktop.ts
 // Custom React hook to determine if the current viewport width corresponds to a desktop layout (minimum width of 780px).
 
 import { useEffect, useState } from 'react';
