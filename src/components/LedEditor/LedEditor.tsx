@@ -72,9 +72,6 @@ export default function LedEditor({
         <MotionButton className={`${styles.compact} ${field.ghostButton}`} onClick={onResetAll}>
           {t('resetAll')}
         </MotionButton>
-         {/*<button className={`${styles.compact} ${field.ghostButton}`} onClick={() => setShowFineSettings(showFineSettings)}>
-          {t('adjust')}
-        </button>*/}
       </div>
     </div>
   );

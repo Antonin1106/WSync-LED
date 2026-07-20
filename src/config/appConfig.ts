@@ -2,12 +2,12 @@
 // Global app settings
 
 import type { Settings } from '../types/app';
-import type { LedMappingMode } from '../types/led';
+import type { LedMappingLabel, LedMappingMode } from '../types/led';
 
 export const SETTINGS_KEY = 'wsync-led-settings-v1';
 export const LED_OVERRIDES_KEY = 'wsync-led-overrides-v1';
 
-export const mappingModes: Array<{ value: LedMappingMode; label: string; }> = [
+export const mappingModes: Array<{ value: LedMappingMode; label: LedMappingLabel; }> = [
   {
     value: 'classic',
     label: 'Classic',

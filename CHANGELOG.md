@@ -5,11 +5,12 @@
 ### Added
 
 - Added animations with motion
+- Added panel resizing
 
 ### Changed
 
 - Github Actions
-
+- Refactor App component
 
 ## [1.0.0] - 2026-07-13
 

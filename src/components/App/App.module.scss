@@ -1,0 +1,11 @@
+// components/App/App.module.scss
+// Style for the main App component
+
+.appShell {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(330px, 430px) minmax(0, 1fr);
+  background:
+    linear-gradient(180deg, rgba(37, 99, 235, 0.12), transparent 260px),
+    #05070a;
+}
