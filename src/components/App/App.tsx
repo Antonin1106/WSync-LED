@@ -87,20 +87,21 @@ export default function App() {
         </Panel>
 
         {isDesktop &&
-          <> <Separator
-            disabled={!isDesktop}
-            style={
-              isDesktop
-                ? {
-                  width: 1,
-                  cursor: 'col-resize',
-                  background: '#dddddd7c',
-                }
-                : {
-                  display: 'none',
-                }
-            }
-          />
+          <>
+            <Separator
+              disabled={!isDesktop}
+              style={
+                isDesktop
+                  ? {
+                    width: 1,
+                    cursor: 'col-resize',
+                    background: '#dddddd7c',
+                  }
+                  : {
+                    display: 'none',
+                  }
+              }
+            />
 
             <Panel
               defaultSize={isDesktop ? '400px' : undefined}
