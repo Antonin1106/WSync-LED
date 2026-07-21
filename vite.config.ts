@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { viteSingleFile } from 'vite-plugin-singlefile';
 import path from 'path';
@@ -21,6 +21,15 @@ export default defineConfig({
 
   // Enable React support and bundle the application into a single HTML file.
   plugins: [react(), viteSingleFile()],
+
+  test: {
+    coverage: {
+      provider: 'v8',
+    },
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/tests/setup.ts',
+  },
 
   // Configure import aliases for cleaner and shorter paths.
   resolve: {
