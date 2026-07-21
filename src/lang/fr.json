@@ -36,6 +36,7 @@
   "outputIP": "IP de destination",
   "Perimeter": "Périmètre",
   "perimeterHelp": "Périmètre utilise {{ledX}} LEDs en haut, {{ledX}} en bas, et {{ledY}} sur les côtés.",
+  "pleaseSelectVideo": "Veuillez sélectionner une vidéo à diffuser",
   "ready": "Près",
   "resetAll": "Tous réinitialiser",
   "resetLED": "Réinitialiser la LED",

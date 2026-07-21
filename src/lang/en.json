@@ -36,6 +36,7 @@
   "outputIP": "Output IP",
   "Perimeter": "Perimeter",
   "perimeterHelp": "Perimeter uses {{ledX}} LEDs on top, {{ledX}} on bottom, and {{ledY}} on each side.",
+  "pleaseSelectVideo": "Please select a video to stream",
   "ready": "Ready",
   "resetAll": "Reset all",
   "resetLED": "Reset LED",

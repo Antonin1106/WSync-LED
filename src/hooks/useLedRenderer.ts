@@ -5,6 +5,7 @@ import { useCallback, useRef, useState } from 'react';
 import type { LedOverride, Rgb, Settings } from '../types/app';
 import { buildLedFrame, getAnalysisSize } from '../lib/ledLayout';
 import type { LedRendererHook } from '../types/hooks';
+import t from '../lib/lang';
 
 /**
  * Custom React hook to manage LED rendering and streaming over WebSocket.
@@ -42,6 +43,10 @@ export default function useLedRenderer({ settingsRef, overridesRef, videoRef, ca
     * Starts the capture loop and opens a websocket connection for streaming.
     */
     function start() {
+        if (!videoRef.current?.src) {
+            alert(t('pleaseSelectVideo'));
+            return;
+        }
         previousColorsRef.current = [];
         websocket.connect();
         runningRef.current = true;
