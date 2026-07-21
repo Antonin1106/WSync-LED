@@ -54,7 +54,7 @@ export default function Controls({ ledRenderer, settings, video, videoCache, web
                 videoRef={video.videoRef}
                 canvasRef={video.canvasRef}
                 currentVideoName={video.currentVideoName}
-                onLoadVideo={(e) => loadVideo(e, video.setVideoSource, videoCache.refreshCachedVideos)}
+                onLoadVideo={(e) => loadVideo(e, video.setVideoSource, videoCache.refreshCachedVideos, ledRenderer.start)}
             />
 
             <div className={styles.actionRow}>
@@ -77,7 +77,7 @@ export default function Controls({ ledRenderer, settings, video, videoCache, web
 
             <VideoLibrary
                 videos={videoCache.cachedVideos}
-                onOpen={(id) => openCachedVideo(id, video.setVideoSource)}
+                onOpen={(id) => openCachedVideo(id, video.setVideoSource, ledRenderer.start)}
                 onDelete={videoCache.removeCachedVideo}
             />
 
