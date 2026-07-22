@@ -1,7 +1,7 @@
 // components/ControlPanel/ModeHelp.tsx
 // Component to renders a user-facing description of the active mapping mode
 
-import t from '../../lib/lang';
+import t from '../../lib/lang/lang';
 import { MotionSpan } from '../Motion/Motion';
 import type { Settings } from '../../types/app';
 

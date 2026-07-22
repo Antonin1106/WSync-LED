@@ -1,7 +1,7 @@
 // lib/registerServiceWorker.ts
 // Function to register a service worker
 
-import t from './lang';
+import t from './lang/lang';
 
 /**
  * Registers the service worker used to enable PWA capabilities.

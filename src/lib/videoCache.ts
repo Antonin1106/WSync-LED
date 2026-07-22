@@ -4,7 +4,7 @@
 import type { ChangeEvent } from 'react';
 import { DB_NAME, DB_VERSION, STORE_NAME } from '../config/cacheConfig';
 import type { CachedVideo, CachedVideoMeta } from '../types/app';
-import t from './lang';
+import t from './lang/lang';
 import type { LedRendererHook, VideoCacheHook, VideoHook } from '../types/hooks';
 
 /**

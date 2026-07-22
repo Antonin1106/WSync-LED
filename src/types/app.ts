@@ -17,7 +17,7 @@ export type Settings = {
   gamma: number;
   saturation: number;
   reverse: boolean;
-  lang: string;
+  lang: 'en' | 'fr';
   autoCompute: boolean;
   computeExactLedCount: boolean;
 };

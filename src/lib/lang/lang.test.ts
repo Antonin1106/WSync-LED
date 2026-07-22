@@ -1,12 +1,12 @@
-// lib/lang.test.ts
+// lib/lang/lang.test.ts
 // Unit tests for language translation.
 
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import t from './lang';
-import i18n from '../config/langConfig';
+import i18n from '../../config/langConfig';
 
-vi.mock('../config/langConfig', () => ({
+vi.mock('../../config/langConfig', () => ({
     default: {
         t: vi.fn(),
     },

@@ -2,7 +2,7 @@
 // Component to renders the media player surface
 
 import type React from 'react';
-import t from '../../lib/lang';
+import t from '../../lib/lang/lang';
 import styles from './VideoCard.module.scss';
 
 type Props = {

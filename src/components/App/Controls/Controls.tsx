@@ -2,7 +2,7 @@
 // Component to renders the Controls section.
 
 import { useReducer } from 'react';
-import t from '../../../lib/lang';
+import t from '../../../lib/lang/lang';
 import LanguageSelector from '../../LanguageSelector/LanguageSelector';
 import VideoCard from '../../VideoCard/VideoCard';
 import VideoLibrary from '../../VideoLibrary/VideoLibrary';

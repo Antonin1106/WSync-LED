@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { loadSettings, saveSettings } from '../../lib/storage';
 import i18n from '../../config/langConfig';
 import styles from './LanguageSelector.module.scss';
+import type { Settings } from '../../types/app';
 
 /**
  * Allows the user to switch the active interface language.
@@ -31,7 +32,7 @@ export default function LanguageSelector({ onChange }: { onChange: () => void })
 
 
     return (
-        <select className={styles.languageSelector} value={lang} onChange={(e) => setLang(e.target.value)}>
+        <select className={styles.languageSelector} value={lang} onChange={(e) => setLang(e.target.value as Settings['lang'])}>
             <option value="en">English</option>
             <option value="fr">Français</option>
         </select>

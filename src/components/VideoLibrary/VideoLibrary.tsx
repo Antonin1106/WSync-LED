@@ -4,7 +4,7 @@
 import { LucideX } from 'lucide-react';
 import { FormatBytes } from '../../lib/videoCache';
 import type { CachedVideoMeta } from '../../types/app';
-import t from '../../lib/lang';
+import t from '../../lib/lang/lang';
 import styles from './VideoLibrary.module.scss';
 import sections from '@/styles/modules/sections.module.scss';
 import { MotionButton } from '../Motion/Motion';

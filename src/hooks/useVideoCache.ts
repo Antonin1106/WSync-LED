@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import type { CachedVideoMeta } from '../types/app';
 import { deleteCachedVideo, getCachedVideos } from '../lib/videoCache';
-import t from '../lib/lang';
+import t from '../lib/lang/lang';
 
 /**
  * Custom React hook to manage cached videos in IndexedDB.

@@ -1,7 +1,7 @@
 // components/LedEditor/LedEditor.tsx
 // Component to renders a toolbar to edut LED layout
 
-import t from '../../lib/lang';
+import t from '../../lib/lang/lang';
 import type { LedOverride } from '../../types/app';
 import styles from './LedEditor.module.scss';
 import field from '../../styles/modules/field.module.scss';
