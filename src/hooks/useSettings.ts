@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { loadSettings, saveSettings } from '../lib/storage';
-import { getLedCount } from '../lib/ledLayout';
+import { getLedCount } from '../lib/ledLayout/ledLayout';
 import type { SettingsHook } from '../types/hooks';
 
 /**

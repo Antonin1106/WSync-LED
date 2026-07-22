@@ -3,7 +3,7 @@
 
 import { mappingModes } from '../../config/appConfig';
 import t from '../../lib/lang/lang';
-import { getLedCount } from '../../lib/ledLayout';
+import { getLedCount } from '../../lib/ledLayout/ledLayout';
 import type { Settings } from '../../types/app';
 import ControlRange from './ControlRange';
 import styles from './ControlPanel.module.scss';
