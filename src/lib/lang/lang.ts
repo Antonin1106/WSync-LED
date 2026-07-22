@@ -1,8 +1,8 @@
-// lib/lang.ts
+// lib/lang/lang.ts
 // Language helper for translation
 
-import i18n from '../config/langConfig';
-import type { Lang, Translation } from '../types/lang';
+import i18n from '../../config/langConfig';
+import type { Lang, Translation } from '../../types/lang';
 
 /**
  * Translates a key into the currently selected language.

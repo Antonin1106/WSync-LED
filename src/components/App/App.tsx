@@ -2,7 +2,7 @@
 // Main app component
 
 import { useEffect, useMemo } from 'react';
-import t from '../../lib/lang';
+import t from '../../lib/lang/lang';
 import styles from './App.module.scss';
 import { Panel, Group, Separator } from 'react-resizable-panels';
 import useIsDesktop from '../../hooks/useIsDesktop';

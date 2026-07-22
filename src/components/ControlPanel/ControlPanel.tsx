@@ -2,7 +2,7 @@
 // Component to renders the settings panel
 
 import { mappingModes } from '../../config/appConfig';
-import t from '../../lib/lang';
+import t from '../../lib/lang/lang';
 import { getLedCount } from '../../lib/ledLayout';
 import type { Settings } from '../../types/app';
 import ControlRange from './ControlRange';

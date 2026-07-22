@@ -5,7 +5,7 @@ import { useCallback, useRef, useState } from 'react';
 import type { LedOverride, Rgb, Settings } from '../types/app';
 import { buildLedFrame, getAnalysisSize } from '../lib/ledLayout';
 import type { LedRendererHook } from '../types/hooks';
-import t from '../lib/lang';
+import t from '../lib/lang/lang';
 
 /**
  * Custom React hook to manage LED rendering and streaming over WebSocket.

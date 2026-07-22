@@ -2,9 +2,9 @@
 // Component to renders a canvas-based preview of the LED layout
 
 import { useEffect, useRef, type ReactNode } from 'react';
-import { createLedPositions } from '../../lib/ledLayout';
+import { createLedPositions } from '../../lib/ledLayout/ledLayout';
 import type { LedOverride, Rgb, Settings } from '../../types/app';
-import t from '../../lib/lang';
+import t from '../../lib/lang/lang';
 import styles from './LedPreview.module.scss';
 import { MotionButton } from '../Motion/Motion';
 
