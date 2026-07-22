@@ -1,7 +1,7 @@
-// lib/colors.ts
+// lib/colors/colors.ts
 // Color helpers
 
-import type { Rgb } from '../types/app';
+import type { Rgb } from '../../types/app';
 
 /**
  * Converts a hexadecimal color string into an RGB triplet.

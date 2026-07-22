@@ -1,7 +1,7 @@
 // lib/ledLayout.ts
 // Helpers for the led layout
 
-import { applyGamma, applySaturation, clampChannel, hexToRgb } from './colors';
+import { applyGamma, applySaturation, clampChannel, hexToRgb } from './colors/colors';
 import type { LedFrame, LedOverride, LedPosition, Rgb, Settings } from '../types/app';
 
 type LayoutBounds = {
