@@ -1,8 +1,8 @@
-// lib/ledLayout.ts
+// lib/ledLayout/ledLayout.ts
 // Helpers for the led layout
 
-import { applyGamma, applySaturation, clampChannel, hexToRgb } from './colors/colors';
-import type { LedFrame, LedOverride, LedPosition, Rgb, Settings } from '../types/app';
+import { applyGamma, applySaturation, clampChannel, hexToRgb } from '../colors/colors';
+import type { LedFrame, LedOverride, LedPosition, Rgb, Settings } from '../../types/app';
 
 type LayoutBounds = {
   width: number;
@@ -40,7 +40,7 @@ export function getAnalysisSize(settings: Settings) {
  * @param settings Current LED settings.
  * @returns Output index for the LED.
  */
-function outputIndex(logicalIndex: number, total: number, settings: Settings) {
+export function outputIndex(logicalIndex: number, total: number, settings: Settings) {
   let index = logicalIndex;
 
   if (settings.reverse) {
