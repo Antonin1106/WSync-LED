@@ -6,6 +6,7 @@
 
 - Added animations with motion
 - Added panel resizing
+- Added test with Vitest
 
 ### Changed
 

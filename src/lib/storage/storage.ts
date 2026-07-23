@@ -1,8 +1,8 @@
-// lib/storage.ts
+// lib/storage/storage.ts
 // Utilities functions for storage
 
-import { initialSettings, LED_OVERRIDES_KEY, SETTINGS_KEY } from '../config/appConfig';
-import type { LedOverride, Settings } from '../types/app';
+import { initialSettings, LED_OVERRIDES_KEY, SETTINGS_KEY } from '../../config/appConfig';
+import type { LedOverride, Settings } from '../../types/app';
 
 /**
  * Loads persisted application settings from local storage.

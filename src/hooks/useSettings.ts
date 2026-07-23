@@ -2,7 +2,7 @@
 // Settings management hook.
 
 import { useEffect, useRef, useState } from 'react';
-import { loadSettings, saveSettings } from '../lib/storage';
+import { loadSettings, saveSettings } from '../lib/storage/storage';
 import { getLedCount } from '../lib/ledLayout/ledLayout';
 import type { SettingsHook } from '../types/hooks';
 

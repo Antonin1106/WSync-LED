@@ -2,7 +2,7 @@
 // Component to select a specific language
 
 import { useEffect, useState } from 'react';
-import { loadSettings, saveSettings } from '../../lib/storage';
+import { loadSettings, saveSettings } from '../../lib/storage/storage';
 import i18n from '../../config/langConfig';
 import styles from './LanguageSelector.module.scss';
 import type { Settings } from '../../types/app';

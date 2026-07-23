@@ -17,7 +17,7 @@ const mocks = vi.hoisted(() => ({
     saveSettings: vi.fn(),
 }));
 
-vi.mock('../../lib/storage', () => ({
+vi.mock('../../lib/storage/storage', () => ({
     loadSettings: () => settings,
     saveSettings: mocks.saveSettings,
 }));
