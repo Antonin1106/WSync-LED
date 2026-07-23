@@ -3,7 +3,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { LedOverride, Settings } from '../types/app';
-import { loadOverrides, saveOverrides } from '../lib/storage';
+import { loadOverrides, saveOverrides } from '../lib/storage/storage';
 import { getLedCount } from '../lib/ledLayout/ledLayout';
 import type { OverridesHook } from '../types/hooks';
 

@@ -5,6 +5,7 @@
 ### Added
 
 - Added panel resizing
+- Added test with Vitest
 
 ### Changed
 
