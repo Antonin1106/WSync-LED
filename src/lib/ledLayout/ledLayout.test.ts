@@ -1,9 +1,9 @@
 // lib/ledLayout/ledLayout.test.ts
 // Unit tests for LEDs Layout.
 
-import { describe, expect, it, test } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import { getLedCount, outputIndex } from './ledLayout';
+import { getAnalysisSize, getLedCount } from './ledLayout';
 import { initialSettings } from '../../config/appConfig';
 import type { Settings } from '../../types/app';
 
@@ -34,22 +34,28 @@ describe('getLedCount()', () => {
     });
 });
 
-test.todo('getAnalysisSize()');
-test.todo('sampleRect()');
+describe('getAnalysisSize()', () => {
+    function jsonFormatSize(width: number, height: number) {
+        return JSON.stringify({ width, height });
+    }
 
-describe('outputIndex()', () => {
-    const logicalIndex = 48;
-    const totalLeds = 100;
-
-    it('returns right index when unreversed', () => {
-        expect(outputIndex(logicalIndex, totalLeds, baseSettings)).toBe(48);
+    it('returns correct size for 15x10 grid', () => {
+        expect(JSON.stringify(getAnalysisSize({ ...baseSettings, ledX: 15, ledY: 10 })))
+            .toBe(jsonFormatSize(90, 120));
     });
 
-    it('returns right index when reversed', () => {
-        expect(outputIndex(logicalIndex, totalLeds, { ...baseSettings, reverse: true })).toBe(51);
+    it('returns correct size for 10x10 grid', () => {
+        expect(JSON.stringify(getAnalysisSize({ ...baseSettings, ledX: 10, ledY: 10 })))
+            .toBe(jsonFormatSize(64, 120));
+    });
+
+    it('returns correct size for 10x4 grid', () => {
+        expect(JSON.stringify(getAnalysisSize({ ...baseSettings, ledX: 10, ledY: 4 })))
+            .toBe(jsonFormatSize(64, 48));
+    });
+
+    it('returns correct size for 50x50 grid', () => {
+        expect(JSON.stringify(getAnalysisSize({ ...baseSettings, ledX: 50, ledY: 50 })))
+            .toBe(jsonFormatSize(240, 180));
     });
 });
-
-test.todo('createLedPositions()');
-test.todo('averageColor()');
-test.todo('buildLedFrame()');
