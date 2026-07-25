@@ -9,8 +9,8 @@ export const LED_OVERRIDES_KEY = 'wsync-led-overrides-v1';
 
 export const mappingModes: Array<{ value: LedMappingMode; label: LedMappingLabel; }> = [
   {
-    value: 'classic',
-    label: 'Classic',
+    value: 'grid',
+    label: 'Grid',
   },
   {
     value: 'perimeter',
@@ -29,7 +29,7 @@ export const initialSettings: Settings = {
   leds: 150,
   ledX: 15,
   ledY: 10,
-  mappingMode: 'classic',
+  mappingMode: 'grid',
   gain: 1.3,
   smooth: 0.35,
   threshold: 8,

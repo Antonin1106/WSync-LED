@@ -19,5 +19,5 @@ export function ModeHelp({ settings }: { settings: Settings }) {
     if (settings.mappingMode === 'border')
         return <MotionSpan>{t('borderHelp', { ledX: settings.ledX, ledY: settings.ledY })}</MotionSpan>;
 
-    return <MotionSpan>{t('classicHelp', { ledX: settings.ledX, ledY: settings.ledY })}</MotionSpan>;
+    return <MotionSpan>{t('gridHelp', { ledX: settings.ledX, ledY: settings.ledY })}</MotionSpan>;
 }

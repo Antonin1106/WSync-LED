@@ -14,7 +14,7 @@ const bounds = {
 describe('createLedPositions', () => {
     it('creates a grid layout', () => {
         const settings = {
-            mappingMode: 'classic',
+            mappingMode: 'grid',
             ledX: 2,
             ledY: 2,
             reverse: false,
@@ -95,7 +95,7 @@ describe('createLedPositions', () => {
 
     it('reverses output indexes', () => {
         const settings = {
-            mappingMode: 'classic',
+            mappingMode: 'grid',
             ledX: 2,
             ledY: 2,
             reverse: true,
@@ -108,7 +108,7 @@ describe('createLedPositions', () => {
 
     it('clips sample rectangles inside bounds', () => {
         const settings = {
-            mappingMode: 'classic',
+            mappingMode: 'grid',
             ledX: 3,
             ledY: 3,
             reverse: false,

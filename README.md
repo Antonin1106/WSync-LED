@@ -22,7 +22,7 @@ The application works on any modern browser supporting the required Web APIs. As
   - Reset a single LED.
   - Reset all overrides.
 - Multiple diffusion layouts:
-  - **Classic** — rectangular LED matrix (`LED X × LED Y`).
+  - **Grid** — rectangular LED matrix (`LED X × LED Y`).
   - **Perimeter** — full-screen perimeter (top, right, bottom, left).
   - **Border** — three-sided perimeter (top, left, right).
 - Advanced processing controls:
@@ -49,7 +49,7 @@ The streaming layer has been designed to allow additional WebSocket-compatible d
 
 `LED X` and `LED Y` represent different values depending on the selected diffusion mode.
 
-- **Classic**
+- **Grid**
   - Total LEDs = `LED X × LED Y`
 
 - **Perimeter**

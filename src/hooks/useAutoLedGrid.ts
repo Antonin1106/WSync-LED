@@ -35,7 +35,7 @@ export default function useAutoLedGrid({ settings, currentVideoName, videoRef, s
 
             // Execute the right compute moide based on the current diffusion mode
             switch (settings.mappingMode) {
-                case 'classic':
+                case 'grid':
                     leds = settings.computeExactLedCount
                         ? computeExactLedGrid(video.videoWidth, video.videoHeight, settings.leds)
                         : computeLedGrid(video.videoWidth, video.videoHeight, settings.leds);

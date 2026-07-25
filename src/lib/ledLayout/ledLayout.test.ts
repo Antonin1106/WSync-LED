@@ -10,7 +10,7 @@ import type { Settings } from '../../types/app';
 const baseSettings: Settings = {
     ...initialSettings,
     autoCompute: false,
-    mappingMode: 'classic',
+    mappingMode: 'grid',
     leds: 100,
     ledX: 10,
     ledY: 5,
@@ -30,7 +30,7 @@ describe('getLedCount()', () => {
     });
 
     it('computes matrix mapping', () => {
-        expect(getLedCount({ ...baseSettings, mappingMode: 'classic' })).toBe(50); // 10 * 5
+        expect(getLedCount({ ...baseSettings, mappingMode: 'grid' })).toBe(50); // 10 * 5
     });
 });
 
