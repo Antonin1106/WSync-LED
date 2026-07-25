@@ -140,7 +140,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
               {t('autoCompute')}</label>
           </MotionDiv>
 
-          {settings.autoCompute && settings.mappingMode === 'classic' &&
+          {settings.autoCompute && settings.mappingMode === 'grid' &&
             <MotionDiv key="computeExactLedCount" className={styles.toggleGrid}>
               <label>
                 <input

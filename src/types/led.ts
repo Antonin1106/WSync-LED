@@ -1,5 +1,5 @@
 // types/led.ts
 // Type used by the mapping selection method
 
-export type LedMappingMode = 'classic' | 'perimeter' | 'border';
-export type LedMappingLabel = 'Classic' | 'Perimeter' | 'Border';
+export type LedMappingMode = 'grid' | 'perimeter' | 'border';
+export type LedMappingLabel = 'Grid' | 'Perimeter' | 'Border';

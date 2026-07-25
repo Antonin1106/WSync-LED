@@ -18,7 +18,7 @@ function createImage(
 }
 
 const settings = {
-    mappingMode: 'classic',
+    mappingMode: 'grid',
     ledX: 1,
     ledY: 1,
     reverse: false,
