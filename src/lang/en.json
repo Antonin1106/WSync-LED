@@ -44,7 +44,6 @@
   "smoothing": "Smoothing",
   "start": "Start",
   "stop": "Stop",
-  "swFailed": "Service worker registration failed",
   "threshold": "Minimum intensity threshold",
   "unavailableVideoCache": "Video cache unavailable",
   "visualization": "Visualization",

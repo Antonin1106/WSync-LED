@@ -22,6 +22,20 @@ export default defineConfig({
   // Enable React support and bundle the application into a single HTML file.
   plugins: [react(), viteSingleFile()],
 
+  // Build configuration for production.
+  build: {
+    minify: true,
+    sourcemap: false,
+    rollupOptions: {
+      input: {
+        wsync: fileURLToPath(
+          new URL('./wsync.html', import.meta.url),
+        ),
+      },
+    },
+  },
+
+  // Test configuration for Vitest.
   test: {
     coverage: {
       provider: 'v8',
@@ -41,7 +55,7 @@ export default defineConfig({
   css: {
     modules: {
       // Use readable class names during development and shorter hashed names for production.
-      generateScopedName: IS_PROD ? '[hash:base64:12]' : '[local]_[hash:base64:5]',
+      generateScopedName: IS_PROD ? '[hash:base64:6]' : '[local]_[hash:base64:5]',
     },
 
     // Global configuration for CSS preprocessors.

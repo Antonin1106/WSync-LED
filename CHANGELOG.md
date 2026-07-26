@@ -12,6 +12,11 @@
 
 - Github Actions
 - Refactor App component
+- App icon
+
+### Removed
+
+- Unavailable Service Worker over HTTP
 
 ## [1.0.0] - 2026-07-13
 

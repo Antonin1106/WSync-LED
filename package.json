@@ -21,6 +21,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@json-types/web-manifest": "^0.3.0",
     "framer-motion": "^12.42.2",
     "i18next": "^26.3.5",
     "lucide-react": "^1.23.0",
