@@ -5,11 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { buildLedFrame } from './buildLedFrame';
 import type { Settings } from '../../../types/app';
 
-function createImage(
-    width: number,
-    height: number,
-    pixels: number[],
-): ImageData {
+function createImage(width: number, height: number, pixels: number[]): ImageData {
     return {
         width,
         height,
@@ -40,8 +36,7 @@ describe('buildLedFrame', () => {
             [],
         );
 
-        expect(frame.packet[0]).toBe(0x10);
-        expect(frame.packet.length).toBe(4);
+        expect(frame.rgbBytes.length).toBe(3);
     });
 
     it('uses sampled color', () => {
@@ -55,7 +50,7 @@ describe('buildLedFrame', () => {
         );
 
         expect(frame.colors).toHaveLength(1);
-        expect(Array.from(frame.packet.slice(1))).toEqual(frame.colors[0]);
+        expect(Array.from(frame.rgbBytes)).toEqual(frame.colors[0]);
     });
 
     it('applies disabled override', () => {

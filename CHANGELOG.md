@@ -10,9 +10,10 @@
 
 ### Changed
 
-- Github Actions
+- Changed `0x10` protocol to DDP
+- Changed Github Actions
 - Refactor App component
-- App icon
+- Changed app icon
 
 ### Removed
 

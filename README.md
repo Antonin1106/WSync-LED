@@ -6,13 +6,12 @@ A mobile-first Web App that analyzes colors from a local video and streams real-
 
 **This software is provided under the MIT License and is supplied "as is", without any warranty. Use it at your own risk.**
 
-The application works on any modern browser supporting the required Web APIs. As a Progressive Web App, it can be installed on mobile and desktop platforms, caches its application shell for no-Internet use, and stores previously opened videos locally using IndexedDB.
+The application works on any modern browser supporting the required Web APIs. As a Progressive Web App, it can be installed on mobile and desktop platforms, and stores previously opened videos locally using IndexedDB.
 
 ## Features
 
 - Real-time binary WebSocket LED streaming to compatible devices.
-- Built-in support for WLED using its `0x10 + RGB` binary protocol.
-- Offline-ready Progressive Web App with install support and local caching.
+- Built-in support for WLED using its DDP binary protocol.
 - Local video library powered by IndexedDB.
 - Supports common browser-compatible video formats (`mp4`, `mov`, `m4v`, `webm`, and any codec supported by the browser).
 - LED layout visualization with interactive LED selection.
@@ -22,9 +21,9 @@ The application works on any modern browser supporting the required Web APIs. As
   - Reset a single LED.
   - Reset all overrides.
 - Multiple diffusion layouts:
-  - **Grid** — rectangular LED matrix (`LED X × LED Y`).
-  - **Perimeter** — full-screen perimeter (top, right, bottom, left).
-  - **Border** — three-sided perimeter (top, left, right).
+  - **Grid** : rectangular LED matrix (`LED X × LED Y`).
+  - **Perimeter** : full-screen perimeter (top, right, bottom, left).
+  - **Border** : three-sided perimeter (top, left, right).
 - Advanced processing controls:
   - FPS
   - Gain
@@ -41,7 +40,7 @@ WSync LED streams LED frames through a standard WebSocket connection and can be 
 
 Current supported integrations include:
 
-- WLED binary WebSocket protocol (`0x10 + RGB`)
+- WLED DDP over WebSocket protocol (RGB)
 
 The streaming layer has been designed to allow additional WebSocket-compatible devices and protocols to be supported in the future.
 

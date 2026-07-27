@@ -20,6 +20,7 @@ export type Settings = {
   lang: 'en' | 'fr';
   autoCompute: boolean;
   computeExactLedCount: boolean;
+  protocol: 'ddp';
 };
 
 export type CachedVideoMeta = {
@@ -58,7 +59,7 @@ export type LedPosition = {
 };
 
 export type LedFrame = {
-  packet: Uint8Array;
+  rgbBytes: Uint8Array;
   colors: Rgb[];
   positions: LedPosition[];
 };

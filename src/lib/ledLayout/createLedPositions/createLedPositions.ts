@@ -81,7 +81,7 @@ export default function createLedPositions(settings: Settings, bounds: LayoutBou
         return positions.map((position, index) => ({
             ...position,
             id: index,
-            outputIndex: settings.reverse ? total - 1 - index : index,
+            outputIndex: outputIndex(index, total, settings),
         }));
     }
 
