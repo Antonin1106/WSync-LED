@@ -39,4 +39,5 @@ export const initialSettings: Settings = {
   lang: 'en',
   autoCompute: true,
   computeExactLedCount: false,
+  protocol: 'ddp',
 };

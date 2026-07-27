@@ -20,10 +20,8 @@ export function buildLedFrame(
     previous: Rgb[],
 ): LedFrame {
     const positions = createLedPositions(settings, { width: img.width, height: img.height });
-    const packet = new Uint8Array(1 + positions.length * 3);
     const colors: Rgb[] = new Array(positions.length);
-
-    packet[0] = 0x10;
+    const rgbBytes = new Uint8Array(positions.length * 3);
 
     positions.forEach((position) => {
         const override = overrides[position.id];
@@ -49,15 +47,16 @@ export function buildLedFrame(
             clampChannel(finalRgb[1]),
             clampChannel(finalRgb[2]),
         ];
-        const packetIndex = 1 + position.outputIndex * 3;
 
         colors[position.id] = clamped;
-        packet[packetIndex] = clamped[0];
-        packet[packetIndex + 1] = clamped[1];
-        packet[packetIndex + 2] = clamped[2];
+        const led = position.outputIndex * 3;
+        rgbBytes[led] = clamped[0];
+        rgbBytes[led + 1] = clamped[1];
+        rgbBytes[led + 2] = clamped[2];
+
     });
 
-    return { packet, colors, positions };
+    return { rgbBytes, colors, positions };
 }
 
 

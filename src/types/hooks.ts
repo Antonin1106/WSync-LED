@@ -2,7 +2,7 @@
 // Hooks return types
 
 import type { Dispatch, RefObject, SetStateAction } from 'react';
-import type { CachedVideoMeta, LedOverride, Rgb, Settings } from './app';
+import type { CachedVideoMeta, LedFrame, LedOverride, Rgb, Settings } from './app';
 
 
 // Return type of useLedRenderer
@@ -57,4 +57,5 @@ export type WebSocketHook = {
     connectionState: ConnectionState;
     connect: () => void;
     disconnect: () => void;
+    send: (_frame: LedFrame) => void;
 }
