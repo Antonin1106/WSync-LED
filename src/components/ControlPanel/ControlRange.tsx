@@ -1,6 +1,7 @@
 // components/ControlPanel/ControlRange.tsx
 // Component to renders a numeric input range
 
+import { useState } from 'react';
 import field from '../../styles/modules/field.module.scss';
 import { motion } from 'framer-motion';
 
@@ -30,6 +31,27 @@ export default function ControlRange({
   step: number;
   onChange: (_value: string) => void;
 }) {
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [text, setText] = useState(value.toString());
+
+  function commit() {
+    const input = text.trim().replace(',', '.');
+    const parsed = Number.parseFloat(input);
+
+    if (Number.isNaN(parsed))
+      return setText(value.toString());
+
+    const clamped = Math.min(max, Math.max(min, parsed));
+    const decimals = (step.toString().split('.')[1] ?? '').length;
+    const stepped = Number((Math.round(clamped / step) * step).toFixed(decimals));
+    const result = stepped.toString();
+
+    setText(result);
+    onChange(result);
+    setIsEditing(false);
+  }
+
   return (
     <motion.label
       layout
@@ -40,10 +62,39 @@ export default function ControlRange({
         opacity: { duration: 0.1, damping: 20, stiffness: 300, type: 'spring', ease: 'linear' },
         y: { duration: 0.2, damping: 15, stiffness: 100, type: 'spring', ease: 'easeInOut' },
       }}
-      className={field.rangeField}>
+      className={field.rangeField}
+      onClick={() => {
+        if (!isEditing)
+          setText(value.toString());
+        setIsEditing(true);
+      }}
+      onBlur={() => setIsEditing(false)}
+    >
       <span>
         {label}
-        <strong>{value}</strong>
+        <strong>
+          {isEditing ?
+            <input
+              type="text"
+              inputMode="decimal"
+              value={text}
+              autoFocus
+              onChange={(e) => setText(e.target.value)}
+              onBlur={commit}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter')
+                  e.currentTarget.blur();
+
+                if (e.key === 'Escape') {
+                  setText(value.toString());
+                  setIsEditing(false);
+                  e.currentTarget.blur();
+                }
+              }}
+            />
+            : value
+          }
+        </strong>
       </span>
       <input
         type="range"
@@ -51,7 +102,7 @@ export default function ControlRange({
         max={max}
         step={step}
         value={value}
-        onInput={(event) => onChange(event.currentTarget.value)}
+        onInput={(e) => onChange(e.currentTarget.value)}
       />
     </motion.label>
   );
