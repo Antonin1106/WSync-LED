@@ -2,7 +2,7 @@
 // LEDs renderer management hook.
 
 import { useCallback, useRef, useState } from 'react';
-import type { LedOverride, Rgb, Settings } from '../types/app';
+import type { LedOverride, RGBW, Settings } from '../types/app';
 import { buildLedFrame, getAnalysisSize } from '../lib/ledLayout/ledLayout';
 import type { LedRendererHook, WebSocketHook } from '../types/hooks';
 import t from '../lib/lang/lang';
@@ -28,8 +28,8 @@ export default function useLedRenderer({ settingsRef, overridesRef, videoRef, ca
     const runningRef = useRef(false);
     const lastFrameRef = useRef(0);
     const animationFrameRef = useRef<number | null>(null);
-    const [ledColors, setLedColors] = useState<Rgb[]>([]);
-    const previousColorsRef = useRef<Rgb[]>([]);
+    const [ledColors, setLedColors] = useState<RGBW[]>([]);
+    const previousColorsRef = useRef<RGBW[]>([]);
     const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
 
     /**

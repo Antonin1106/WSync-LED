@@ -23,6 +23,7 @@ const settings = {
     gain: 1,
     saturation: 1,
     smooth: 0,
+    dataType: 'RGBW',
 } as Settings;
 
 describe('buildLedFrame', () => {
@@ -36,7 +37,7 @@ describe('buildLedFrame', () => {
             [],
         );
 
-        expect(frame.rgbBytes.length).toBe(3);
+        expect(frame.rgbBytes.length).toBe(4);
     });
 
     it('uses sampled color', () => {
@@ -67,7 +68,7 @@ describe('buildLedFrame', () => {
             [],
         );
 
-        expect(frame.colors[0]).toEqual([0, 0, 0]);
+        expect(frame.colors[0]).toEqual([0, 0, 0, 0]);
     });
 
     it('applies color override', () => {
@@ -85,7 +86,7 @@ describe('buildLedFrame', () => {
             [],
         );
 
-        expect(frame.colors[0]).toEqual([0, 255, 0]);
+        expect(frame.colors[0]).toEqual([0, 255, 0, 0]);
     });
 
     it('applies smoothing', () => {
@@ -99,7 +100,7 @@ describe('buildLedFrame', () => {
             },
             {},
             [
-                [0, 0, 0],
+                [0, 0, 0, 0],
             ],
         );
 
@@ -122,7 +123,7 @@ describe('buildLedFrame', () => {
             [],
         );
 
-        expect(frame.colors[0]).toEqual([0, 0, 0]);
+        expect(frame.colors[0]).toEqual([0, 0, 0, 0]);
     });
 
     it('writes colors using outputIndex', () => {

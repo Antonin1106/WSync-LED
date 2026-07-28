@@ -44,7 +44,7 @@ export default function useWebSocket(settingsRef: RefObject<Settings>): WebSocke
 
     /**
      * Sends a frame of LED data over the WebSocket connection.
-     * @param frame The LED frame data to be sent, including RGB values and LED positions.
+     * @param frame The LED frame data to be sent, including RGB(W) values and LED positions.
      */
     function send(frame: LedFrame) {
         if (wsRef.current?.readyState === 1) {

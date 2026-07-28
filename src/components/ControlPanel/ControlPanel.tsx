@@ -12,6 +12,7 @@ import sections from '../../styles/modules/sections.module.scss';
 import { MotionDiv } from '../Motion/Motion';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { ModeHelp } from './ModeHelp';
+import type { ChangeEvent } from 'react';
 
 type Props = {
   settings: Settings;
@@ -37,11 +38,21 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
     onSettingsChange({ ...settings, [key]: parseFloat(value) });
   }
 
+  function setSettings(key: keyof Settings, event: ChangeEvent<HTMLSelectElement | HTMLInputElement>) {
+    onSettingsChange({ ...settings, [key]: event.currentTarget.value });
+  }
+
   return (
     <section className={sections.panelSection}>
       <div className={sections.sectionTitle}>
         <h2>{t('controls')}</h2>
-        <span>{ledCount} LEDs</span>
+        <div className={styles.ledInfo}>
+          <span>{ledCount} LEDs</span>
+          <select onChange={(e) => setSettings('dataType', e)}>
+            <option value="RGB">RGB</option>
+            <option value="RGBW">RGBW</option>
+          </select>
+        </div>
       </div>
 
       <label className={field.field}>
@@ -77,12 +88,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
         <span>{t('diffusionMode')}</span>
         <select
           value={settings.mappingMode}
-          onChange={(event) =>
-            onSettingsChange({
-              ...settings,
-              mappingMode: event.currentTarget.value as Settings['mappingMode'],
-            })
-          }
+          onChange={(e) => setSettings('mappingMode', e)}
         >
           {mappingModes.map((mode) => (
             <option key={mode.value} value={mode.value}>

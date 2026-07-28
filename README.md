@@ -25,6 +25,7 @@ The application works on any modern browser supporting the required Web APIs. As
   - **Perimeter** : full-screen perimeter (top, right, bottom, left).
   - **Border** : three-sided perimeter (top, left, right).
 - Advanced processing controls:
+  - RGB/RGBW color mode 
   - FPS
   - Gain
   - Smoothing
@@ -40,7 +41,7 @@ WSync LED streams LED frames through a standard WebSocket connection and can be 
 
 Current supported integrations include:
 
-- WLED DDP over WebSocket protocol (RGB)
+- WLED DDP over WebSocket protocol (RGB(W))
 
 The streaming layer has been designed to allow additional WebSocket-compatible devices and protocols to be supported in the future.
 
@@ -93,20 +94,19 @@ Each production build regenerates the service worker cache version, ensuring ins
 
 ## Progressive Web App
 
-Host the `dist` directory on a local or remote web server.
-Once served over HTTP(S), the application can be installed on supported browsers.
+Host `wsync.html` on a local or remote web server (such as WLED).
+Once served over HTTP(S), the application can be used on supported browsers.
 
 After the first successful load:
 
-- The application shell is available offline,
+- The application shell is available,
 - Previously opened videos remain stored locally through IndexedDB,
-- The app will still be able to work when the origin server's URL is unable (offline), only if the target LED device is located on the local network.
 
 ## Notes
 
 - Video compatibility depends on browser codec support rather than file extensions.
 - The target LED device must be reachable over the local network.
-- LED streaming is active only while playback is running and streaming has been started by the user.
+- LED streaming is active only while playback is running.
 
 ## Built-in development commands
 

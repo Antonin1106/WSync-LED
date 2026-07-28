@@ -3,14 +3,14 @@
 
 import { useEffect, useRef, type ReactNode } from 'react';
 import { createLedPositions } from '../../lib/ledLayout/ledLayout';
-import type { LedOverride, Rgb, Settings } from '../../types/app';
+import type { LedOverride, RGBW, Settings } from '../../types/app';
 import t from '../../lib/lang/lang';
 import styles from './LedPreview.module.scss';
 import { MotionButton } from '../Motion/Motion';
 
 type Props = {
     settings: Settings;
-    colors: Rgb[];
+    colors: RGBW[];
     overrides: Record<number, LedOverride>;
     selectedLed: number | null;
     editMode: boolean;
@@ -24,7 +24,7 @@ type Props = {
  * Renders a canvas-based preview of the LED layout and supports selecting individual LEDs.
  * @param props  - The properties for the LedPreview component.
  * @param props.settings - The current application settings, including LED layout configuration.
- * @param props.colors - An array of RGB color values for each LED in the layout.
+ * @param props.colors - An array of RGBW color values for each LED in the layout.
  * @param props.overrides - A record of LED override settings, allowing for custom colors or disabled states.
  * @param props.selectedLed - The index of the currently selected LED, or null if none is selected.
  * @param props.editMode -  A boolean indicating whether the LED selection mode is active.
@@ -130,13 +130,13 @@ export default function LedPreview({
         }
 
         latestLayoutRef.current.forEach((position) => {
-            const color = colors[position.id] ?? [18, 24, 39];
+            const color = colors[position.id] ?? [18, 24, 39, 0];
             const override = overrides[position.id];
             const r = Math.min(position.width, position.height) * 0.1;
 
             ctx.fillStyle = override && !override.enabled
                 ? '#111827'
-                : `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+                : `rgb(${color[0] + color[3]}, ${color[1] + color[3]}, ${color[2] + color[3]})`; // Apply white channel to RGB values in the preview
             roundRect(ctx, position.x, position.y, position.width, position.height, r);
             ctx.fill();
 
