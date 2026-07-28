@@ -1,0 +1,15 @@
+// styles/mixins/_input.scss
+// Input mixins for styling
+
+@mixin select {
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    background: none;
+    width: 130px;
+
+    option {
+        color: black
+    }
+}

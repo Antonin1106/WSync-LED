@@ -21,6 +21,7 @@ export type Settings = {
   autoCompute: boolean;
   computeExactLedCount: boolean;
   protocol: 'ddp';
+  dataType: 'RGB' | 'RGBW';
 };
 
 export type CachedVideoMeta = {
@@ -40,7 +41,7 @@ export type LedOverride = {
   color?: string;
 };
 
-export type Rgb = [number, number, number];
+export type RGBW = [number, number, number, number];
 
 export type LedPosition = {
   id: number;
@@ -60,7 +61,7 @@ export type LedPosition = {
 
 export type LedFrame = {
   rgbBytes: Uint8Array;
-  colors: Rgb[];
+  colors: RGBW[];
   positions: LedPosition[];
 };
 

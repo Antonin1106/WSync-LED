@@ -6,24 +6,37 @@ import {
     applyGamma,
     applySaturation,
     clampChannel,
-    hexToRgb,
+    hexToRgbw,
+    RGBToRGBW,
 } from './colors';
 
-describe('hexToRgb', () => {
+describe('hexToRgbw', () => {
     it('converts a hex color with #', () => {
-        expect(hexToRgb('#FF8040')).toEqual([255, 128, 64]);
+        const rgbw = hexToRgbw('#FF8040');
+        expect(rgbw[0]).toBeCloseTo(251.77);
+        expect(rgbw[1]).toBeCloseTo(124.77);
+        expect(rgbw[2]).toBeCloseTo(60.77);
+        expect(rgbw[3]).toBeCloseTo(3.23);
     });
 
     it('converts a hex color without #', () => {
-        expect(hexToRgb('00FF7F')).toEqual([0, 255, 127]);
+        expect(hexToRgbw('00FF7F')).toEqual([0, 255, 127, 0]);
     });
 
     it('converts black', () => {
-        expect(hexToRgb('#000000')).toEqual([0, 0, 0]);
+        expect(hexToRgbw('#000000')).toEqual([0, 0, 0, 0]);
     });
 
     it('converts white', () => {
-        expect(hexToRgb('#FFFFFF')).toEqual([255, 255, 255]);
+        expect(hexToRgbw('#FFFFFF')).toEqual([51, 51, 51, 204]);
+    });
+
+    it('converts white with rgba', () => {
+        expect(hexToRgbw('#FFFFFFFF')).toEqual([51, 51, 51, 204]);
+    });
+
+    it('converts white with rgba without #', () => {
+        expect(hexToRgbw('FFFFFFFF')).toEqual([51, 51, 51, 204]);
     });
 });
 
@@ -43,21 +56,23 @@ describe('applyGamma', () => {
 
 describe('applySaturation', () => {
     it('keeps the original color with saturation = 1', () => {
-        expect(applySaturation([255, 100, 50], 1)).toEqual([255, 100, 50]);
+        expect(applySaturation([255, 100, 50, 255], 1)).toEqual([255, 100, 50, 255]);
     });
 
     it('produces grayscale with saturation = 0', () => {
-        const result = applySaturation([255, 100, 50], 0);
+        const result = applySaturation([255, 100, 50, 255], 0);
 
         expect(result[0]).toBeCloseTo(result[1]);
         expect(result[1]).toBeCloseTo(result[2]);
+        expect(result[3]).toBe(255);
     });
 
     it('increases saturation', () => {
-        const result = applySaturation([200, 100, 50], 1.5);
+        const result = applySaturation([200, 100, 50, 255], 1.5);
 
         expect(result[0]).toBeGreaterThan(200);
         expect(result[2]).toBeLessThan(50);
+        expect(result[3]).toBe(255);
     });
 });
 
@@ -76,5 +91,31 @@ describe('clampChannel', () => {
 
     it('clamps values above 255', () => {
         expect(clampChannel(300)).toBe(255);
+    });
+});
+
+describe('RGBtoRGBW', () => {
+    it('convert white RGB to RGBW', () => {
+        expect(RGBToRGBW(255, 255, 255)).toEqual([51, 51, 51, 204]);
+    });
+
+    it('convert black RGB to RGBW', () => {
+        expect(RGBToRGBW(0, 0, 0)).toEqual([0, 0, 0, 0]);
+    });
+
+    it('convert a RGB color to RGBW', () => {
+        expect(RGBToRGBW(125, 255, 0)).toEqual([125, 255, 0, 0]);
+    });
+
+    it('convert another RGB color to RGBW', () => {
+        expect(RGBToRGBW(125, 125, 125)).toEqual([25, 25, 25, 100]);
+    });
+
+    it('convert another RGB color to RGBW', () => {
+        const rgbw = RGBToRGBW(200, 146, 48);
+        expect(rgbw[0]).toBeCloseTo(197.78, 0);
+        expect(rgbw[1]).toBeCloseTo(143.78, 0);
+        expect(rgbw[2]).toBeCloseTo(45.78, 0);
+        expect(rgbw[3]).toBeCloseTo(2.22, 0);
     });
 });

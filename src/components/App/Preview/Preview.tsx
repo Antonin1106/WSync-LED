@@ -4,7 +4,7 @@
 import { useState, type RefObject } from 'react';
 import LedEditor from '../../LedEditor/LedEditor';
 import LedPreview from '../../LedPreview/LedPreview';
-import type { Rgb, Settings } from '../../../types/app';
+import type { RGBW, Settings } from '../../../types/app';
 import type { OverridesHook } from '../../../types/hooks';
 
 /**
@@ -18,7 +18,7 @@ import type { OverridesHook } from '../../../types/hooks';
  */
 export default function Preview({ ledColors, overrides, settings, videoRef }:
     {
-        ledColors: Rgb[],
+        ledColors: RGBW[],
         overrides: OverridesHook,
         settings: Settings,
         videoRef: RefObject<HTMLVideoElement | null>

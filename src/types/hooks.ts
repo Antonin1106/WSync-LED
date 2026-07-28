@@ -2,7 +2,7 @@
 // Hooks return types
 
 import type { Dispatch, RefObject, SetStateAction } from 'react';
-import type { CachedVideoMeta, LedFrame, LedOverride, Rgb, Settings } from './app';
+import type { CachedVideoMeta, LedFrame, LedOverride, RGBW, Settings } from './app';
 
 
 // Return type of useLedRenderer
@@ -10,7 +10,7 @@ export type LedRendererHook = {
     start: () => void;
     stop: () => void;
     isRunning: boolean;
-    ledColors: Rgb[];
+    ledColors: RGBW[];
 }
 
 // Return type of useOverrides

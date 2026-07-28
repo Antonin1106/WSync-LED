@@ -1,8 +1,8 @@
 // lib/ledLayout/buildLedFrame/buildLedFrame.ts
 // buildLedFrame helper for the led layout.
 
-import type { LedFrame, LedOverride, LedPosition, Rgb, Settings } from '../../../types/app';
-import { applyGamma, applySaturation, clampChannel, hexToRgb } from '../../colors/colors';
+import type { LedFrame, LedOverride, LedPosition, RGBW, Settings } from '../../../types/app';
+import { applyGamma, applySaturation, clampChannel, getColorsSettings, hexToRgbw, RGBToRGBW } from '../../colors/colors';
 import { createLedPositions } from '../ledLayout';
 
 /**
@@ -17,42 +17,47 @@ export function buildLedFrame(
     img: ImageData,
     settings: Settings,
     overrides: Record<number, LedOverride>,
-    previous: Rgb[],
+    previous: RGBW[],
 ): LedFrame {
     const positions = createLedPositions(settings, { width: img.width, height: img.height });
-    const colors: Rgb[] = new Array(positions.length);
-    const rgbBytes = new Uint8Array(positions.length * 3);
+    const colors: RGBW[] = new Array(positions.length);
+    const { BYTES_PER_PIXELS, isRGBW } = getColorsSettings(settings);
+    const rgbBytes = new Uint8Array(positions.length * BYTES_PER_PIXELS);
 
     positions.forEach((position) => {
         const override = overrides[position.id];
-        let rgb: Rgb;
+        let rgbw: RGBW;
 
         if (override && !override.enabled) {
-            rgb = [0, 0, 0];
+            rgbw = [0, 0, 0, 0];
         } else if (override?.color) {
-            rgb = hexToRgb(override.color);
+            rgbw = hexToRgbw(override.color);
         } else {
-            rgb = averageColor(img, position, settings);
+            rgbw = averageColor(img, position, settings);
         }
 
-        const previousRgb = previous[position.id] ?? rgb;
+        const previousColor = previous[position.id] ?? rgbw;
         const smooth = settings.smooth;
-        const finalRgb: Rgb = [
-            previousRgb[0] * smooth + rgb[0] * (1 - smooth),
-            previousRgb[1] * smooth + rgb[1] * (1 - smooth),
-            previousRgb[2] * smooth + rgb[2] * (1 - smooth),
+        const finalColor: RGBW = [
+            previousColor[0] * smooth + rgbw[0] * (1 - smooth),
+            previousColor[1] * smooth + rgbw[1] * (1 - smooth),
+            previousColor[2] * smooth + rgbw[2] * (1 - smooth),
+            previousColor[3] * smooth + rgbw[3] * (1 - smooth),
         ];
-        const clamped: Rgb = [
-            clampChannel(finalRgb[0]),
-            clampChannel(finalRgb[1]),
-            clampChannel(finalRgb[2]),
+        const clamped: RGBW = [
+            clampChannel(finalColor[0]),
+            clampChannel(finalColor[1]),
+            clampChannel(finalColor[2]),
+            clampChannel(finalColor[3]),
         ];
 
         colors[position.id] = clamped;
-        const led = position.outputIndex * 3;
+        const led = position.outputIndex * BYTES_PER_PIXELS;
         rgbBytes[led] = clamped[0];
         rgbBytes[led + 1] = clamped[1];
         rgbBytes[led + 2] = clamped[2];
+        if (isRGBW)
+            rgbBytes[led + 3] = clamped[3];
 
     });
 
@@ -61,18 +66,19 @@ export function buildLedFrame(
 
 
 /**
- * Computes an average RGB color for a single LED sample area.
+ * Computes an average RGBW color for a single LED sample area.
  * @param img Source image data.
  * @param position LED position and sampling rectangle.
  * @param settings Visual processing settings.
- * @returns Average RGB value for the sampled area.
+ * @returns Average RGBW value for the sampled area.
  */
-function averageColor(img: ImageData, position: LedPosition, settings: Settings): Rgb {
+function averageColor(img: ImageData, position: LedPosition, settings: Settings): RGBW {
     const { x, y, width, height } = position.sample;
     const px = img.data;
     let r = 0;
     let g = 0;
     let b = 0;
+    let w = 0;
     let c = 0;
 
     for (let yy = y; yy < y + height; yy += 1) {
@@ -89,14 +95,18 @@ function averageColor(img: ImageData, position: LedPosition, settings: Settings)
     g = Math.sqrt(g / c);
     b = Math.sqrt(b / c);
 
+    if (getColorsSettings(settings).isRGBW)
+        [r, g, b, w] = RGBToRGBW(r, g, b);
+
     const luminance = r * 0.2126 + g * 0.7152 + b * 0.0722;
-    if (luminance < settings.threshold) return [0, 0, 0];
+    if (luminance < settings.threshold) return [0, 0, 0, 0];
 
     return applySaturation(
         [
             applyGamma(r, settings.gamma) * settings.gain,
             applyGamma(g, settings.gamma) * settings.gain,
             applyGamma(b, settings.gamma) * settings.gain,
+            applyGamma(w, settings.gamma) * settings.gain,
         ],
         settings.saturation,
     );
