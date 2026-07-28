@@ -11,10 +11,10 @@ import { motion, type HTMLMotionProps } from 'framer-motion';
 export function MotionButton(props: HTMLMotionProps<'button'>) {
     return (
         <motion.button
-            whileHover={!props.disabled ? { scale: 1.06 } : undefined}
-            whileTap={{ scale: 0.95 }}
+            whileHover={!props.disabled ? { scale: 1.04 } : undefined}
+            whileTap={{ scale: 0.97 }}
             transition={{
-                duration: 0.15, damping: 10, stiffness: 200, type: 'spring', ease: 'easeInOut',
+                duration: 0.15, damping: 15, stiffness: 200, type: 'spring', ease: 'easeInOut',
             }}
             {...props}
         />

@@ -28,7 +28,7 @@ export const initialSettings: Settings = {
   dataType: 'RGB',
   fps: 24,
   gain: 1.3,
-  gamma: 2.2,
+  gamma: 2,
   ip: '',
   lang: 'en',
   ledX: 15,

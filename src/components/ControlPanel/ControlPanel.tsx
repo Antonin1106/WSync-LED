@@ -1,7 +1,7 @@
 // components/ControlPanel/ControlPanel.tsx
 // Component to renders the settings panel
 
-import { mappingModes } from '../../config/appConfig';
+import { initialSettings, mappingModes } from '../../config/appConfig';
 import t from '../../lib/lang/lang';
 import { getLedCount } from '../../lib/ledLayout/ledLayout';
 import type { Settings } from '../../types/app';
@@ -9,7 +9,7 @@ import ControlRange from './ControlRange';
 import styles from './ControlPanel.module.scss';
 import field from '../../styles/modules/field.module.scss';
 import sections from '../../styles/modules/sections.module.scss';
-import { MotionDiv } from '../Motion/Motion';
+import { MotionButton, MotionDiv } from '../Motion/Motion';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { ModeHelp } from './ModeHelp';
 import type { ChangeEvent } from 'react';
@@ -42,6 +42,8 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
     onSettingsChange({ ...settings, [key]: event.currentTarget.value });
   }
 
+  const hostname = window.location.hostname;
+
   return (
     <section className={sections.panelSection}>
       <div className={sections.sectionTitle}>
@@ -64,7 +66,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
         <div className={field.fieldBox}>
           <input
             value={settings.ip}
-            placeholder="wled.local, 192.168.1.10..."
+            placeholder={hostname + (', wled.local, 192.168.1.10').replace(`, ${hostname}`, '')}
             autoCapitalize="off"
             autoCorrect="off"
             onInput={(event) =>
@@ -158,6 +160,12 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
                 />
                 {t('computeExactLedCount')}</label>
             </MotionDiv>}
+
+          <div key="bottomLayout" className={styles.bottomLayout}>
+            <MotionButton onClick={() => confirm(t('sureToReset?')) && onSettingsChange(initialSettings)}>
+              {t('resetDefaultValues')}
+            </MotionButton>
+          </div>
         </AnimatePresence>
       </LayoutGroup>
     </section>
