@@ -119,7 +119,7 @@ export default function LedPreview({
          * @param r Corner radius.
          */
         function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
-            const radius = Math.min(r, w / 2, h / 2);
+            const radius = Math.max(0, Math.min(r, w / 2, h / 2));
             ctx.beginPath();
             ctx.moveTo(x + radius, y);
             ctx.arcTo(x + w, y, x + w, y + h, radius);
