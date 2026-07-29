@@ -39,7 +39,6 @@ export type VideoHook = {
     canvasRef: RefObject<HTMLCanvasElement | null>;
     currentVideoName: string;
     setVideoSource: (_blob: Blob, _name: string) => void;
-    revokeVideoUrl: () => void;
 }
 
 // Return type of useVideoCache

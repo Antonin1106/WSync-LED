@@ -1,7 +1,7 @@
 // hooks/useVideo.ts
 // Video management hook.
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, /*useEffect,*/ useRef, useState } from 'react';
 
 /**
  * Custom React hook to manage video playback and caching.
@@ -40,17 +40,16 @@ export default function useVideo() {
     }, [revokeVideoUrl]);
 
     // Revoke URL when unmount
-    useEffect(() => {
+    /*useEffect(() => {
         return () => {
-            revokeVideoUrl();
+            revokeVideoUrl(); // This part may cause bugs
         };
-    }, [revokeVideoUrl]);
+    }, [revokeVideoUrl]);*/
 
     return {
         videoRef,
         canvasRef,
         currentVideoName,
         setVideoSource,
-        revokeVideoUrl,
     };
 }
