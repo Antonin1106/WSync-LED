@@ -4,48 +4,42 @@
 import { useState } from 'react';
 import field from '../../styles/modules/field.module.scss';
 import { motion } from 'framer-motion';
+import type { NumberConstraint } from '../../types/app';
+import { validateNumber } from '../../lib/utils/validateSettings/validateSettings';
 
 /**
  * Renders a single numeric range control with a visible value label.
  * @param props - The properties for the ControlRange component.
  * @param props.label - The label text for the range control.
  * @param props.value - The current numeric value of the range control.
- * @param props.min - The minimum value for the range control.
- * @param props.max - The maximum value for the range control.
- * @param props.step - The step increment for the range control.
+ * @param props.constraint - The numeric constraint for the range control.
  * @param props.onChange - A callback function to handle changes to the range control's value.
  * @returns The rendered ControlRange component.
  */
 export default function ControlRange({
   label,
   value,
-  min,
-  max,
-  step,
+  constraint,
   onChange,
 }: {
   label: string;
   value: number;
-  min: number;
-  max: number;
-  step: number;
+  constraint: NumberConstraint;
   onChange: (_value: string) => void;
 }) {
 
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(value.toString());
+  const min = constraint.min ?? 0;
+  const max = constraint.max ?? 60;
+  const step = constraint.step ?? 1;
 
   function commit() {
     const input = text.trim().replace(',', '.');
     const parsed = Number.parseFloat(input);
-
     if (Number.isNaN(parsed))
       return setText(value.toString());
-
-    const clamped = Math.min(max, Math.max(min, parsed));
-    const decimals = (step.toString().split('.')[1] ?? '').length;
-    const stepped = Number((Math.round(clamped / step) * step).toFixed(decimals));
-    const result = stepped.toString();
+    const result = validateNumber(parsed, min, max, step).toString();
 
     setText(result);
     onChange(result);
