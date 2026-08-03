@@ -6,9 +6,14 @@ import {
     applyGamma,
     applySaturation,
     clampChannel,
+    getColorsSettings,
     hexToRgbw,
+    normalizeRGBW,
     RGBToRGBW,
+    rgbwToHex,
 } from './colors';
+import { initialSettings } from '../../config/appConfig';
+import type { Settings } from '../../types/app';
 
 describe('hexToRgbw', () => {
     it('converts a hex color with #', () => {
@@ -39,6 +44,21 @@ describe('hexToRgbw', () => {
         expect(hexToRgbw('FFFFFFFF')).toEqual([51, 51, 51, 204]);
     });
 });
+
+describe('rgbwToHex', () => {
+    it('converts a RGBW color to HEX (RRGGBB) with W=0', () => {
+        expect(rgbwToHex([40, 60, 125, 0])).toBe('283C7D');
+    });
+
+    it('converts a RGBW color to HEX (RRGGBB) with W', () => {
+        expect(rgbwToHex([50, 150, 250, 5])).toBe('379BFF');
+    });
+
+    it('converts RGBW => HEX with little values for \'0\' representation in HEX', () => {
+        expect(rgbwToHex([9, 60, 125, 0])).toBe('093C7D');
+    });
+});
+
 
 describe('applyGamma', () => {
     it('returns 0 for a value of 0', () => {
@@ -117,5 +137,49 @@ describe('RGBtoRGBW', () => {
         expect(rgbw[1]).toBeCloseTo(143.78, 0);
         expect(rgbw[2]).toBeCloseTo(45.78, 0);
         expect(rgbw[3]).toBeCloseTo(2.22, 0);
+    });
+});
+
+describe('getColorsSetttings', () => {
+    it('convert lowercase to uppercase for dataType', () => {
+        const colorsSettings = getColorsSettings({ ...initialSettings, dataType: 'rgb' } as unknown as Settings);
+        expect(colorsSettings.dataType).toBe('RGB');
+    });
+
+    it('returns values for RGBW dataType', () => {
+        const colorsSettings = getColorsSettings({ ...initialSettings, dataType: 'RGBW' });
+        expect(colorsSettings.isRGBW).toBe(true);
+        expect(colorsSettings.isRGB).toBe(false);
+        expect(colorsSettings.BYTES_PER_PIXELS).toBe(4);
+        expect(colorsSettings.MAX_DDP_PIXELS).toBe(354);
+        expect(colorsSettings.MAX_JSON_PIXELS).toBe(150);
+    });
+
+    it('returns values for RGB dataType', () => {
+        const colorsSettings = getColorsSettings({ ...initialSettings, dataType: 'RGB' });
+        expect(colorsSettings.isRGBW).toBe(false);
+        expect(colorsSettings.isRGB).toBe(true);
+        expect(colorsSettings.BYTES_PER_PIXELS).toBe(3);
+        expect(colorsSettings.MAX_DDP_PIXELS).toBe(472);
+    });
+
+    it('returns isJson=true when JSON is set', () => {
+        const colorsSettings = getColorsSettings({ ...initialSettings, protocol: 'JSON' });
+        expect(colorsSettings.isJSON).toBe(true);
+    });
+});
+
+describe('normalizeRGBW', () => {
+    it('returns values when all colors are <= 255', () => {
+        const rgbw = normalizeRGBW([51, 51, 51, 204]);
+        expect(rgbw).toStrictEqual([51, 51, 51, 204]);
+    });
+
+    it('returns scaled values when a color is > 255', () => {
+        const rgbw = normalizeRGBW([257, 30, 15, 0]);
+        expect(rgbw[0]).toBeCloseTo(255);
+        expect(rgbw[1]).toBeCloseTo(29.8, 1);
+        expect(rgbw[2]).toBeCloseTo(14.9, 1);
+        expect(rgbw[3]).toBeCloseTo(0);
     });
 });

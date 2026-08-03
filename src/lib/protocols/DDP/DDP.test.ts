@@ -4,6 +4,7 @@
 import { describe, expect, it } from 'vitest';
 import buildDDPPackets from './DDP';
 import { initialSettings } from '../../../config/appConfig';
+import type { Settings } from '../../../types/app';
 
 describe('buildDDPPackets', () => {
     it('creates one packet', () => {
@@ -13,6 +14,14 @@ describe('buildDDPPackets', () => {
 
         expect(packets[0]?.length).toBe(11 + 3);
         expect(packets[1]).toBeUndefined();
+    });
+
+    it('creates one packet with RGBW enabled', () => {
+        const settings: Settings = { ...initialSettings, leds: 1, ledX: 1, ledY: 1, dataType: 'RGBW' };
+        const rgbBytes: Uint8Array = new Uint8Array([51, 51, 51, 204]);
+        const packets = buildDDPPackets(rgbBytes, settings);
+
+        expect(packets[0]?.[3]).toBe(0x1B);
     });
 
     it('creates several packets', () => {

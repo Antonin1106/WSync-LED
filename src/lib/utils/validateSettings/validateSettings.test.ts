@@ -1,9 +1,35 @@
 // lib/utils/validateSettings/validateSettings.test.ts
 // Unit tests for settings validation.
 
-import { describe, expect, it } from 'vitest';
-import { initialSettings } from '../../../config/appConfig';
+import { describe, expect, it, vi } from 'vitest';
+import * as appConfig from '../../../config/appConfig';
+import type { Settings } from '../../../types/app';
+
+// Mock the getConstraints function to return a modified version of the constraints
+vi.mock('../../../config/appConfig', async () => {
+    const actual = await vi.importActual<typeof appConfig>(
+        '../../../config/appConfig',
+    );
+
+    return {
+        ...actual,
+        getConstraints: vi.fn((settings) => {
+            const constraints = actual.getConstraints(settings);
+
+            return {
+                ...constraints,
+                smooth: {
+                    ...constraints.smooth,
+                    min: undefined,
+                    max: undefined,
+                },
+            };
+        }),
+    };
+});
+
 import validateSettings, { validateNumber } from './validateSettings';
+const initialSettings = appConfig.initialSettings;
 
 describe('validateSettings', () => {
     it('clamps numeric settings to their supported ranges', () => {
@@ -14,7 +40,6 @@ describe('validateSettings', () => {
             gamma: 20,
             ledX: 0,
             ledY: 100,
-            smooth: 2,
             threshold: -10,
         })).toEqual({
             ...initialSettings,
@@ -23,7 +48,6 @@ describe('validateSettings', () => {
             gamma: 3.4,
             ledX: 1,
             ledY: 40,
-            smooth: 0.95,
             threshold: 0,
         });
     });
@@ -46,6 +70,58 @@ describe('validateSettings', () => {
             fps: 25,
             leds: 13,
         });
+    });
+
+    it('reset incorrect text value to default', () => {
+        expect(validateSettings({
+            ...initialSettings,
+            protocol: 'unknown' as Settings['protocol'],
+        })).toEqual({
+            ...initialSettings,
+            protocol: 'ddp',
+        });
+    });
+
+    it('reset non-number value to default', () => {
+        expect(validateSettings({
+            ...initialSettings,
+            leds: 'unknown' as unknown as Settings['leds'],
+        })).toEqual({
+            ...initialSettings,
+            leds: 150,
+        });
+    });
+
+    it('uses 0 as minimum when this constraint is not defined', () => {
+        const settings = {
+            ...initialSettings,
+            smooth: -1, // Add an incorrect value, smooth as no constraint here
+        };
+
+        expect(validateSettings(settings as Settings)).toEqual({ ...initialSettings, smooth: 0 });
+        expect(appConfig.getConstraints).toHaveBeenCalledWith(settings);
+    });
+
+    it('uses 60 as maximum when this constraint is not defined', () => {
+        const settings = {
+            ...initialSettings,
+            smooth: 80, // Add an incorrect value, smooth as no constraint here
+        };
+
+        expect(validateSettings(settings as Settings)).toEqual({ ...initialSettings, smooth: 60 });
+        expect(appConfig.getConstraints).toHaveBeenCalledWith(settings);
+    });
+
+    it('set default value to boolean if it is undefined', () => {
+        const settings = { ...initialSettings, reverse: undefined };
+        expect(validateSettings(settings as unknown as Settings)).toEqual({ ...initialSettings, reverse: false });
+        expect(appConfig.getConstraints).toHaveBeenCalledWith(settings);
+    });
+
+    it('returns actual settings when nothing has changed', () => {
+        const settings = { ...initialSettings };
+        expect(validateSettings(settings)).toBe(settings);
+        expect(appConfig.getConstraints).toHaveBeenCalledWith(settings);
     });
 });
 

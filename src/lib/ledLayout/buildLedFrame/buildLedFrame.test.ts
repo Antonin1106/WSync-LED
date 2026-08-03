@@ -132,19 +132,15 @@ describe('buildLedFrame', () => {
             0, 255, 0, 255,
         ]);
 
-        const frame = buildLedFrame(
-            img,
-            {
-                ...settings,
-                ledX: 2,
-                ledY: 1,
-                reverse: true,
-            },
-            {},
-            [],
-        );
-
+        const frame = buildLedFrame(img, { ...settings, ledX: 2, ledY: 1, reverse: true }, {}, []);
         expect(frame.positions[0]?.outputIndex).toBe(1);
         expect(frame.positions[1]?.outputIndex).toBe(0);
+    });
+
+    it('returns colors without white channel', () => {
+        const img = createImage(1, 1, [255, 255, 255, 255]);
+        const frame = buildLedFrame(img, { ...settings, dataType: 'RGB' }, {}, []);
+        expect(frame.rgbBytes.length).toBe(frame.positions.length * 3);
+        expect(frame.rgbBytes).toStrictEqual(new Uint8Array([255, 255, 255]));
     });
 });

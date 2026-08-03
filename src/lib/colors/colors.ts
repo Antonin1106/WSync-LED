@@ -30,7 +30,7 @@ export function hexToRgbw(hex: string): RGBW {
 export function rgbwToHex(rgbw: RGBW) {
 
   const toHex = (c: number): string => {
-    let h = (c ?? 0).toString(16).toUpperCase();
+    let h = c.toString(16).toUpperCase();
     if (h.length === 1)
       h = '0' + h;
     return h;
@@ -43,7 +43,7 @@ export function rgbwToHex(rgbw: RGBW) {
   const b = toHex(rgbw[2] + rgbw[3]);
   // const w = toHex(rgbw[3] ?? 0);
 
-  return r + g + b; // We dont't use alpha (RRGGBBAA) as white channel.
+  return r + g + b; // We dont't use alpha in RRGGBBAA as white channel.
 }
 
 /**

@@ -20,10 +20,6 @@ export default function validateSettings(settings: Settings): Settings {
         const constraint = constraints[key];
         const defaultValue = initialSettings[key];
         let nextValue;
-
-        if (!constraint)
-            continue;
-
         const value = validated[key];
 
         switch (constraint.type) {
