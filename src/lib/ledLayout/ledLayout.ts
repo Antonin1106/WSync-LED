@@ -12,7 +12,7 @@ import { buildLedFrame } from './buildLedFrame/buildLedFrame';
  * @returns LED count for the active mapping mode.
  */
 export function getLedCount(settings: Settings) {
-  if (settings.autoCompute) return settings.leds; // Return all LEDs included unused
+  if (settings.autoCompute && settings.computeExactLedCount) return settings.leds; // Return all LEDs included unused
   if (settings.mappingMode === 'perimeter') return settings.ledX * 2 + settings.ledY * 2;
   if (settings.mappingMode === 'border') return settings.ledX + settings.ledY * 2;
   return settings.ledX * settings.ledY;

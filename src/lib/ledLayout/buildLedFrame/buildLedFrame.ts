@@ -2,7 +2,7 @@
 // buildLedFrame helper for the led layout.
 
 import type { LedFrame, LedOverride, LedPosition, RGBW, Settings } from '../../../types/app';
-import { applyGamma, applySaturation, clampChannel, getColorsSettings, hexToRgbw, RGBToRGBW } from '../../colors/colors';
+import { applyGamma, applySaturation, clampChannel, getColorsSettings, hexToRgbw, normalizeRGBW, RGBToRGBW } from '../../colors/colors';
 import { createLedPositions } from '../ledLayout';
 
 /**
@@ -91,23 +91,19 @@ function averageColor(img: ImageData, position: LedPosition, settings: Settings)
         }
     }
 
-    r = Math.sqrt(r / c);
-    g = Math.sqrt(g / c);
-    b = Math.sqrt(b / c);
+    const processColor = (color: number) =>
+        applyGamma(Math.sqrt(color / c), settings.gamma) * settings.gain;
+
+    r = processColor(r);
+    g = processColor(g);
+    b = processColor(b);
+
+    const luminance = r * 0.2126 + g * 0.7152 + b * 0.0722;
+    if (luminance < settings.threshold)
+        return [0, 0, 0, 0];
 
     if (getColorsSettings(settings).isRGBW)
         [r, g, b, w] = RGBToRGBW(r, g, b);
 
-    const luminance = r * 0.2126 + g * 0.7152 + b * 0.0722;
-    if (luminance < settings.threshold) return [0, 0, 0, 0];
-
-    return applySaturation(
-        [
-            applyGamma(r, settings.gamma) * settings.gain,
-            applyGamma(g, settings.gamma) * settings.gain,
-            applyGamma(b, settings.gamma) * settings.gain,
-            applyGamma(w, settings.gamma) * settings.gain,
-        ],
-        settings.saturation,
-    );
+    return normalizeRGBW(applySaturation([r, g, b, w], settings.saturation));
 }

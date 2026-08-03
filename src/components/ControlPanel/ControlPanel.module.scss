@@ -5,13 +5,21 @@
     display: flex;
     gap: 8px;
     align-items: center;
+    justify-content: end;
+    flex-wrap: wrap-reverse;
+
+    @include respond(small) {
+        &>span {
+            order: 2;
+        }
+    }
 
     select {
         @include select;
         margin: 0;
         padding: 1px;
         font-size: 0.8rem;
-        width: 70px;
+        width: min-content;
         padding-left: 3px;
     }
 }
