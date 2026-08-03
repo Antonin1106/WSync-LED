@@ -41,7 +41,8 @@ WSync LED streams LED frames through a standard WebSocket connection and can be 
 
 Current supported integrations include:
 
-- WLED DDP over WebSocket protocol (RGB(W))
+- WLED DDP over WebSocket (RGB(W)),
+- WLED JSON over WebSocket (RGB(W)) (not recommended)
 
 The streaming layer has been designed to allow additional WebSocket-compatible devices and protocols to be supported in the future.
 

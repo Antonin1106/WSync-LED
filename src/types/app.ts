@@ -20,7 +20,7 @@ export type Settings = {
   lang: 'en' | 'fr';
   autoCompute: boolean;
   computeExactLedCount: boolean;
-  protocol: 'ddp';
+  protocol: 'ddp' | 'JSON';
   dataType: 'RGB' | 'RGBW';
 };
 

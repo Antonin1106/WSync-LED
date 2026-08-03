@@ -21,6 +21,32 @@ export function hexToRgbw(hex: string): RGBW {
 }
 
 /**
+ * Converts an RGBW color array into a hexadecimal color string.
+ * This function does not return the alpha channel in the hex string, as it is not supported in this context.
+ * However, the white channel is included in the conversion to ensure accurate color representation for LED applications.
+ * @param rgbw An array containing the red, green, blue, and white channel values.
+ * @returns A hexadecimal color string representing the RGB color.
+ */
+export function rgbwToHex(rgbw: RGBW) {
+
+  const toHex = (c: number): string => {
+    let h = (c ?? 0).toString(16).toUpperCase();
+    if (h.length === 1)
+      h = '0' + h;
+    return h;
+  };
+
+  // Include the white channel in the RGB conversion
+  // to ensure accurate representation
+  const r = toHex(rgbw[0] + rgbw[3]);
+  const g = toHex(rgbw[1] + rgbw[3]);
+  const b = toHex(rgbw[2] + rgbw[3]);
+  // const w = toHex(rgbw[3] ?? 0);
+
+  return r + g + b; // We dont't use alpha (RRGGBBAA) as white channel.
+}
+
+/**
  * Applies a gamma correction curve to a color channel value.
  * @param value Channel value in the 0-255 range.
  * @param gamma Gamma exponent to apply.
@@ -89,16 +115,42 @@ export function getColorsSettings(settings: Settings) {
   const dataType = settings.dataType.toUpperCase();
   const isRGBW = dataType === 'RGBW';
   const isRGB = dataType === 'RGB';
-  const BYTES_PER_PIXELS = isRGBW ? 4 : 3; // RGB = 3 bytes/px ; RGBW = 4 bytes/px
-  const MAX_RGBW_PIXELS = 354; // 1428 bytes / 4
-  const MAX_RGB_PIXELS = 472; // 1428 bytes / 3
+  const BYTES_PER_PIXELS = isRGBW ? 4 : 3; // RGB = 3 bytes/led ; RGBW = 4 bytes/led
+  const MAX_RGBW_PIXELS = 354; // 1428 bytes / 4 (per packet)
+  const MAX_RGB_PIXELS = 472; // 1428 bytes / 3 (per packet)
   const MAX_DDP_PIXELS = isRGBW ? MAX_RGBW_PIXELS : MAX_RGB_PIXELS; // Maximum number of RGB(W) pixels per DDP packet
+  const MAX_JSON_PIXELS = 150; // This is an arbitrary limit for JSON packets to avoid overwhelming the controller buffer.
+  const isJSON = settings.protocol === 'JSON';
 
   return {
     dataType,
     isRGB,
     isRGBW,
+    isJSON,
     BYTES_PER_PIXELS,
     MAX_DDP_PIXELS,
+    MAX_JSON_PIXELS,
   };
+}
+
+/**
+ * Normalizes RGBW values to ensure that the combined intensity of the RGB channels and the white channel does not exceed the maximum value of 255 for any channel.
+ * @param rgbw An array containing the red, green, blue, and white channel values.
+ * @returns A normalized RGBW array where the values are scaled down proportionally if any channel exceeds 255, maintaining the color balance while preventing overflow.
+ */
+export function normalizeRGBW(rgbw: RGBW): RGBW {
+  const [r, g, b, w] = rgbw;
+  const max = Math.max(r + w, g + w, b + w);
+
+  if (max <= 255)
+    return [r, g, b, w];
+
+  const scale = 255 / max;
+
+  return [
+    r * scale,
+    g * scale,
+    b * scale,
+    w * scale,
+  ];
 }

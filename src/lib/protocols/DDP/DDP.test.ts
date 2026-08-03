@@ -7,7 +7,7 @@ import { initialSettings } from '../../../config/appConfig';
 
 describe('buildDDPPackets', () => {
     it('creates one packet', () => {
-        const settings = { ...initialSettings, leds: 1 };
+        const settings = { ...initialSettings, leds: 1, ledX: 1, ledY: 1 };
         const rgbBytes: Uint8Array = new Uint8Array([100, 50, 25]);
         const packets = buildDDPPackets(rgbBytes, settings);
 
@@ -17,7 +17,7 @@ describe('buildDDPPackets', () => {
 
     it('creates several packets', () => {
         // Create fakes values for 500 LEDs
-        const settings = { ...initialSettings, leds: 500 };
+        const settings = { ...initialSettings, leds: 500, computeExactLedCount: true };
         const LEDS = 28 * 18;
         const rgbBytes: Uint8Array = new Uint8Array(LEDS * 3);
         for (let i = 0; i < LEDS * 3; i += 3) {

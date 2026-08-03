@@ -49,8 +49,17 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
       <div className={sections.sectionTitle}>
         <h2>{t('controls')}</h2>
         <div className={styles.ledInfo}>
-          <span>{ledCount} LEDs</span>
-          <select onChange={(e) => setSettings('dataType', e)}>
+          <span>{ledCount} {t('LED', { count: ledCount })}</span>
+          <select
+            value={settings.protocol}
+            onChange={(e) => onSettingsChange({
+              ...settings,
+              protocol: e.target.value as 'ddp' | 'JSON',
+            })}>
+            <option value="ddp">DDP</option>
+            <option value="JSON">{t('unstableJSON')}</option>
+          </select>
+          <select value={settings.dataType} onChange={(e) => setSettings('dataType', e)}>
             <option value="RGB">RGB</option>
             <option value="RGBW">RGBW</option>
           </select>

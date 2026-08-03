@@ -7,6 +7,9 @@
 - Added animations with motion
 - Added panel resizing
 - Added test with Vitest
+- Added RGBW support
+- Added reset button
+- Added JSON protocol
 
 ### Changed
 
@@ -17,7 +20,7 @@
 
 ### Removed
 
-- Unavailable Service Worker over HTTP
+- Removed unavailable Service Worker over HTTP
 
 ## [1.0.0] - 2026-07-13
 

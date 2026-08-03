@@ -27,6 +27,8 @@
   "gridHelp": "Le mode grille utilise une grille de {{ledX}} par {{ledY}} LED.",
   "KB": "Ko",
   "layout": "Disposition",
+  "LED_one": "LED",
+  "LED_other": "LEDs",
   "localLibrary": "Liste enregistrée",
   "MB": "Mo",
   "noLEDSel": "Aucune LED selectionnée",
@@ -48,6 +50,7 @@
   "sureToReset?": "Êtes-vous sûr de vouloir rétablir les valeurs par défauts ?",
   "threshold": "Seuil minimum d'intensité",
   "unavailableVideoCache": "Le cache vidéo est indisponible",
+  "unstableJSON": "JSON (déprécié)",
   "visualization": "Visualisation",
   "wsError": "Erreur WebSocket",
   "wsPath": "Url WS"

@@ -27,6 +27,8 @@
   "gridHelp": "Grid-style modes use a {{ledX}} by {{ledY}} LED grid.",
   "KB": "KB",
   "layout": "LED Layout",
+  "LED_one": "LED",
+  "LED_other": "LEDs",
   "localLibrary": "Local library",
   "MB": "MB",
   "noLEDSel": "No LED selected",
@@ -48,6 +50,7 @@
   "sureToReset?": "Are you sure you want to reset all settings to their default values?",
   "threshold": "Minimum intensity threshold",
   "unavailableVideoCache": "Video cache unavailable",
+  "unstableJSON": "JSON (unstable)",
   "visualization": "Visualization",
   "wsError": "WebSocket Error",
   "wsPath": "WS Path"

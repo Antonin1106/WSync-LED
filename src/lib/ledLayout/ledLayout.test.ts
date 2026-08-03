@@ -17,8 +17,16 @@ const baseSettings: Settings = {
 };
 
 describe('getLedCount()', () => {
-    it('returns all leds when autoCompute is enabled', () => {
-        expect(getLedCount({ ...baseSettings, autoCompute: true })).toBe(100);
+    it('returns x * y leds when autoCompute is enabled', () => {
+        expect(getLedCount({ ...baseSettings, autoCompute: true })).toBe(50);
+    });
+
+    it('returns all leds when autoCompute and computeExactLedCount are enabled', () => {
+        expect(getLedCount({ ...baseSettings, autoCompute: true, computeExactLedCount: true })).toBe(100);
+    });
+
+    it('returns x * y leds when autoCompute is disabled and computeExactLedCount is enabled', () => {
+        expect(getLedCount({ ...baseSettings, autoCompute: false, computeExactLedCount: true })).toBe(50);
     });
 
     it('computes perimeter mapping', () => {
