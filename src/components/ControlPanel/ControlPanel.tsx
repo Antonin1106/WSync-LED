@@ -1,7 +1,7 @@
 // components/ControlPanel/ControlPanel.tsx
 // Component to renders the settings panel
 
-import { initialSettings, mappingModes } from '../../config/appConfig';
+import { getConstraints, initialSettings, mappingModes } from '../../config/appConfig';
 import t from '../../lib/lang/lang';
 import { getLedCount } from '../../lib/ledLayout/ledLayout';
 import type { Settings } from '../../types/app';
@@ -13,7 +13,6 @@ import { MotionButton, MotionDiv } from '../Motion/Motion';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { ModeHelp } from './ModeHelp';
 import type { ChangeEvent } from 'react';
-
 type Props = {
   settings: Settings;
   ledCount: number;
@@ -42,6 +41,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
     onSettingsChange({ ...settings, [key]: event.currentTarget.value });
   }
 
+  const constraint = getConstraints(settings);
   const hostname = window.location.hostname;
 
   return (
@@ -116,21 +116,20 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
               <ModeHelp key={settings.mappingMode} settings={settings} />
             </AnimatePresence>
           </motion.p>
-          <ControlRange key="fps" label={t('FPS')} value={settings.fps} min={5} max={60} step={1} onChange={(value) => setNumber('fps', value)} />
+          <ControlRange key="fps" label={t('FPS')} value={settings.fps} constraint={constraint.fps} onChange={(value) => setNumber('fps', value)} />
 
           {settings.autoCompute &&
-            <ControlRange key="LEDs" label="LEDs" value={settings.leds} min={1} max={1600} step={1} onChange={(value) => setNumber('leds', value)} />}
+            <ControlRange key="LEDs" label="LEDs" value={settings.leds} constraint={constraint.leds} onChange={(value) => setNumber('leds', value)} />}
           {!settings.autoCompute &&
-            <ControlRange key="x" label="LED X" value={settings.ledX} min={1} max={40} step={1} onChange={(value) => setNumber('ledX', value)} />}
+            <ControlRange key="x" label="LED X" value={settings.ledX} constraint={constraint.ledX} onChange={(value) => setNumber('ledX', value)} />}
           {!settings.autoCompute &&
-            <ControlRange key="y" label="LED Y" value={settings.ledY} min={1} max={40} step={1} onChange={(value) => setNumber('ledY', value)} />}
+            <ControlRange key="y" label="LED Y" value={settings.ledY} constraint={constraint.ledY} onChange={(value) => setNumber('ledY', value)} />}
 
-          <ControlRange key="gain" label="Gain" value={settings.gain} min={0.2} max={4} step={0.05} onChange={(value) => setNumber('gain', value)} />
-          <ControlRange key="smooth" label={t('smoothing')} value={settings.smooth} min={0} max={0.95} step={0.01} onChange={(value) => setNumber('smooth', value)} />
-          <ControlRange key="threshold" label={t('threshold')} value={settings.threshold} min={0} max={80} step={1} onChange={(value) => setNumber('threshold', value)} />
-          <ControlRange key="gamma" label="Gamma" value={settings.gamma} min={1} max={3.4} step={0.05} onChange={(value) => setNumber('gamma', value)} />
-          <ControlRange key="saturation" label="Saturation" value={settings.saturation} min={0} max={2.5} step={0.05} onChange={(value) => setNumber('saturation', value)} />
-
+          <ControlRange key="gain" label="Gain" value={settings.gain} constraint={constraint.gain} onChange={(value) => setNumber('gain', value)} />
+          <ControlRange key="smooth" label={t('smoothing')} value={settings.smooth} constraint={constraint.smooth} onChange={(value) => setNumber('smooth', value)} />
+          <ControlRange key="threshold" label={t('threshold')} value={settings.threshold} constraint={constraint.threshold} onChange={(value) => setNumber('threshold', value)} />
+          <ControlRange key="gamma" label="Gamma" value={settings.gamma} constraint={constraint.gamma} onChange={(value) => setNumber('gamma', value)} />
+          <ControlRange key="saturation" label="Saturation" value={settings.saturation} constraint={constraint.saturation} onChange={(value) => setNumber('saturation', value)} />
 
           <MotionDiv key="reverse" className={styles.toggleGrid} >
             <label>

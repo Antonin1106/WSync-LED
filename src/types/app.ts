@@ -69,3 +69,11 @@ export interface LedGrid {
   ledX: number;
   ledY: number;
 }
+
+export type NumberConstraint = {
+  min?: number;
+  max?: number;
+  step?: number;
+  type: 'number' | 'boolean' | 'string'
+  values?: Array<string>;
+};
