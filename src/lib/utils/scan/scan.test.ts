@@ -23,15 +23,24 @@ describe('scan', () => {
         setSettings = vi.fn<SettingsUpdater>();
     });
 
-    it('returns immediately when an IP is already configured', async () => {
-        await scan({
+    it('test the device when an IP is already configured', async () => {
+        vi.mocked(fetch).mockResolvedValue({
+            ok: true,
+            json: async () => ({
+                brand: 'WLED',
+                ip: '10.0.0.5',
+            }),
+        } as Response);
+
+        const result = await scan({
             ip: '10.0.0.5',
         } as Settings,
             setSettings,
         );
 
-        expect(fetch).not.toHaveBeenCalled();
-        expect(setSettings).not.toHaveBeenCalled();
+        expect(result).toBe('10.0.0.5');
+        expect(fetch).toHaveBeenCalledOnce();
+        expect(setSettings).toHaveBeenCalledOnce();
     });
 
     it('finds a WLED device on the AP address', async () => {
@@ -51,11 +60,14 @@ describe('scan', () => {
         await scan({} as Settings, setSettings);
 
         expect(setSettings).toHaveBeenCalledOnce();
-        expect(fetch).toHaveBeenCalledTimes(1);
+        expect(fetch).toHaveBeenCalledTimes(2);
     });
 
     it('finds a WLED device on the current hostname', async () => {
         vi.mocked(fetch)
+            .mockResolvedValueOnce({
+                ok: false,
+            } as Response)
             .mockResolvedValueOnce({
                 ok: false,
             } as Response)
@@ -202,13 +214,17 @@ describe('scan', () => {
     });
 
     it('updates settings only when it has not been overrided before', async () => {
-        vi.mocked(fetch).mockResolvedValueOnce({
-            ok: true,
-            json: async () => ({
-                brand: 'WLED',
-                ip: '192.168.4.1',
-            }),
-        } as Response);
+        vi.mocked(fetch)
+            .mockResolvedValueOnce({
+                ok: true,
+            } as Response)
+            .mockResolvedValueOnce({
+                ok: true,
+                json: async () => ({
+                    brand: 'WLED',
+                    ip: '192.168.4.1',
+                }),
+            } as Response);
 
         await scan({ fps: 24 } as Settings, setSettings);
         expect(setSettings).toHaveBeenCalledOnce();

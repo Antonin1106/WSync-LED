@@ -20,6 +20,7 @@ export default function useSettings(): SettingsHook {
 
     const settingsRef = useRef(settings);
     const isScannedRef = useRef(false);
+    const [scanResult, setIsScanning] = useState<string | undefined>('');
 
     useEffect(() => {
         settingsRef.current = settings;
@@ -36,14 +37,14 @@ export default function useSettings(): SettingsHook {
 
     // Scan network to find any WLED device
     useEffect(() => {
-        const scanAndUpdate = async () => await scan(settings, setSettings);
+        const scanAndUpdate = async () => setIsScanning(await scan(settings, setSettings));
         if (!isScannedRef.current)
             scanAndUpdate();
         isScannedRef.current = true;
     }, [settings]);
 
     return {
-        isScannedRef,
+        scanResult,
         settings,
         setSettings,
         settingsRef,
