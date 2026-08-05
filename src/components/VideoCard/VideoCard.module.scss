@@ -30,5 +30,9 @@
         color: #94a3b8;
         font-size: 0.83rem;
         overflow-wrap: anywhere;
+
+        @include container(control, small) {
+            font-size: 0.75rem;
+        }
     }
 }

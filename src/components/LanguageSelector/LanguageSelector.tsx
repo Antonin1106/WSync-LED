@@ -9,26 +9,24 @@ import type { Settings } from '../../types/app';
 
 /**
  * Allows the user to switch the active interface language.
- * @param props - The props for the LanguageSelector component.
- * @param props.onChange Callback function that is called when the language is changed.
+ * @param props The props for the LanguageSelector component.
+ * @param props.setSettings A function to update the application settings.
  * @returns The rendered LanguageSelector component.
  */
-export default function LanguageSelector({ onChange }: { onChange: () => void }) {
+export default function LanguageSelector({ setSettings }: { setSettings: React.Dispatch<React.SetStateAction<Settings>> }) {
 
     const [lang, setLang] = useState(() => loadSettings().lang);
 
     useEffect(() => {
         const settings = loadSettings();
-        if (settings.lang === lang && i18n.language === lang) {
+        if (settings.lang === lang && i18n.language === lang)
             return;
-        }
 
-        settings.lang = lang;
-        saveSettings(settings);
+        setSettings((prev) => ({ ...prev, lang }));
+        saveSettings({ ...settings, lang });
 
         i18n.changeLanguage(lang);
-        onChange();
-    }, [lang, onChange]);
+    }, [lang, setSettings]);
 
 
     return (

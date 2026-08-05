@@ -4,7 +4,7 @@
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import styles from './Island.module.scss';
-import t from '../../../../lib/lang/lang';
+import t, { ta } from '../../../../lib/lang/lang';
 
 /**
  * A component representing an island control for displaying connection state information.
@@ -38,7 +38,7 @@ export default function Island({ connectionState }: {
                 }}
         >
             <div ref={contentRef}>
-                {translation}
+                {ta(connectionState)}
             </div>
         </motion.div>
     );

@@ -2,7 +2,7 @@
 // Component to renders the settings panel
 
 import { getConstraints, initialSettings, mappingModes } from '../../config/appConfig';
-import t from '../../lib/lang/lang';
+import t, { ta } from '../../lib/lang/lang';
 import { getLedCount } from '../../lib/ledLayout/ledLayout';
 import type { Settings } from '../../types/app';
 import ControlRange from './ControlRange';
@@ -47,7 +47,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
   return (
     <section className={sections.panelSection}>
       <div className={sections.sectionTitle}>
-        <h2>{t('controls')}</h2>
+        <h2>{ta('controls')}</h2>
         <div className={styles.ledInfo}>
           <span>{ledCount} {t('LED', { count: ledCount })}</span>
           <select
@@ -68,9 +68,9 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
 
       <label className={field.field}>
         <div className={field.fieldBox}>
-          <span>{t('outputIP')}</span>
+          <span>{ta('outputIP')}</span>
           <span />
-          <span>{t('wsPath')}</span>
+          <span>{ta('wsPath')}</span>
         </div>
         <div className={field.fieldBox}>
           <input
@@ -96,7 +96,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
       </label>
 
       <label className={field.field}>
-        <span>{t('diffusionMode')}</span>
+        <span>{ta('diffusionMode')}</span>
         <select
           value={settings.mappingMode}
           onChange={(e) => setSettings('mappingMode', e)}
@@ -116,7 +116,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
               <ModeHelp key={settings.mappingMode} settings={settings} />
             </AnimatePresence>
           </motion.p>
-          <ControlRange key="fps" label={t('FPS')} value={settings.fps} constraint={constraint.fps} onChange={(value) => setNumber('fps', value)} />
+          <ControlRange key="fps" label={ta('FPS')} value={settings.fps} constraint={constraint.fps} onChange={(value) => setNumber('fps', value)} />
 
           {settings.autoCompute &&
             <ControlRange key="LEDs" label="LEDs" value={settings.leds} constraint={constraint.leds} onChange={(value) => setNumber('leds', value)} />}
@@ -126,8 +126,8 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
             <ControlRange key="y" label="LED Y" value={settings.ledY} constraint={constraint.ledY} onChange={(value) => setNumber('ledY', value)} />}
 
           <ControlRange key="gain" label="Gain" value={settings.gain} constraint={constraint.gain} onChange={(value) => setNumber('gain', value)} />
-          <ControlRange key="smooth" label={t('smoothing')} value={settings.smooth} constraint={constraint.smooth} onChange={(value) => setNumber('smooth', value)} />
-          <ControlRange key="threshold" label={t('threshold')} value={settings.threshold} constraint={constraint.threshold} onChange={(value) => setNumber('threshold', value)} />
+          <ControlRange key="smooth" label={ta('smoothing')} value={settings.smooth} constraint={constraint.smooth} onChange={(value) => setNumber('smooth', value)} />
+          <ControlRange key="threshold" label={ta('threshold')} value={settings.threshold} constraint={constraint.threshold} onChange={(value) => setNumber('threshold', value)} />
           <ControlRange key="gamma" label="Gamma" value={settings.gamma} constraint={constraint.gamma} onChange={(value) => setNumber('gamma', value)} />
           <ControlRange key="saturation" label="Saturation" value={settings.saturation} constraint={constraint.saturation} onChange={(value) => setNumber('saturation', value)} />
 
@@ -140,7 +140,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
                   onSettingsChange({ ...settings, reverse: event.currentTarget.checked })
                 }
               />
-              {t('reverseOutputOrder')}
+              {ta('reverseOutputOrder')}
             </label>
           </MotionDiv>
 
@@ -153,7 +153,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
                   onSettingsChange({ ...settings, autoCompute: event.currentTarget.checked, leds: getLedCount(settings) })
                 }
               />
-              {t('autoCompute')}</label>
+              {ta('autoCompute')}</label>
           </MotionDiv>
 
           {settings.autoCompute && settings.mappingMode === 'grid' &&
@@ -166,12 +166,12 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
                     onSettingsChange({ ...settings, computeExactLedCount: event.currentTarget.checked })
                   }
                 />
-                {t('computeExactLedCount')}</label>
+                {ta('computeExactLedCount')}</label>
             </MotionDiv>}
 
           <div key="bottomLayout" className={styles.bottomLayout}>
             <MotionButton onClick={() => confirm(t('sureToReset?')) && onSettingsChange(initialSettings)}>
-              {t('resetDefaultValues')}
+              {ta('resetDefaultValues')}
             </MotionButton>
           </div>
         </AnimatePresence>

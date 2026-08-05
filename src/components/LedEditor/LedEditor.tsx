@@ -1,7 +1,7 @@
 // components/LedEditor/LedEditor.tsx
 // Component to renders a toolbar to edut LED layout
 
-import t from '../../lib/lang/lang';
+import { ta } from '../../lib/lang/lang';
 import type { LedOverride } from '../../types/app';
 import styles from './LedEditor.module.scss';
 import field from '../../styles/modules/field.module.scss';
@@ -38,12 +38,12 @@ export default function LedEditor({
   return (
     <div className={styles.ledEditor}>
       <div>
-        <h3>{selectedLed === null ? t('noLEDSel') : `LED ${selectedLed + 1}`}</h3>
-        <p>{disabledLedCount} {t('disabledLED', { count: disabledLedCount })}</p>
+        <h3>{selectedLed === null ? ta('noLEDSel') : `LED ${selectedLed + 1}`}</h3>
+        <p>{disabledLedCount} {ta('disabledLED', { count: disabledLedCount })}</p>
       </div>
       <div className={styles.editorActions}>
         <label className={styles.colorField}>
-          <span>{t('color')}</span>
+          <span>{ta('color')}</span>
           <input
             type="color"
             value={selectedColor}
@@ -60,17 +60,17 @@ export default function LedEditor({
             onUpdateLed({ enabled: !selectedEnabled, color: selectedOverride?.color })
           }
         >
-          {selectedEnabled ? t('disable') : t('enable')}
+          {selectedEnabled ? ta('disable') : ta('enable')}
         </MotionButton>
         <MotionButton
           className={`${styles.compact} ${field.ghostButton}`}
           disabled={selectedLed === null}
           onClick={() => onUpdateLed(null)}
         >
-          {t('resetLED')}
+          {ta('resetLED')}
         </MotionButton>
         <MotionButton className={`${styles.compact} ${field.ghostButton}`} onClick={onResetAll}>
-          {t('resetAll')}
+          {ta('resetAll')}
         </MotionButton>
       </div>
     </div>
