@@ -27,6 +27,7 @@ export type OverridesHook = {
 
 // Return type of useSettings
 export type SettingsHook = {
+    isScannedRef: RefObject<boolean>;
     settings: Settings;
     setSettings: Dispatch<SetStateAction<Settings>>;
     settingsRef: RefObject<Settings>;

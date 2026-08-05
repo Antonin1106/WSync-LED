@@ -7,6 +7,7 @@ import { getLedCount } from '../lib/ledLayout/ledLayout';
 import type { SettingsHook } from '../types/hooks';
 import type { Settings } from '../types/app';
 import validateSettings from '../lib/utils/validateSettings/validateSettings';
+import scan from '../lib/utils/scan/scan';
 
 /**
  * Custom React hook to manage application settings.
@@ -18,6 +19,7 @@ export default function useSettings(): SettingsHook {
     );
 
     const settingsRef = useRef(settings);
+    const isScannedRef = useRef(false);
 
     useEffect(() => {
         settingsRef.current = settings;
@@ -32,7 +34,16 @@ export default function useSettings(): SettingsHook {
         });
     };
 
+    // Scan network to find any WLED device
+    useEffect(() => {
+        const scanAndUpdate = async () => await scan(settings, setSettings);
+        if (!isScannedRef.current)
+            scanAndUpdate();
+        isScannedRef.current = true;
+    }, [settings]);
+
     return {
+        isScannedRef,
         settings,
         setSettings,
         settingsRef,
