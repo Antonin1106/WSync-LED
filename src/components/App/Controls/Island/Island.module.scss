@@ -1,0 +1,46 @@
+// components/App/Controls/Island/Island.module.scss
+// Style for the Island component.
+
+.island {
+    display: inline-flex;
+    justify-self: end;
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+    justify-content: center;
+    padding: 7px 10px;
+    margin: 0;
+    border: solid 1px #cccccc56;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    backdrop-filter: blur(15px);
+    min-width: 50px;
+    max-width: 145px;
+    text-align: center;
+    user-select: none;
+    transition: background .2s ease, border .2s ease;
+    background: linear-gradient(45deg, #19197038, #0e32862f);
+
+    &>div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        white-space: nowrap;
+        width: max-content;
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+.connected {
+    color: #bbf7d0;
+    border-color: rgba(34, 197, 94, 0.35);
+    background: rgba(22, 101, 52, 0.32);
+    background: linear-gradient(45deg, rgba(1, 173, 1, .4), rgba(47, 66, 53, .5));
+}
+
+.disconnected,
+.wsError {
+    color: #f7bbbb;
+    border-color: rgba(189, 103, 97, 0.356);
+    background: rgba(101, 34, 22, 0.32);
+}

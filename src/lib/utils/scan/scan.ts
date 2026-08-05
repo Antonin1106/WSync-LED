@@ -3,7 +3,7 @@
 
 import type { Dispatch, SetStateAction } from 'react';
 import type { Settings } from '../../../types/app';
-import { initialSettings } from '../../../config/appConfig';
+import { AP_IP, initialSettings } from '../../../config/appConfig';
 import type { WLEDDeviceData } from '../../../types/ws';
 
 /**
@@ -14,7 +14,7 @@ import type { WLEDDeviceData } from '../../../types/ws';
  * @param setSettings A function to update the application settings.
  * @returns Promise undefined.
  */
-export default async function scan(settings: Settings, setSettings: Dispatch<SetStateAction<Settings>>): Promise<undefined> {
+export default async function scan(settings: Settings, setSettings: Dispatch<SetStateAction<Settings>>): Promise<string | undefined> {
     /**
      * Try to fetch the WLED device info from the given IP address.
      * @param ip The IP address to test.
@@ -43,23 +43,17 @@ export default async function scan(settings: Settings, setSettings: Dispatch<Set
 
         return;
     }
+    const IPtoTest: string[] = [settings.ip, AP_IP, window.location.hostname];
     const testedIp: string[] = [];
 
-    if (settings.ip)
-        return;
-
-    // Try AP IP
-    if (await tryDevice('192.168.4.1'))
-        return;
-
-    // Try current device
-    if (await tryDevice(window.location.hostname))
-        return;
-
-    // Fallback : try all devices
     for (let i = 1; i <= 254; i++)
-        if (await tryDevice('192.168.1.' + i))
-            return;
+        IPtoTest.push(String('192.168.1.' + i));
+
+    for (const i in IPtoTest)
+        if (await tryDevice(IPtoTest[i] ?? ''))
+            return IPtoTest[i];
+
+    return;
 }
 
 function setWLEDData(data: unknown, ip: string, settings: Settings, setSettings: Dispatch<SetStateAction<Settings>>): undefined | true {

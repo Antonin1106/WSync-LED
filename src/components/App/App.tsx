@@ -15,6 +15,7 @@ import useVideoCache from '../../hooks/useVideoCache';
 import useLedRenderer from '../../hooks/useLedRenderer';
 import Preview from './Preview/Preview';
 import Controls from './Controls/Controls';
+import usePopMessage from '../../hooks/usePopMessage';
 
 /**
  * Main application shell that manages video loading, LED preview rendering and websocket streaming.
@@ -29,7 +30,7 @@ export default function App() {
   const video = useVideo();
   const videoCache = useVideoCache();
   const websocket = useWebSocket(settings.settingsRef);
-
+  const popMessage = usePopMessage(settings);
   const ledRenderer = useLedRenderer({
     settingsRef: settings.settingsRef,
     overridesRef: overrides.overridesRef,
@@ -78,6 +79,7 @@ export default function App() {
         >
           <Controls
             ledRenderer={ledRenderer}
+            popMessage={popMessage}
             settings={settings}
             video={video}
             videoCache={videoCache}
