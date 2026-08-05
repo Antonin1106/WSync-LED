@@ -6,11 +6,17 @@
 $breakpoints: (
   small: 480px,
   medium: 780px,
-  big: 1024px,
+  big: 1024px
 );
 
 @mixin respond($size) {
   @media (max-width: map.get($breakpoints, $size)) {
+    @content;
+  }
+}
+
+@mixin container($name, $size) {
+  @container #{$name} (width <=#{map.get($breakpoints, $size)}) {
     @content;
   }
 }
