@@ -3,8 +3,8 @@
 
 import type { Dispatch, SetStateAction } from 'react';
 import type { Settings } from '../../../types/app';
-import { AP_IP, initialSettings } from '../../../config/appConfig';
-import type { WLEDDeviceData } from '../../../types/ws';
+import { AP_IP } from '../../../config/appConfig';
+import setWLEDData from '../setWLEDData/setWLEDData';
 
 /**
  * Scan the network for a WLED device and return its IP address.
@@ -54,36 +54,4 @@ export default async function scan(settings: Settings, setSettings: Dispatch<Set
             return IPtoTest[i];
 
     return;
-}
-
-function setWLEDData(data: unknown, ip: string, settings: Settings, setSettings: Dispatch<SetStateAction<Settings>>): undefined | true {
-    if (typeof data !== 'object' || data === null)
-        return;
-
-    const deviceData = data as WLEDDeviceData;
-
-    // Check if it is a WLED device
-    if (deviceData.brand !== 'WLED')
-        return;
-
-    // Ensure IP is the same
-    if (deviceData.ip !== ip)
-        return;
-
-    // Helper to select value to use
-    const getSettingValue = <T>(current: T, initial: T, device: T | undefined): T =>
-        (current === initial ? (device ?? initial) : current);
-
-    // Save collected data to settings
-    setSettings(
-        {
-            ...settings,
-            ip,
-            fps: getSettingValue(settings.fps, initialSettings.fps, deviceData.leds?.fps),
-            leds: getSettingValue(settings.leds, initialSettings.leds, deviceData.leds?.count),
-            dataType: deviceData.leds?.rgbw ? 'RGBW' : 'RGB',
-        },
-    );
-
-    return true;
 }

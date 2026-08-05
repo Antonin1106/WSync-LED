@@ -29,7 +29,7 @@ export default function App() {
   const overrides = useLedOverrides(settings.settings);
   const video = useVideo();
   const videoCache = useVideoCache();
-  const websocket = useWebSocket(settings.settingsRef);
+  const websocket = useWebSocket(settings.settingsRef, settings.setSettings);
   const popMessage = usePopMessage(settings);
   const ledRenderer = useLedRenderer({
     settingsRef: settings.settingsRef,
