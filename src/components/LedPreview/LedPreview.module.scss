@@ -10,6 +10,8 @@
     gap: 16px;
     padding: max(16px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom));
     overflow: hidden;
+    container-type: inline-size;
+    container-name: preview;
 
     @include respond(medium) {
         order: 1;
@@ -56,6 +58,7 @@
         border: 1px solid #1f2937;
         border-radius: 8px;
         background: #020617;
+        justify-self: center;
 
         canvas {
             display: block;

@@ -93,7 +93,7 @@ button:disabled {
   opacity: 0.48;
 }
 
-@include respond(medium) {
+@include container(control, medium) {
   video {
     max-height: 34dvh;
   }

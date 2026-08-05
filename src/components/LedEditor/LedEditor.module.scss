@@ -9,7 +9,7 @@
     gap: 12px;
     padding: 12px;
 
-    @include respond(medium) {
+    @include container(preview, medium) {
         grid-template-columns: 1fr;
     }
 
@@ -26,14 +26,13 @@
         justify-content: flex-end;
         gap: 8px;
 
-        @include respond(medium) {
+        @include container(preview, medium) {
             justify-content: stretch;
 
             >* {
                 flex: 1 1 130px;
             }
         }
-
 
         .colorField {
             min-height: 38px;
@@ -45,7 +44,6 @@
             border-radius: 7px;
             background: #111827;
         }
-
     }
 
     .compact {
