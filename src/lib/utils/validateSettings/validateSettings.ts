@@ -30,7 +30,7 @@ export default function validateSettings(settings: Settings): Settings {
                 if (constraint.values && !constraint.values.includes(value as never))
                     nextValue = defaultValue;
                 else
-                    nextValue = (value as string).trim() || defaultValue;
+                    nextValue = ((value ?? '') as string).trim() || defaultValue;
                 break;
             case 'number':
                 if (typeof value !== 'number')

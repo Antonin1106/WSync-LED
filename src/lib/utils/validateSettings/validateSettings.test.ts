@@ -82,6 +82,16 @@ describe('validateSettings', () => {
         });
     });
 
+    it('uses empty string when nothing is given and it is allowed', () => {
+        expect(validateSettings({
+            ...initialSettings,
+            ip: undefined as unknown as Settings['ip'],
+        })).toEqual({
+            ...initialSettings,
+            ip: '',
+        });
+    });
+
     it('reset non-number value to default', () => {
         expect(validateSettings({
             ...initialSettings,
