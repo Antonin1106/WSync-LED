@@ -6,6 +6,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import LanguageSelector from './LanguageSelector';
+import type { Lang } from '../../types/lang';
 
 let settings = {
     lang: 'en',
@@ -32,6 +33,14 @@ vi.mock('../../config/langConfig', () => ({
         }),
     },
 }));
+
+vi.mock('../../lib/lang/lang', () => {
+    const translate = vi.fn((_key: Lang, _options?: Record<string, unknown>) => 'Language');
+
+    return {
+        default: translate,
+    };
+});
 
 describe('LanguageSelector', () => {
     beforeEach(() => {

@@ -51,6 +51,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
         <div className={styles.ledInfo}>
           <span>{ledCount} {t('LED', { count: ledCount })}</span>
           <select
+            aria-label={t('protocol')}
             value={settings.protocol}
             onChange={(e) => onSettingsChange({
               ...settings,
@@ -59,7 +60,10 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
             <option value="ddp">DDP</option>
             <option value="JSON">{t('unstableJSON')}</option>
           </select>
-          <select value={settings.dataType} onChange={(e) => setSettings('dataType', e)}>
+          <select
+            aria-label={t('colorFormat')}
+            value={settings.dataType}
+            onChange={(e) => setSettings('dataType', e)}>
             <option value="RGB">RGB</option>
             <option value="RGBW">RGBW</option>
           </select>

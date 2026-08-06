@@ -37,6 +37,7 @@ export function ta<K extends Lang>(
             <MotionBdi
                 key={t(key, options)}
                 dir="ltr"
+                lang={i18n.language}
             >
                 {t(key, options)}
             </MotionBdi>
