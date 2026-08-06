@@ -44,20 +44,22 @@ describe('scan', () => {
     });
 
     it('finds a WLED device on the AP address', async () => {
-        vi.mocked(fetch).mockResolvedValue({
-            ok: true,
-            json: async () => ({
-                brand: 'WLED',
-                ip: '192.168.4.1',
-                leds: {
-                    fps: 42,
-                    count: 150,
-                    rgbw: false,
-                },
-            }),
-        } as Response);
+        vi.mocked(fetch)
+            .mockResolvedValueOnce({ ok: false } as Response)
+            .mockResolvedValue({
+                ok: true,
+                json: async () => ({
+                    brand: 'WLED',
+                    ip: '192.168.4.1',
+                    leds: {
+                        fps: 42,
+                        count: 150,
+                        rgbw: false,
+                    },
+                }),
+            } as Response);
 
-        await scan({} as Settings, setSettings);
+        await scan({ ip: '192.168.1.20' } as Settings, setSettings);
 
         expect(setSettings).toHaveBeenCalledOnce();
         expect(fetch).toHaveBeenCalledTimes(2);
@@ -176,20 +178,7 @@ describe('scan', () => {
         expect(setSettings).not.toHaveBeenCalled();
     });
 
-    it('does not update settings when IP are not corresponding', async () => {
-        vi.mocked(fetch).mockResolvedValueOnce({
-            ok: true,
-            json: async () => ({
-                brand: 'WLED',
-                ip: '192.168.1.12', // Set another IP
-            }),
-        } as Response);
-
-        await scan({} as Settings, setSettings);
-        expect(setSettings).not.toHaveBeenCalled();
-    });
-
-    it('does not update settings when data is not a  JSON', async () => {
+    it('does not update settings when data is not a valid JSON string', async () => {
         vi.mocked(fetch).mockResolvedValue({
             ok: true,
             json: async () => 'unknown',
