@@ -19,6 +19,8 @@ import usePopMessage from '../../hooks/usePopMessage';
 
 /**
  * Main application shell that manages video loading, LED preview rendering and websocket streaming.
+ * This component is responsible for orchestrating the various hooks and components that make up the application,
+ * including settings management, video handling, LED rendering, and user interface controls.
  * @returns The rendered App component.
  */
 export default function App() {

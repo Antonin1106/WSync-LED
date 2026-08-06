@@ -93,7 +93,7 @@ Please follow these guidelines when contributing:
 
 ## 6. Documentation
 
-Public functions, hooks, utilities, and reusable components must be documented using **JSDoc** when their behavior is not immediately obvious.
+Public functions, hooks, utilities, and reusable components must be documented using **JSDoc**.
 
 Example:
 

@@ -24,10 +24,6 @@ export default function setWLEDData(data: unknown, ip: string, settings: Setting
     if (deviceData.brand !== 'WLED')
         return;
 
-    // Ensure IP is the same
-    if (deviceData.ip !== ip)
-        return;
-
     // Helper to select value to use
     const getSettingValue = <T>(current: T, initial: T, device: T | undefined): T =>
         (current === initial ? (device ?? initial) : current);

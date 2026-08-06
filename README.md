@@ -15,6 +15,7 @@ The application works on any modern browser supporting the required Web APIs. As
 - Local video library powered by IndexedDB.
 - Supports common browser-compatible video formats (`mp4`, `mov`, `m4v`, `webm`, and any codec supported by the browser).
 - LED layout visualization with interactive LED selection.
+- Network scan to find a WLED device.
 - Per-LED overrides:
   - Force a custom color.
   - Disable individual LEDs.
@@ -111,10 +112,13 @@ After the first successful load:
 
 ## Built-in development commands
 
-- `npm run dev` — Starts a development server with hot reload.
-- `npm run build` — Builds the production bundle in the `dist` directory.
-- `npm run lint` — Runs ESLint to check for code style issues.
-- `npm run lint:fix` — Runs ESLint and automatically fixes fixable issues.
-- `npm run check:header` — Checks for headers compliance in all files.
-- `npm run check:i18n` — Checks for missing or unused translation keys in the `src/lang/` directory.
-- `npm run sort-translations` — Sorts translation keys in the `src/lang/` directory for consistency.
+| Command              | Purpose                                                |
+| -------------------- | ------------------------------------------------------ |
+| `npm run dev`        | Start the application development server.              |
+| `npm run build`      | Build and verify the production application.           |
+| `npm run lint`       | Run ESLint.                                            |
+| `npm run lint:fix`   | Run ESLint and apply automatic fixes.                  |
+| `npm test`           | Run translation checks, header checks, and unit tests. |
+| `npm run coverage`   | Run unit tests with coverage.                          |
+| `npm run docs:dev`   | Start the VitePress documentation server.              |
+| `npm run docs:build` | Build the documentation site.                          |

@@ -4,6 +4,7 @@
 
 ### Added
 
+- Added integrated documentation with TypeDoc and VitePress
 - Added animations with motion
 - Added panel resizing
 - Added test with Vitest
@@ -21,6 +22,7 @@
 ### Removed
 
 - Removed unavailable Service Worker over HTTP
+- Removed `0x10` procotol
 
 ## [1.0.0] - 2026-07-13
 

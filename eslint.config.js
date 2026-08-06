@@ -9,7 +9,7 @@ import jsdoc from 'eslint-plugin-jsdoc';
 
 export default defineConfig([
     // Ignore generated build files.
-    globalIgnores(['dist']),
+    globalIgnores(['dist', 'docs']),
     jsdoc.configs['flat/recommended-typescript'],
     {
         settings: {
