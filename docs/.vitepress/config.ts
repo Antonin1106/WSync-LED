@@ -4,7 +4,7 @@ const isGitHubPages = process.env.GITHUB_ACTIONS === 'true'
 export default defineConfig({
   lang: 'en-US',
 
-  base: isGitHubPages ? '/Wsync-LED/' : '/',
+  base: isGitHubPages ? '/WSync-LED/' : '/',
 
   title: 'WSync LED',
 
