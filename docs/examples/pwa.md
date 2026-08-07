@@ -21,4 +21,19 @@ Open WSync-LED in your favorite browser, click the install button and follow ins
 Serve WSync-LED from a local source on your network (run `npm run preview` or use a  local server) or access it from [Github Pages](https://antonin1106.github.io/WSync-LED/wsync.html).
 
 Then open WSync-LED on Safari, click the share button, then `Add to home screen`.
+
 You can change the app name as you want.
+
+<div style="display:flex;justify-content:center;gap:15px;text-align:center;max-width:1000px;">
+    <figure>
+        <img src="../assets/share.png" style="border-radius:30px;width:100%;">
+        <figcaption><b>Share WSync on Safari</b></figcaption>
+    </figure>
+    <figure style="display:flex;justify-content:space-between;flex-direction:column">
+        <img src="../assets/add-to-homescreen.png" style="border-radius:32px;width:1400px">
+        <figcaption><b>Add WSync to homescreen</b></figcaption>
+    </figure>
+</div>
+
+> [!INFO]
+> It is highly recommended to select the `Open as Web App` option.
