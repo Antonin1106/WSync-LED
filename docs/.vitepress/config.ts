@@ -47,6 +47,14 @@ export default defineConfig({
         link: '/guide/getting-started.html',
       },
       {
+        text: 'Legal',
+        link: '/legal.html',
+      },
+      {
+        text: 'WSync-LED',
+        link: `https://antonin1106.github.io/WSync-LED/wsync.html`,
+      },
+      {
         text: 'GitHub',
         link: 'https://github.com/Antonin1106/wsync-led',
       },
@@ -99,6 +107,14 @@ export default defineConfig({
               text: 'Accessibility',
               link: '/project/accessibility.html',
             },
+            {
+              text: 'Changelog',
+              link: '/project/changelog.html',
+            },
+            {
+              text: 'MIT License',
+              link: '/project/License.html',
+            },
           ],
         },
       ],
@@ -139,6 +155,10 @@ export default defineConfig({
               text: 'WLED integration',
               link: '/examples/wled.html',
             },
+            {
+              text: 'Progressive Web App',
+              link: '/examples/pwa.html',
+            },
           ],
         },
       ],
@@ -148,7 +168,7 @@ export default defineConfig({
       {
         icon: 'github',
         link: 'https://github.com/Antonin1106/wsync-led',
-      },
+      }
     ],
 
     search: {
