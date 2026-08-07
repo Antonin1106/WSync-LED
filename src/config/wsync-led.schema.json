@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/Antonin1106/WSync-LED/ui/config/wsync-led.schema.json",
+    "$id": "https://raw.githubusercontent.com/Antonin1106/WSync-LED/main/src/config/wsync-led.schema.json",
     "title": "WSync-LED Configuration",
     "description": "Configuration file for WSync-LED.",
     "type": "object",

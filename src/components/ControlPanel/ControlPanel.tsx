@@ -179,7 +179,7 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange, ove
             </MotionDiv>}
 
           <div key="bottomLayout" className={styles.bottomLayout}>
-            <MotionLabel htmlFor={styles.jsonInput}>
+            <MotionLabel htmlFor={styles.jsonInput} tabIndex={-1}>
               <Download />
               {ta('importSettings')}
               <input

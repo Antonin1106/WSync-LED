@@ -10,7 +10,6 @@
   color-scheme: dark;
   text-rendering: optimizeLegibility;
   font-synthesis: none;
-  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -23,13 +22,13 @@ html,
 body,
 #root {
   min-height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
-  min-width: 320px;
   background: #05070a;
-  overscroll-behavior: none;
   padding-top: env(safe-area-inset-top);
   padding-right: env(safe-area-inset-right);
   padding-bottom: env(safe-area-inset-bottom);

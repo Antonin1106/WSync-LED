@@ -62,6 +62,8 @@ export default function App() {
     />
   ), [ledRenderer.ledColors, overrides, settings.settings, video.videoRef]);
 
+  const width = 'calc(100vw -  env(safe-area-inset-right) -  env(safe-area-inset-right))';
+
   return (
     <main className={styles.appShell}>
       <Group
@@ -69,8 +71,8 @@ export default function App() {
         orientation={isDesktop ? 'horizontal' : 'vertical'}
         style={
           isDesktop
-            ? { height: '100vh', width: '100vw' }
-            : { display: 'flex', flexDirection: 'column', width: '100vw' }
+            ? { height: '100vh', width: width }
+            : { display: 'flex', flexDirection: 'column', width: width }
         }
       >
         <Panel

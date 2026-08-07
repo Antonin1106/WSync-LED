@@ -39,12 +39,6 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: cp dist/wsync.html docs/.vitepress/dist/wsync.html
-      # - name: Download from the latest release
-      #  run: |
-      #    gh release download --pattern wsync.html --dir .
-      #    cp wsync.html docs/.vitepress/dist/wsync.html
-      #  env:
-      #    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

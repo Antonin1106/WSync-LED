@@ -70,14 +70,14 @@ export default function Controls({ ledRenderer, overrides, popMessage, settings,
                     onClick={ledRenderer.start}
                     disabled={ledRenderer.isRunning}
                 >
-                    {t('start')}
+                    {ta('start')}
                 </MotionButton>
                 <MotionButton
                     className={field.ghostButton}
                     onClick={ledRenderer.stop}
                     disabled={!ledRenderer.isRunning}
                 >
-                    {t('stop')}
+                    {ta('stop')}
                 </MotionButton>
             </div>
 
