@@ -1,8 +1,8 @@
 // components/App/Controls/Controls.tsx
 // Component to renders the Controls section.
 
-import React, { useReducer } from 'react';
-import t from '../../../lib/lang/lang';
+import React from 'react';
+import t, { ta } from '../../../lib/lang/lang';
 import LanguageSelector from '../../LanguageSelector/LanguageSelector';
 import VideoCard from '../../VideoCard/VideoCard';
 import VideoLibrary from '../../VideoLibrary/VideoLibrary';
@@ -35,16 +35,13 @@ export default function Controls({ ledRenderer, popMessage, settings, video, vid
         videoCache: VideoCacheHook,
         websocket: WebSocketHook,
     }) {
-
-    const [, forceUpdate] = useReducer(x => x + 1, 0);
-
     return (
         <section className={styles.controlSurface}>
             <header className={styles.appHeader}>
                 <div>
-                    <p className={styles.eyebrow}>{t('desc')}</p>
+                    <p className={styles.eyebrow}>{ta('desc')}</p>
                     <h1>{t('appName')}</h1>
-                    <LanguageSelector onChange={() => forceUpdate()} />
+                    <LanguageSelector setSettings={settings.setSettings} />
                 </div>
 
                 <Island
@@ -73,7 +70,6 @@ export default function Controls({ ledRenderer, popMessage, settings, video, vid
                 >
                     {t('start')}
                 </MotionButton>
-
                 <MotionButton
                     className={field.ghostButton}
                     onClick={ledRenderer.stop}

@@ -30,7 +30,7 @@ export default function usePopMessage(settings: SettingsHook): ReactNode {
         if (settings.scanResult === undefined)
             events.push(t('noWLEDfound') + '.');
         else {
-            const connectedTo = (ip: string) => `${t('connectedTo')} ${ip}.`;
+            const connectedTo = (ip: string) => `${t('connectedTo')} ${ip}`;
 
             switch (settings.scanResult) {
                 case previousAppSettings.ip:

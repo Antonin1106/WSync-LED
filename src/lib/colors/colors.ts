@@ -7,7 +7,7 @@ import type { RGBW, Settings } from '../../types/app';
  * Converts a hexadecimal color string into an RGBW tuple.
  * @param hex Hexadecimal color code such as #ff00aa or #ff00aaff.
  * @returns RGBW channel values as integers.
- * @description This function parses a hexadecimal color string, extracting the red, green, and blue components.
+ * This function parses a hexadecimal color string, extracting the red, green, and blue components.
  * It then converts these values into an RGBW format, which includes a white channel calculated based on the RGB values.
  * The function supports both 6-character and 8-character hex codes (rgba is not supported), with or without a leading '#'.
  */
@@ -90,7 +90,7 @@ export function clampChannel(value: number) {
  * @param g Green channel value (0-255).
  * @param b Blue channel value (0-255).
  * @returns An array containing the adjusted RGB values and the calculated white channel value as [R, G, B, W].
- * @description The white channel is calculated with a basic algorithm based on the minimum of the RGB channels
+ * The white channel is calculated with a basic algorithm based on the minimum of the RGB channels
  * and a saturation factor to ensure that the resulting color maintains its intended hue while utilizing the white channel effectively.
  */
 export function RGBToRGBW(r: number, g: number, b: number): RGBW {

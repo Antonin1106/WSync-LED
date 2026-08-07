@@ -4,7 +4,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { createLedPositions } from '../../lib/ledLayout/ledLayout';
 import type { LedOverride, RGBW, Settings } from '../../types/app';
-import t from '../../lib/lang/lang';
+import { ta } from '../../lib/lang/lang';
 import styles from './LedPreview.module.scss';
 import { MotionButton } from '../Motion/Motion';
 
@@ -192,14 +192,14 @@ export default function LedPreview({
         <section className={styles.previewSurface}>
             <div className={styles.previewToolbar}>
                 <div>
-                    <p className={styles.eyebrow}>{t('visualization')}</p>
-                    <h2>{t('layout')}</h2>
+                    <p className={styles.eyebrow}>{ta('visualization')}</p>
+                    <h2>{ta('layout')}</h2>
                 </div>
                 <MotionButton
                     className={editMode ? `${styles.modeButton} ${styles.active}` : styles.modeButton}
                     onClick={() => onEditModeChange(!editMode)}
                 >
-                    {editMode ? t('editingActive') : t('editLEDs')}
+                    {editMode ? ta('editingActive') : ta('editLEDs')}
                 </MotionButton>
             </div>
 

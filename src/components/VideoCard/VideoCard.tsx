@@ -2,7 +2,7 @@
 // Component to renders the media player surface
 
 import type React from 'react';
-import t from '../../lib/lang/lang';
+import { ta } from '../../lib/lang/lang';
 import styles from './VideoCard.module.scss';
 
 type Props = {
@@ -32,7 +32,7 @@ export default function VideoCard({
       <video id="video" ref={videoRef} controls playsInline preload="metadata" />
       <canvas id="canvas" ref={canvasRef} hidden />
       <label className={styles.fileButton} htmlFor={styles.fileInput}>
-        {t('chooseVideo')}
+        {ta('chooseVideo')}
       </label>
       <input
         type="file"
@@ -40,7 +40,7 @@ export default function VideoCard({
         accept="video/*,.mp4,.mov,.m4v,.webm,.avi,.mkv"
         onChange={onLoadVideo}
       />
-      <p className={styles.videoName}>{currentVideoName || t('noVideoLoaded')}</p>
+      <p className={styles.videoName}>{currentVideoName || ta('noVideoLoaded')}</p>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 // components/ControlPanel/ModeHelp.tsx
 // Component to renders a user-facing description of the active mapping mode
 
-import t from '../../lib/lang/lang';
+import { ta } from '../../lib/lang/lang';
 import { MotionSpan } from '../Motion/Motion';
 import type { Settings } from '../../types/app';
 
@@ -13,11 +13,11 @@ import type { Settings } from '../../types/app';
  */
 export function ModeHelp({ settings }: { settings: Settings }) {
     if (settings.mappingMode === 'perimeter') {
-        return <MotionSpan>{t('perimeterHelp', { ledX: settings.ledX, ledY: settings.ledY })}</MotionSpan>;
+        return <MotionSpan>{ta('perimeterHelp', { ledX: settings.ledX, ledY: settings.ledY })}</MotionSpan>;
     }
 
     if (settings.mappingMode === 'border')
-        return <MotionSpan>{t('borderHelp', { ledX: settings.ledX, ledY: settings.ledY })}</MotionSpan>;
+        return <MotionSpan>{ta('borderHelp', { ledX: settings.ledX, ledY: settings.ledY })}</MotionSpan>;
 
-    return <MotionSpan>{t('gridHelp', { ledX: settings.ledX, ledY: settings.ledY })}</MotionSpan>;
+    return <MotionSpan>{ta('gridHelp', { ledX: settings.ledX, ledY: settings.ledY })}</MotionSpan>;
 }

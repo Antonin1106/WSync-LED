@@ -6,6 +6,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import LanguageSelector from './LanguageSelector';
+import type { Lang } from '../../types/lang';
 
 let settings = {
     lang: 'en',
@@ -33,6 +34,14 @@ vi.mock('../../config/langConfig', () => ({
     },
 }));
 
+vi.mock('../../lib/lang/lang', () => {
+    const translate = vi.fn((_key: Lang, _options?: Record<string, unknown>) => 'Language');
+
+    return {
+        default: translate,
+    };
+});
+
 describe('LanguageSelector', () => {
     beforeEach(() => {
         settings = {
@@ -45,7 +54,7 @@ describe('LanguageSelector', () => {
     });
 
     it('renders with the saved language selected', () => {
-        render(<LanguageSelector onChange={vi.fn()} />);
+        render(<LanguageSelector setSettings={vi.fn()} />);
 
         expect(screen.getByRole('combobox')).toHaveValue('en');
     });
@@ -54,7 +63,7 @@ describe('LanguageSelector', () => {
         const user = userEvent.setup();
         const onChange = vi.fn();
 
-        render(<LanguageSelector onChange={onChange} />);
+        render(<LanguageSelector setSettings={onChange} />);
 
         await user.selectOptions(screen.getByRole('combobox'), 'fr');
 
@@ -71,7 +80,7 @@ describe('LanguageSelector', () => {
         settings.lang = 'en';
         currentLanguage = 'en';
 
-        render(<LanguageSelector onChange={vi.fn()} />);
+        render(<LanguageSelector setSettings={vi.fn()} />);
 
         expect(mocks.saveSettings).not.toHaveBeenCalled();
     });
@@ -80,7 +89,7 @@ describe('LanguageSelector', () => {
         settings.lang = 'fr';
         currentLanguage = 'fr';
 
-        render(<LanguageSelector onChange={vi.fn()} />);
+        render(<LanguageSelector setSettings={vi.fn()} />);
 
         expect(screen.getByRole('combobox')).toHaveValue('fr');
 

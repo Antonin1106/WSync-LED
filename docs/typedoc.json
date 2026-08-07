@@ -1,0 +1,49 @@
+{
+    "$schema": "https://typedoc.org/schema.json",
+    "entryPoints": [
+        "../src/components",
+        "../src/config",
+        "../src/hooks",
+        "../src/lib",
+        "../src/types"
+    ],
+    "entryPointStrategy": "expand",
+    "plugin": [
+        "typedoc-plugin-rename-defaults",
+        "typedoc-plugin-frontmatter",
+        "typedoc-plugin-markdown"
+    ],
+    "out": "api",
+    "hideBreadcrumbs": true,
+    "hidePageTitle": false,
+    "githubPages": true,
+    "excludePrivate": true,
+    "excludeProtected": false,
+    "excludeInternal": true,
+    "categorizeByGroup": true,
+    "indexFormat": "table",
+    "sort": [
+        "kind",
+        "alphabetical"
+    ],
+    "typeDeclarationFormat": "table",
+    "useCodeBlocks": true,
+    "commentStyle": "all",
+    "useFirstParagraphOfCommentAsSummary": true,
+    "notRenderedTags": [
+        "@showCategories",
+        "@showGroups",
+        "@hideCategories",
+        "@hideGroups",
+        "@disableGroups",
+        "@expand",
+        "@preventExpand",
+        "@expandType",
+        "@summary",
+        "@group",
+        "@groupDescription",
+        "@category",
+        "@categoryDescription",
+        "@param"
+    ]
+}

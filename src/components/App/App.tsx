@@ -19,6 +19,8 @@ import usePopMessage from '../../hooks/usePopMessage';
 
 /**
  * Main application shell that manages video loading, LED preview rendering and websocket streaming.
+ * This component is responsible for orchestrating the various hooks and components that make up the application,
+ * including settings management, video handling, LED rendering, and user interface controls.
  * @returns The rendered App component.
  */
 export default function App() {
@@ -29,7 +31,7 @@ export default function App() {
   const overrides = useLedOverrides(settings.settings);
   const video = useVideo();
   const videoCache = useVideoCache();
-  const websocket = useWebSocket(settings.settingsRef);
+  const websocket = useWebSocket(settings.settingsRef, settings.setSettings);
   const popMessage = usePopMessage(settings);
   const ledRenderer = useLedRenderer({
     settingsRef: settings.settingsRef,

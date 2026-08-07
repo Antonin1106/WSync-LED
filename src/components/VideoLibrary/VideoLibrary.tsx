@@ -4,7 +4,7 @@
 import { ArrowBigDown, LucideX } from 'lucide-react';
 import { FormatBytes } from '../../lib/videoCache';
 import type { CachedVideoMeta } from '../../types/app';
-import t from '../../lib/lang/lang';
+import t, { ta } from '../../lib/lang/lang';
 import styles from './VideoLibrary.module.scss';
 import sections from '@/styles/modules/sections.module.scss';
 import { MotionButton } from '../Motion/Motion';
@@ -46,7 +46,7 @@ export default function VideoLibrary({ videos, onOpen, onDelete }: Props) {
         className={sections.sectionTitle}
         style={{ paddingRight: 12 }}
       >
-        <h2>{t('localLibrary')}</h2>
+        <h2>{ta('localLibrary')}</h2>
         <span className={styles.rightCorner}>
           <AnimatePresence mode="popLayout">
             <motion.b
@@ -75,7 +75,7 @@ export default function VideoLibrary({ videos, onOpen, onDelete }: Props) {
             className={styles.emptyState}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-          > {t('openedVideos')}
+          > {ta('openedVideos')}
           </motion.p>)}
         <AnimatePresence>
           {(!isHidden || (videos.length <= 1 && videos.length > 0)) &&

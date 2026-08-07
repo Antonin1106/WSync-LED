@@ -62,3 +62,24 @@ export function MotionSpan(props: HTMLMotionProps<'span'>) {
         />
     );
 }
+
+/**
+ * Renders a motion-enabled bdi with fade-in and fade-out animations.
+ * @param props The properties for the MotionBdi component, extending HTMLMotionProps for a bdi element.
+ * @returns The rendered bdi component with specified animations and transitions.
+ */
+export function MotionBdi(props: HTMLMotionProps<'bdi'>) {
+    return (
+        <motion.bdi
+            initial={{ opacity: 0, y: -3, rotateX: -90 }}
+            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            exit={{ opacity: 0, y: -3, rotateX: 90 }}
+            transition={{
+                opacity: { duration: 0.1, damping: 20, stiffness: 300, type: 'spring', ease: 'linear' },
+                y: { duration: 0.1, damping: 10, stiffness: 100, type: 'spring', ease: 'easeInOut' },
+                rotateX: { duration: 0.1, type: 'spring', ease: 'easeInOut' },
+            }}
+            {...props}
+        />
+    );
+}

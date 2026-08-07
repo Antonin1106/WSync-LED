@@ -6,13 +6,15 @@ import type { LedFrame, Settings } from '../types/app';
 import type { ConnectionState, WebSocketHook } from '../types/hooks';
 import buildDDPPackets from '../lib/protocols/DDP/DDP';
 import buildJSONPackets from '../lib/protocols/JSON/JSON';
+import setWLEDData from '../lib/utils/setWLEDData/setWLEDData';
 
 /**
  * Custom React hook to manage WebSocket connections for streaming LED data.
  * @param settingsRef A reference to the current application settings, used to configure the WebSocket connection.
+ * @param setSettings A function to update the application settings.
  * @returns An object containing the WebSocket reference, connection state, and functions to connect and disconnect the WebSocket.
  */
-export default function useWebSocket(settingsRef: RefObject<Settings>): WebSocketHook {
+export default function useWebSocket(settingsRef: RefObject<Settings>, setSettings: React.Dispatch<React.SetStateAction<Settings>>): WebSocketHook {
     const [connectionState, setConnectionState] = useState<ConnectionState>('ready');
     const wsRef = useRef<WebSocket | null>(null);
 
@@ -31,6 +33,7 @@ export default function useWebSocket(settingsRef: RefObject<Settings>): WebSocke
         ws.onopen = () => setConnectionState('connected');
         ws.onclose = () => setConnectionState('disconnected');
         ws.onerror = () => setConnectionState('wsError');
+        ws.onmessage = (message) => setWLEDData(JSON.parse(message.data).info, settingsRef.current.ip, settingsRef.current, setSettings);
         wsRef.current = ws;
         setConnectionState('connecting');
     }

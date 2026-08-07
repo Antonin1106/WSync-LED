@@ -1,7 +1,7 @@
 // components/ControlPanel/ControlRange.tsx
 // Component to renders a numeric input range
 
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import field from '../../styles/modules/field.module.scss';
 import { motion } from 'framer-motion';
 import type { NumberConstraint } from '../../types/app';
@@ -22,7 +22,7 @@ export default function ControlRange({
   constraint,
   onChange,
 }: {
-  label: string;
+  label: ReactNode;
   value: number;
   constraint: NumberConstraint;
   onChange: (_value: string) => void;
