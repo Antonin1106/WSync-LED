@@ -42,7 +42,7 @@ export default defineConfig({
     },
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/tests/setup.ts',
+    setupFiles: './src/config/tests.ts',
   },
 
   // Configure import aliases for cleaner and shorter paths.

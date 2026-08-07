@@ -16,7 +16,8 @@ Use this setup for a rectangular LED matrix controlled by WLED.
 | LED X          | Matrix width                               |
 | LED Y          | Matrix height                              |
 
-If the physical output order is inverted, enable **Reverse output order**.
+> [!TIP] 
+> If the physical output order is inverted, enable **Reverse output order**.
 
 ## Four-Sided Screen Ambilight
 
@@ -82,7 +83,9 @@ Use JSON only when DDP is unavailable.
 | WS Path      | `ws`                        |
 | Color format | RGB unless RGBW is required |
 
-JSON packets are larger and less suitable for high LED counts or high FPS. For stable live output, prefer DDP.
+> [!IMPORTANT]
+> JSON packets are larger and less suitable for high LED counts or high FPS. For stable live output, prefer DDP.
+> Uses JSON only as a fallback.
 
 ## Suggested Starting Values
 
@@ -97,4 +100,5 @@ These defaults are a practical starting point for most setups:
 | Gamma                       | `2`    |
 | Saturation                  | `1`    |
 
-Increase gain for brighter output, increase smoothing for calmer transitions, and increase the threshold if dark scenes produce unwanted low level glow.
+> [!INFO] 
+> Increase gain for brighter output, increase smoothing for calmer transitions, and increase the threshold if dark scenes produce unwanted low level glow.

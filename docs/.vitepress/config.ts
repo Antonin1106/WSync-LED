@@ -1,7 +1,10 @@
 import { defineConfig } from 'vitepress';
+const isGitHubPages = process.env.GITHUB_ACTIONS === 'true'
 
 export default defineConfig({
   lang: 'en-US',
+
+  base: isGitHubPages ? '/Wsync-LED/' : '/',
 
   title: 'WSync LED',
 

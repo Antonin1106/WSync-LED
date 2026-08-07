@@ -60,16 +60,17 @@ If you discover a bug, please open an issue including:
 
 ```
 .
-├── public/             # Static assets
+├── docs/               # Documentation directory
 ├── src/
+│   ├── assets/         # Assets
 │   ├── components/     # React components
 │   ├── config/         # Application configuration
+│   ├── hooks/          # Custom React hooks
 │   ├── lang/           # Languages files
 │   ├── lib/            # Utilities and helpers
 │   ├── styles/         # Global styles
 │   ├── types/          # TypeScript types
-│   ├── App.tsx
-│   └── main.tsx
+│   └── main.tsx        # Entry app point
 ├── CHANGELOG.md
 ├── README.md
 └── package.json
@@ -121,6 +122,7 @@ Comments should explain **why** something exists rather than simply repeating wh
 If your contribution changes the project's behavior:
 
 - Update `README.md` if needed.
+- Update any `.md` needed into `docs/`.
 - Update `CHANGELOG.md`.
 - Add or update JSDoc comments when appropriate.
 
@@ -130,7 +132,7 @@ If your contribution changes the project's behavior:
 
 If your contribution introduces or modifies user-facing text:
 
-- Always use the `t()` function for translatable strings.
+- Always use the `t()` or `ta()` function for translatable strings.
 - Update every supported language file in [`src/lang/`](src/lang/).
 - Ensure that translation keys remain consistent across all language files.
 - Remove unused translation keys whenever applicable.
@@ -147,19 +149,13 @@ Before opening a Pull Request:
 npm install
 ```
 
-- Run ESLint:
-
-```bash
-npm run lint
-```
-
 - Build the project:
 
 ```bash
 npm run build
 ```
 
-If tests exist, run them as well.
+If tests exist, they will be executed automatically during build.
 
 Your contribution should compile without errors or warnings.
 
@@ -181,4 +177,4 @@ When creating the Pull Request, include:
 - How the changes were tested.
 - Any known limitations or breaking changes.
 
-Thank you for helping improve the project !
+**Thank you for helping improve the project !**

@@ -16,7 +16,7 @@
     "out": "api",
     "hideBreadcrumbs": true,
     "hidePageTitle": false,
-    "githubPages": false,
+    "githubPages": true,
     "excludePrivate": true,
     "excludeProtected": false,
     "excludeInternal": true,
@@ -28,5 +28,22 @@
     ],
     "typeDeclarationFormat": "table",
     "useCodeBlocks": true,
-    "commentStyle": "all"
+    "commentStyle": "all",
+    "useFirstParagraphOfCommentAsSummary": true,
+    "notRenderedTags": [
+        "@showCategories",
+        "@showGroups",
+        "@hideCategories",
+        "@hideGroups",
+        "@disableGroups",
+        "@expand",
+        "@preventExpand",
+        "@expandType",
+        "@summary",
+        "@group",
+        "@groupDescription",
+        "@category",
+        "@categoryDescription",
+        "@param"
+    ]
 }
