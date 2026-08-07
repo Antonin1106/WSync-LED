@@ -11,6 +11,7 @@
 - Added RGBW support
 - Added reset button
 - Added JSON protocol
+- Added import/export settings
 
 ### Changed
 

@@ -6,7 +6,7 @@ import { loadSettings, saveSettings } from '../lib/storage/storage';
 import { getLedCount } from '../lib/ledLayout/ledLayout';
 import type { SettingsHook } from '../types/hooks';
 import type { Settings } from '../types/app';
-import validateSettings from '../lib/utils/validateSettings/validateSettings';
+import validateSettings from '../lib/utils/validate/validateSettings/validateSettings';
 import scan from '../lib/utils/scan/scan';
 
 /**

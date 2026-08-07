@@ -2,6 +2,7 @@
 // Component to renders motion-enabled elements with animations
 
 import { motion, type HTMLMotionProps } from 'framer-motion';
+import styles from './Motion.module.scss';
 
 /**
  * Renders a motion-enabled button with hover and tap animations.
@@ -11,7 +12,27 @@ import { motion, type HTMLMotionProps } from 'framer-motion';
 export function MotionButton(props: HTMLMotionProps<'button'>) {
     return (
         <motion.button
+            className={styles.motionButton}
             whileHover={!props.disabled ? { scale: 1.04 } : undefined}
+            whileTap={{ scale: 0.97 }}
+            transition={{
+                duration: 0.15, damping: 15, stiffness: 200, type: 'spring', ease: 'easeInOut',
+            }}
+            {...props}
+        />
+    );
+}
+
+/**
+ * Renders a motion-enabled link with hover and tap animations.
+ * @param props The properties for the MotionLink component, extending HTMLMotionProps for a "a" element.
+ * @returns The rendered MotionLink component with specified animations and transitions.
+ */
+export function MotionLink(props: HTMLMotionProps<'a'>) {
+    return (
+        <motion.a
+            className={styles.motionLink}
+            whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
             transition={{
                 duration: 0.15, damping: 15, stiffness: 200, type: 'spring', ease: 'easeInOut',
@@ -78,6 +99,25 @@ export function MotionBdi(props: HTMLMotionProps<'bdi'>) {
                 opacity: { duration: 0.1, damping: 20, stiffness: 300, type: 'spring', ease: 'linear' },
                 y: { duration: 0.1, damping: 10, stiffness: 100, type: 'spring', ease: 'easeInOut' },
                 rotateX: { duration: 0.1, type: 'spring', ease: 'easeInOut' },
+            }}
+            {...props}
+        />
+    );
+}
+
+/**
+ * Renders a motion-enabled label with hover and tap animations.
+ * @param props The properties for the MotionLabel component, extending HTMLMotionProps for a button label.
+ * @returns The rendered MotionLabel component with specified animations and transitions.
+ */
+export function MotionLabel(props: HTMLMotionProps<'label'>) {
+    return (
+        <motion.label
+            className={styles.motionLabel}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{
+                duration: 0.15, damping: 15, stiffness: 200, type: 'spring', ease: 'easeInOut',
             }}
             {...props}
         />

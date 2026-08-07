@@ -81,6 +81,7 @@ export default function App() {
         >
           <Controls
             ledRenderer={ledRenderer}
+            overrides={overrides}
             popMessage={popMessage}
             settings={settings}
             video={video}

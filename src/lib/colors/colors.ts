@@ -12,10 +12,11 @@ import type { RGBW, Settings } from '../../types/app';
  * The function supports both 6-character and 8-character hex codes (rgba is not supported), with or without a leading '#'.
  */
 export function hexToRgbw(hex: string): RGBW {
-  const value = hex.replace('#', '');
-  const r = parseInt(value.slice(0, 2), 16);
-  const g = parseInt(value.slice(2, 4), 16);
-  const b = parseInt(value.slice(4, 6), 16);
+  const value = hex.replace('#', '').trim();
+  const safeValue = value.length >= 6 ? value.slice(0, 6) : value.padEnd(6, '0');
+  const r = parseInt(safeValue.slice(0, 2), 16) || 0;
+  const g = parseInt(safeValue.slice(2, 4), 16) || 0;
+  const b = parseInt(safeValue.slice(4, 6), 16) || 0;
 
   return RGBToRGBW(r, g, b);
 }
@@ -33,7 +34,7 @@ export function rgbwToHex(rgbw: RGBW) {
     let h = c.toString(16).toUpperCase();
     if (h.length === 1)
       h = '0' + h;
-    return h;
+    return h.slice(0, 2);
   };
 
   // Include the white channel in the RGB conversion

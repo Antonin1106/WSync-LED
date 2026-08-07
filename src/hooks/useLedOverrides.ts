@@ -1,11 +1,12 @@
 // hooks/useLedOverrides.ts
 // LEDs overrides management hook.
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import type { LedOverride, Settings } from '../types/app';
 import { loadOverrides, saveOverrides } from '../lib/storage/storage';
 import { getLedCount } from '../lib/ledLayout/ledLayout';
 import type { OverridesHook } from '../types/hooks';
+import validateOverrides from '../lib/utils/validate/validateOverrides/validateOverrides';
 
 /**
  * Custom React hook to manage LED overrides based on the current settings.
@@ -17,7 +18,7 @@ export default function useLedOverrides(settings: Settings): OverridesHook {
     const [selectedLed, setSelectedLed] = useState<number | null>(null);
 
     // Current override settings
-    const [ledOverrides, setLedOverrides] = useState<Record<number, LedOverride>>(loadOverrides);
+    const [ledOverrides, updateLedOverrides] = useState<Record<number, LedOverride>>(loadOverrides);
 
     // Compute the override for the currently selected LED, if any
     const selectedOverride = selectedLed === null ? undefined : ledOverrides[selectedLed];
@@ -39,6 +40,14 @@ export default function useLedOverrides(settings: Settings): OverridesHook {
             if (update) next[selectedLed] = update;
             else delete next[selectedLed];
             return next;
+        });
+    };
+
+    // Validate overrides before using them
+    const setLedOverrides: Dispatch<SetStateAction<Record<number, LedOverride>>> = (value) => {
+        updateLedOverrides((previous) => {
+            const next = typeof value === 'function' ? value(previous) : value;
+            return validateOverrides(next);
         });
     };
 

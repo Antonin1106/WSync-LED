@@ -1,19 +1,25 @@
-// lib/utils/validateSettings/validateSettings.ts
+// lib/utils/validate/validateSettings/validateSettings.ts
 // Utilities functions to validate settings
 
-import { getConstraints, initialSettings } from '../../../config/appConfig';
-import type { Settings } from '../../../types/app';
+import { getConstraints, initialSettings } from '../../../../config/appConfig';
+import type { Settings } from '../../../../types/app';
+import reduce from '../reduce';
 
 /**
  * Verify all settings according to their constraints.
  * @param settings Current application settings.
  * @returns Validated settings with values according to their defined constraints.
  */
-export default function validateSettings(settings: Settings): Settings {
-    const constraints = getConstraints(settings);
-
+export default function validateSettings(settings: Record<string, unknown>): Settings {
+    const keys = Object.keys(initialSettings) as (keyof Settings)[];
+    const reduced = reduce<Settings>(keys, settings);
     let changed = false;
-    const validated = { ...settings };
+
+    if (Object.keys(reduced).length !== Object.keys(settings).length)
+        changed = true;
+
+    const constraints = getConstraints(reduced);
+    const validated = { ...reduced };
     const constraintKeys = Object.keys(constraints) as Array<keyof typeof constraints>;
 
     for (const key of constraintKeys) {
@@ -46,7 +52,7 @@ export default function validateSettings(settings: Settings): Settings {
         }
     }
 
-    return changed ? validated : settings;
+    return changed ? validated : settings as Settings;
 }
 
 /**

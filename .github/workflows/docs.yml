@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - docs # Provisional
+      - ui
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

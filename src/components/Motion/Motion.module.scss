@@ -1,0 +1,19 @@
+// components/Motion/Motion.module.scss
+// Stye for motion components.
+
+.motionButton,
+.motionLink,
+.motionLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    @container (width <=480px) {
+        flex-direction: column;
+    }
+
+    svg {
+        width: 20px;
+    }
+}

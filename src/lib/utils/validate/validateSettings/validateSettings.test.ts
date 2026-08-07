@@ -1,14 +1,14 @@
-// lib/utils/validateSettings/validateSettings.test.ts
+// lib/utils/validate/validateSettings/validateSettings.test.ts
 // Unit tests for settings validation.
 
 import { describe, expect, it, vi } from 'vitest';
-import * as appConfig from '../../../config/appConfig';
-import type { Settings } from '../../../types/app';
+import * as appConfig from '../../../../config/appConfig';
+import type { Settings } from '../../../../types/app';
 
 // Mock the getConstraints function to return a modified version of the constraints
-vi.mock('../../../config/appConfig', async () => {
+vi.mock('../../../../config/appConfig', async () => {
     const actual = await vi.importActual<typeof appConfig>(
-        '../../../config/appConfig',
+        '../../../../config/appConfig',
     );
 
     return {

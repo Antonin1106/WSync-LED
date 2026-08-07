@@ -5,7 +5,7 @@ import { useState, type ReactNode } from 'react';
 import field from '../../styles/modules/field.module.scss';
 import { motion } from 'framer-motion';
 import type { NumberConstraint } from '../../types/app';
-import { validateNumber } from '../../lib/utils/validateSettings/validateSettings';
+import { validateNumber } from '../../lib/utils/validate/validateSettings/validateSettings';
 
 /**
  * Renders a single numeric range control with a visible value label.

@@ -38,11 +38,13 @@ body {
 
 button,
 input,
-select {
+select,
+a {
   font: inherit;
 }
 
-button {
+button,
+a {
   touch-action: manipulation;
 }
 

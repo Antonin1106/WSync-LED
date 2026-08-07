@@ -23,7 +23,7 @@ export default defineConfig({
 
   themeConfig: {
     logo: {
-      src: '/assets/app-icon.png',
+      src: '/app-icon.png',
       alt: 'WSync LED logo'
     },
 

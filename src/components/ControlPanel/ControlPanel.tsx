@@ -9,25 +9,30 @@ import ControlRange from './ControlRange';
 import styles from './ControlPanel.module.scss';
 import field from '../../styles/modules/field.module.scss';
 import sections from '../../styles/modules/sections.module.scss';
-import { MotionButton, MotionDiv } from '../Motion/Motion';
+import { MotionButton, MotionDiv, MotionLabel, MotionLink } from '../Motion/Motion';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { ModeHelp } from './ModeHelp';
 import type { ChangeEvent } from 'react';
+import { Download, Recycle, Share } from 'lucide-react';
+import { exportSettings, importSettings } from '../../lib/storage/storage';
+import type { OverridesHook } from '../../types/hooks';
 type Props = {
   settings: Settings;
   ledCount: number;
   onSettingsChange: (_settings: Settings) => void;
+  overrides: OverridesHook;
 };
 
 /**
  * Renders the control panel for LED output settings and mapping options.
- * @param props - The properties for the ControlPanel component.
- * @param props.settings - The current application settings.
- * @param props.ledCount - The total number of LEDs configured in the application.
- * @param props.onSettingsChange - A callback function to handle changes to the application settings.
+ * @param props The properties for the ControlPanel component.
+ * @param props.settings The current application settings.
+ * @param props.ledCount The total number of LEDs configured in the application.
+ * @param props.onSettingsChange A callback function to handle changes to the application settings.
+ * @param props.overrides The overrides containing LED override states and functions.
  * @returns The rendered ControlPanel component.
  */
-export default function ControlPanel({ settings, ledCount, onSettingsChange }: Props) {
+export default function ControlPanel({ settings, ledCount, onSettingsChange, overrides }: Props) {
   /**
    * Updates a numeric setting from an input string value.
    * @param key Setting key to update.
@@ -174,7 +179,22 @@ export default function ControlPanel({ settings, ledCount, onSettingsChange }: P
             </MotionDiv>}
 
           <div key="bottomLayout" className={styles.bottomLayout}>
+            <MotionLabel htmlFor={styles.jsonInput}>
+              <Download />
+              {ta('importSettings')}
+              <input
+                type="file"
+                id={styles.jsonInput}
+                accept=".json"
+                onChange={f => importSettings(f, onSettingsChange, overrides.setLedOverrides)}
+              />
+            </MotionLabel>
+            <MotionLink href={exportSettings(settings, overrides.ledOverrides)} download="WSync-LED-config.json">
+              <Share />
+              {ta('exportSettings')}
+            </MotionLink>
             <MotionButton onClick={() => confirm(t('sureToReset?')) && onSettingsChange(initialSettings)}>
+              <Recycle />
               {ta('resetDefaultValues')}
             </MotionButton>
           </div>

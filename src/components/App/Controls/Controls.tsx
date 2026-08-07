@@ -9,7 +9,7 @@ import VideoLibrary from '../../VideoLibrary/VideoLibrary';
 import ControlPanel from '../../ControlPanel/ControlPanel';
 import styles from './Controls.module.scss';
 import field from '../../../styles/modules/field.module.scss';
-import type { LedRendererHook, SettingsHook, VideoCacheHook, VideoHook, WebSocketHook } from '../../../types/hooks';
+import type { LedRendererHook, OverridesHook, SettingsHook, VideoCacheHook, VideoHook, WebSocketHook } from '../../../types/hooks';
 import { loadVideo, openCachedVideo } from '../../../lib/videoCache';
 import { MotionButton } from '../../Motion/Motion';
 import Island from './Island/Island';
@@ -19,6 +19,7 @@ import { AnimatePresence } from 'framer-motion';
  * Controls component that provides the main user interface for managing video playback, LED rendering, and application settings.
  * @param props - The properties for the Controls component.
  * @param props.ledRenderer - The LED renderer hook that manages the LED rendering process.
+ * @param props.overrides The overrides containing LED override states and functions.
  * @param props.popMessage - A message to show into the header component.
  * @param props.settings - The settings hook that manages application settings.
  * @param props.video - The video hook that manages video playback and state.
@@ -26,9 +27,10 @@ import { AnimatePresence } from 'framer-motion';
  * @param props.websocket - The websocket hook that manages the websocket connection state.
  * @returns The rendered Controls component.
  */
-export default function Controls({ ledRenderer, popMessage, settings, video, videoCache, websocket }:
+export default function Controls({ ledRenderer, overrides, popMessage, settings, video, videoCache, websocket }:
     {
         ledRenderer: LedRendererHook,
+        overrides: OverridesHook;
         popMessage: React.ReactNode
         settings: SettingsHook,
         video: VideoHook,
@@ -89,6 +91,7 @@ export default function Controls({ ledRenderer, popMessage, settings, video, vid
                 settings={settings.settings}
                 ledCount={settings.ledCount}
                 onSettingsChange={settings.setSettings}
+                overrides={overrides}
             />
         </section>
     );
