@@ -1,0 +1,11 @@
+// styles/mixins/_content.scss
+// Content mixins for styling
+
+@mixin eyebrow {
+    margin: 0 0 4px;
+    color: #93c5fd;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}

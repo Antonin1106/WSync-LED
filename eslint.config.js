@@ -1,15 +1,28 @@
 import js from '@eslint/js';
 import globals from 'globals';
+import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 import { defineConfig, globalIgnores } from 'eslint/config';
+import jsdoc from 'eslint-plugin-jsdoc';
 
 export default defineConfig([
     // Ignore generated build files.
     globalIgnores(['dist']),
-
+    jsdoc.configs['flat/recommended-typescript'],
     {
+        settings: {
+            react: {
+                version: 'detect',
+            },
+        },
+
+        plugins: {
+            react,
+            jsdoc,
+        },
+
         // Apply this configuration to all JavaScript and TypeScript source files.
         files: ['**/*.{ts,tsx,js,jsx}'],
 
@@ -118,13 +131,13 @@ export default defineConfig([
              * ---------------------------------------------------------------- */
 
             // Indentation is handled by the formatter.
-            indent: ['off', 4],
+            'indent': ['off', 4],
 
             // Allow tabs if the formatter inserts them.
             'no-tabs': 'off',
 
             // Enforce single quotes.
-            quotes: ['error', 'single'],
+            'quotes': ['error', 'single'],
 
             // Require trailing commas in multiline structures.
             'comma-dangle': ['error', 'always-multiline'],
@@ -148,8 +161,32 @@ export default defineConfig([
             // Warn about unused variables, except those prefixed with "_".
             'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
 
-            // Prevent using undeclared variables.
-            'no-undef': 'error',
+            // Disable the prevent using undeclared variables.
+            'no-undef': 'off',
+
+            /* ------------------------------------------------------------------
+            * JSDoc
+            * ---------------------------------------------------------------- */
+
+
+            'jsdoc/require-jsdoc': [
+                'error',
+                {
+                    publicOnly: true,
+                    require: {
+                        FunctionDeclaration: true,
+                        MethodDefinition: false,
+                        ClassDeclaration: true,
+                        ArrowFunctionExpression: false,
+                        FunctionExpression: false,
+                    },
+                },
+            ],
+
+            'jsdoc/require-param': 'error',
+            'jsdoc/require-returns': 'error',
+            'jsdoc/check-tag-names': 'error',
+            'jsdoc/check-alignment': 'error',
         },
     },
 ]);

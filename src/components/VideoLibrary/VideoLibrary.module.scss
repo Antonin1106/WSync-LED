@@ -1,0 +1,55 @@
+// components/VideoLibrary/VideoLibrary.module.scss
+// Styles for the VideoLibrary component
+
+.iconButton {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fecaca;
+    background: #1f2937;
+}
+
+.libraryList {
+    display: grid;
+    gap: 8px;
+}
+
+.emptyState {
+    margin: 4px 0 0;
+    color: #94a3b8;
+    font-size: 0.86rem;
+    line-height: 1.4;
+}
+
+.libraryItem {
+    @include flex-center;
+    gap: 8px;
+
+    button {
+        @include button;
+    }
+
+    button:first-child {
+        min-width: 0;
+        flex: 1;
+        display: grid;
+        gap: 2px;
+        padding: 9px 10px;
+        color: #e5e7eb;
+        text-align: left;
+        background: #111827;
+    }
+
+    strong {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    span {
+        color: #94a3b8;
+        font-size: 0.78rem;
+    }
+}

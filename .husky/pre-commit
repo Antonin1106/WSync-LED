@@ -1,0 +1,13 @@
+# .husky/pre-commit
+
+# Make sure translations are sorted
+npm run sort-translations
+
+# Run ESlint
+npm run lint
+
+# Run tests
+npm test
+
+# Build
+npm run build

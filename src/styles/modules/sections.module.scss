@@ -1,0 +1,19 @@
+// styles/modules/sections.module.scss
+// Section class used by several components
+
+.panelSection {
+    @include default-container;
+    padding: 12px;
+    margin-top: 12px;
+}
+
+.sectionTitle {
+    @include flex-center;
+    @include space-between;
+    margin-bottom: 10px;
+
+    span {
+        color: #94a3b8;
+        font-size: 0.82rem;
+    }
+}
