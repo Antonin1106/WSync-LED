@@ -75,12 +75,10 @@ export function importSettings(changeEvent: ChangeEvent<HTMLInputElement, HTMLIn
   const reader = new FileReader();
   reader.onload = (event) => {
     const imported = JSON.parse(event.target?.result as string);
-    if (imported[SETTINGS_KEY]) {
+    if (imported[SETTINGS_KEY])
       setSettings({ ...imported[SETTINGS_KEY] });
-    }
-    if (imported[LED_OVERRIDES_KEY]) {
+    if (imported[LED_OVERRIDES_KEY])
       setOverrides(imported[LED_OVERRIDES_KEY]);
-    }
   };
 
   if (!changeEvent.target.files) return;

@@ -36,6 +36,8 @@ export type CachedVideo = CachedVideoMeta & {
   blob: Blob;
 };
 
+export type Override = Record<number, LedOverride>;
+
 export type LedOverride = {
   enabled: boolean;
   color?: string;

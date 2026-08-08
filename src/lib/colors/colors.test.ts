@@ -43,6 +43,18 @@ describe('hexToRgbw', () => {
     it('converts white with rgba without #', () => {
         expect(hexToRgbw('FFFFFFFF')).toEqual([51, 51, 51, 204]);
     });
+
+    it('converts incorrect longer HEX to black RGBW', () => {
+        expect(hexToRgbw('GHTYK5NN')).toEqual([0, 0, 0, 0]);
+    });
+
+    it('converts incorrect short HEX to black RGBW', () => {
+        expect(hexToRgbw('LGVN')).toEqual([0, 0, 0, 0]);
+    });
+
+    it('converts short HEX to RGBW', () => {
+        expect(hexToRgbw('FFAA')).toEqual([255, 170, 0, 0]);
+    });
 });
 
 describe('rgbwToHex', () => {

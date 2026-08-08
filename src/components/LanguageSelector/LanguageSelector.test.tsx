@@ -4,11 +4,11 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
 import LanguageSelector from './LanguageSelector';
 import type { Lang } from '../../types/lang';
-
+import { initialSettings } from '../../config/appConfig';
 let settings = {
+    ...initialSettings,
     lang: 'en',
 };
 
@@ -45,6 +45,7 @@ vi.mock('../../lib/lang/lang', () => {
 describe('LanguageSelector', () => {
     beforeEach(() => {
         settings = {
+            ...initialSettings,
             lang: 'en',
         };
 
@@ -68,12 +69,20 @@ describe('LanguageSelector', () => {
         await user.selectOptions(screen.getByRole('combobox'), 'fr');
 
         expect(mocks.saveSettings).toHaveBeenCalledWith({
+            ...initialSettings,
             lang: 'fr',
         });
 
         expect(currentLanguage).toBe('fr');
 
-        expect(onChange).toHaveBeenCalledOnce();
+        expect(onChange).toHaveBeenCalledTimes(1);
+
+        const updater = onChange.mock.calls[0]?.[0];
+        expect(typeof updater).toBe('function');
+        expect(updater({ ...initialSettings, lang: 'en' })).toEqual({
+            ...initialSettings,
+            lang: 'fr',
+        });
     });
 
     it('does nothing on mount if language is already current', () => {
