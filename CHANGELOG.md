@@ -1,5 +1,15 @@
 # WSync-LED Changelog
 
+
+## [1.0.1] - 2026-08-15
+
+### Changed
+
+- Fix some dependency vulnerabilities
+- Bump nanoid from 3.3.15 to 3.3.18
+- Bump js-yaml from 4.3.0 to 4.3.1
+- Bump postcss from 8.5.16 to 8.5.26
+
 ## [1.0.0] - 2026-07-13
 
 ### Added
