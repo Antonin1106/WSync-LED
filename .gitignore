@@ -25,6 +25,7 @@ dist-ssr
 *.temp
 test
 dist
+.eslintcache
 
 docs/.vitepress/dist
 docs/.vitepress/cache

@@ -1,4 +1,6 @@
 # .husky/pre-commit
 
+npx lint-staged
+
 # Ensure the build succeeds
 npm run build
