@@ -1,5 +1,10 @@
 # WSync-LED Changelog
 
+## [1.0.2] - 2026-10-17
+
+### Changed
+
+- Update dependencies
 
 ## [1.0.1] - 2026-08-15
 
