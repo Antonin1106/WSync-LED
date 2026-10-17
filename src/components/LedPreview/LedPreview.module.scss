@@ -28,18 +28,18 @@
     }
 
     .previewToolbar {
-        @include flex-center;
-        @include space-between;
+        @extend .flex-center;
+        @extend .space-between;
 
         .eyebrow {
-            @include eyebrow
+           @extend .eyebrow;
         }
     }
 
     .modeButton {
-        @include button;
-        @include white-content;
-        @include darkButton;
+        @extend .button;
+        @extend .white-content;
+        @extend .darkButton;
 
         flex: 0 0 auto;
         padding: 0 12px;

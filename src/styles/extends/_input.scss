@@ -1,7 +1,7 @@
-// styles/mixins/_input.scss
+// styles/extends/_input.scss
 // Input mixins for styling
 
-@mixin select {
+.select {
     padding: 5px;
     margin-top: 10px;
     border-radius: 10px;

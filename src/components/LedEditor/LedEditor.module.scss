@@ -2,7 +2,7 @@
 // Styles for the LedEditor component
 
 .ledEditor {
-    @include default-container;
+    @extend .default-container;
 
     display: grid;
     grid-template-columns: minmax(140px, 1fr) auto;
@@ -20,7 +20,7 @@
     }
 
     .editorActions {
-        @include flex-center;
+        @extend .flex-center;
 
         flex-wrap: wrap;
         justify-content: flex-end;

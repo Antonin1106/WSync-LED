@@ -3,4 +3,6 @@
 
 // This SCSS is automatically included in all SCSS files
 
+@forward 'extends/';
 @forward 'mixins/';
+@forward 'variables/variables';

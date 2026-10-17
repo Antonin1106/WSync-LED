@@ -71,12 +71,12 @@ span.rightCorner {
 }
 
 .libraryItem {
-    @include flex-center;
+    @extend .flex-center;
     gap: 8px;
     margin-bottom: 8px;
 
     button {
-        @include button;
+        @extend .button;
     }
 
     button:first-child {

@@ -32,23 +32,23 @@
 }
 
 .eyebrow {
-    @include eyebrow
+    @extend .eyebrow;
 }
 
 .primaryButton {
-    @include button;
-    @include white-content;
+    @extend .button;
+    @extend .white-content;
 }
 
 .actionRow {
-    @include flex-center;
+    @extend .flex-center;
     gap: 10px;
     margin: 12px 0;
 }
 
 .primaryButton {
     flex: 1;
-    background: #2563eb;
+    background: $bg-primary;
 }
 
 

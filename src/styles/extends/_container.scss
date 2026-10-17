@@ -1,0 +1,20 @@
+// styles/extends/_container.scss
+// Commun style for containers
+
+@use '../variables/variables' as *;
+
+.default-container {
+    border: 1px solid #243041;
+    border-radius: 8px;
+    background: $bg-secondary;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+}
+
+.space-between {
+    justify-content: space-between;
+    gap: 12px;
+}

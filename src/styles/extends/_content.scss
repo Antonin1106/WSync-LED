@@ -1,7 +1,7 @@
-// styles/mixins/_content.scss
+// styles/extends/_content.scss
 // Content mixins for styling
 
-@mixin eyebrow {
+.eyebrow {
     margin: 0 0 4px;
     color: #93c5fd;
     font-size: 0.72rem;

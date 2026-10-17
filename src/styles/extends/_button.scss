@@ -1,19 +1,19 @@
-// styles/mixins/_button.scss
+// styles/extends/_button.scss
 // Commun style for buttons
 
-@mixin button {
+.button {
     min-height: 44px;
     border: 0;
     border-radius: 7px;
     cursor: pointer;
 }
 
-@mixin darkButton {
+.darkButton {
     background: #1f2937;
     border: 1px solid #334155;
 }
 
-@mixin white-content {
+.white-content {
     color: #fff;
     font-weight: 700;
 }

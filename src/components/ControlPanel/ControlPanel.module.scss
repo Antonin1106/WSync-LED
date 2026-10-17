@@ -15,7 +15,7 @@
     }
 
     select {
-        @include select;
+        @extend .select;
         margin: 0;
         padding: 1px;
         font-size: 0.8rem;
@@ -75,8 +75,8 @@
         text-align: center;
         text-decoration: none;
         cursor: pointer;
-        @include white-content;
-        @include darkButton;
+        @extend .white-content;
+        @extend .darkButton;
 
         @include container(control, small) {
             font-size: 0.8rem;

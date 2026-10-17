@@ -2,18 +2,18 @@
 // Styles for the VideoCard component
 
 .videoCard {
-    @include default-container;
+    @extend .default-container;
     padding: 10px;
 
     .fileButton {
-        @include button;
+        @extend .button;
 
         width: 100%;
         margin-top: 10px;
         display: grid;
         place-items: center;
         color: #fff;
-        background: #2563eb;
+        background: $bg-primary;
         font-weight: 700;
     }
 
