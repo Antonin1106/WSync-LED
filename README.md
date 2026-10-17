@@ -8,6 +8,8 @@ A mobile-first Web App that analyzes colors from a local video and streams real-
 
 The application works on any modern browser supporting the required Web APIs. As a Progressive Web App, it can be installed on mobile and desktop platforms, and stores previously opened videos locally using IndexedDB.
 
+Public documentation is available at [https://antonin1106.github.io/WSync-LED](https://antonin1106.github.io/WSync-LED/).
+
 ## Features
 
 - Real-time binary WebSocket LED streaming to compatible devices.
